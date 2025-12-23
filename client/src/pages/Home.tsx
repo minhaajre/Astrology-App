@@ -211,7 +211,7 @@ export default function Home() {
                       <div className="flex flex-wrap gap-2">
                         {template.keyInsights.slice(0, 3).map((insight, i) => (
                           <Badge key={i} variant="outline" className="text-xs">
-                            {insight.substring(0, 50)}...
+                            {insight.length > 50 ? insight.substring(0, 50) + "..." : insight}
                           </Badge>
                         ))}
                       </div>

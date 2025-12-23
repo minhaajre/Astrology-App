@@ -36,7 +36,7 @@ export function NumberAccordion({ highlightNumbers = [] }: NumberAccordionProps)
                     {num}
                   </span>
                   <div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold">{meaning.core}</span>
                       {isMaster && (
                         <Badge variant="secondary" className="text-xs">
@@ -49,8 +49,8 @@ export function NumberAccordion({ highlightNumbers = [] }: NumberAccordionProps)
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-muted-foreground line-clamp-1">
-                      {meaning.essence.substring(0, 80)}...
+                    <p className="text-sm text-muted-foreground">
+                      {meaning.essence.substring(0, 120)}
                     </p>
                   </div>
                 </div>

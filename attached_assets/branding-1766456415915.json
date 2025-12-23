@@ -1,0 +1,94 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "sans-serif",
+      "count": 137
+    },
+    {
+      "family": "Anthropic Serif",
+      "count": 77
+    },
+    {
+      "family": "Georgia",
+      "count": 77
+    },
+    {
+      "family": "Anthropic Sans",
+      "count": 60
+    },
+    {
+      "family": "Arial",
+      "count": 60
+    }
+  ],
+  "colors": {
+    "primary": "#C6613F",
+    "accent": "#D97757",
+    "background": "#F0EEE6",
+    "textPrimary": "#141413",
+    "link": "#D97757"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Anthropic Serif",
+      "heading": "Anthropic Sans"
+    },
+    "fontStacks": {
+      "body": [
+        "Anthropic Serif",
+        "Georgia",
+        "sans-serif"
+      ],
+      "heading": [
+        "Anthropic Sans",
+        "Arial",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Anthropic Serif",
+        "Georgia",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "64px",
+      "h2": "32px",
+      "body": "24px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "0px"
+  },
+  "components": {},
+  "images": {
+    "logo": "File saved at: attached_assets/logo.svg",
+    "favicon": "File saved at: attached_assets/favicon.png",
+    "ogImage": "File saved at: attached_assets/ogImage.jpg"
+  },
+  "__framework_hints": [],
+  "__llm_logo_reasoning": {
+    "selectedIndex": 2,
+    "reasoning": "Strong indicators: header logo linking to homepage, header location, visible, src contains logo, reasonable size, SVG format. Score: 98 (clear winner by 28 points)",
+    "confidence": 0.9
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "LLM failed"
+    },
+    "secondary": {
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "LLM failed"
+    },
+    "confidence": 0
+  },
+  "confidence": {
+    "buttons": 0,
+    "colors": 0,
+    "overall": 0
+  }
+}
