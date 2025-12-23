@@ -252,6 +252,14 @@ export function getVietnamAnimal(year: number): string {
   return vietnamAnimals[idx];
 }
 
+export function getAnimalCompatibility(animalA: string, animalB: string): 'Good' | 'Neutral' | 'Enemies' {
+  if (animalA === animalB) return 'Good';
+  if ((animalFriends[animalA] || []).includes(animalB)) return 'Good';
+  if ((animalEnemiesPrimary[animalA] || []).includes(animalB)) return 'Enemies';
+  if ((animalEnemiesSecondary[animalA] || []).includes(animalB)) return 'Enemies';
+  return 'Neutral';
+}
+
 export const animalIconNames: Record<string, string> = {
   Rat: "🐭",
   Buffalo: "🐃",

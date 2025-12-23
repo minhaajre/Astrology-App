@@ -11,6 +11,7 @@ import {
   getVietnamAnimal,
   animalIconNames,
   calculateCompatibility,
+  getAnimalCompatibility,
   type CompatibilityResult,
 } from "@/lib/numerology";
 import { countries } from "@/lib/countries";
@@ -49,6 +50,27 @@ export function CountryCompatibility({
       animal: getVietnamAnimal(personDob.getFullYear()),
     };
   }, [personDob]);
+
+  const getZodiacCompatibilityDetails = (compatibility: 'Good' | 'Neutral' | 'Enemies') => {
+    const details: Record<typeof compatibility, { color: string; label: string; description: string }> = {
+      Good: {
+        color: 'text-green-600 dark:text-green-400',
+        label: 'Good Compatibility',
+        description: 'Natural harmony and mutual understanding'
+      },
+      Neutral: {
+        color: 'text-gray-600 dark:text-gray-400',
+        label: 'Neutral',
+        description: 'Neither particularly aligned nor opposed'
+      },
+      Enemies: {
+        color: 'text-red-600 dark:text-red-400',
+        label: 'Challenging Enemies',
+        description: 'Different approaches - requires conscious effort'
+      }
+    };
+    return details[compatibility];
+  };
 
   useEffect(() => {
     if (!personDob || !personData) return;
@@ -303,6 +325,59 @@ export function CountryCompatibility({
                   </p>
                 </CardContent>
               </Card>
+
+              {personData && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-base">
+                      <Sparkles className="h-4 w-4" />
+                      Zodiac Animal Compatibility
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {(() => {
+                      const countryAnimal = getVietnamAnimal(activeResult.year);
+                      const compatibility = getAnimalCompatibility(personData.animal, countryAnimal);
+                      const details = getZodiacCompatibilityDetails(compatibility);
+                      
+                      return (
+                        <div className="grid grid-cols-2 gap-6">
+                          <div className="text-center">
+                            <p className="text-xs font-medium text-muted-foreground mb-3">Your Animal</p>
+                            <div className="text-5xl mb-2">{animalIconNames[personData.animal]}</div>
+                            <p className="font-semibold">{personData.animal}</p>
+                          </div>
+                          
+                          <div className="text-center">
+                            <p className="text-xs font-medium text-muted-foreground mb-3">{activeResult.country}'s Animal</p>
+                            <div className="text-5xl mb-2">{animalIconNames[countryAnimal]}</div>
+                            <p className="font-semibold">{countryAnimal}</p>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                    
+                    {(() => {
+                      const countryAnimal = getVietnamAnimal(activeResult.year);
+                      const compatibility = getAnimalCompatibility(personData.animal, countryAnimal);
+                      const details = getZodiacCompatibilityDetails(compatibility);
+                      
+                      return (
+                        <div className="mt-6 pt-6 border-t">
+                          <div className="rounded-lg bg-muted/50 p-4">
+                            <p className={`text-sm font-semibold ${details.color} mb-2`}>
+                              {details.label}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {details.description}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </CardContent>
+                </Card>
+              )}
 
               <Collapsible defaultOpen>
                 <Card>
