@@ -54,17 +54,17 @@ export function DailyEnergyCards() {
       
       <div className="grid gap-4 md:grid-cols-3">
         {/* Today's Numerology */}
-        <Card className="bg-card/50">
-          <CardContent className="pt-6">
-            <div className="flex items-start gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 mt-1">
+        <Card className="bg-card/50 min-h-44">
+          <CardContent className="pt-6 pb-6 h-full flex flex-col">
+            <div className="flex gap-3 h-full">
+              <div className="rounded-lg bg-primary/10 p-2 mt-1 flex-shrink-0">
                 <Zap className="h-5 w-5 text-primary" />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 flex flex-col">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                   Numerology
                 </p>
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-2 flex-wrap mb-2">
                   <p className="text-2xl font-bold" data-testid="energy-today-number">
                     {todayNumber}
                   </p>
@@ -72,7 +72,7 @@ export function DailyEnergyCards() {
                     {todayMeaning.core.split(" &")[0]}
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+                <p className="text-xs text-muted-foreground mt-auto">
                   {todayMeaning.dailyForecast}
                 </p>
               </div>
@@ -81,17 +81,17 @@ export function DailyEnergyCards() {
         </Card>
 
         {/* This Week's Energy */}
-        <Card className="bg-card/50">
-          <CardContent className="pt-6">
-            <div className="flex items-start gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 mt-1">
+        <Card className="bg-card/50 min-h-44">
+          <CardContent className="pt-6 pb-6 h-full flex flex-col">
+            <div className="flex gap-3 h-full">
+              <div className="rounded-lg bg-primary/10 p-2 mt-1 flex-shrink-0">
                 <Calendar className="h-5 w-5 text-primary" />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 flex flex-col">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                   This Week
                 </p>
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-2 flex-wrap mb-2">
                   <p className="text-2xl font-bold" data-testid="energy-week-number">
                     {weekNumber1}
                   </p>
@@ -99,8 +99,8 @@ export function DailyEnergyCards() {
                     Week {weekNumber}
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2 line-clamp-2">
-                  {weekMeaning.core.split(" &")[0]} • {weekMeaning.essence.substring(0, 60)}...
+                <p className="text-xs text-muted-foreground mt-auto">
+                  {weekMeaning.core.split(" &")[0]} • {weekMeaning.essence.substring(0, 80)}
                 </p>
               </div>
             </div>
@@ -108,17 +108,17 @@ export function DailyEnergyCards() {
         </Card>
 
         {/* This Month's Energy */}
-        <Card className="bg-card/50">
-          <CardContent className="pt-6">
-            <div className="flex items-start gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 mt-1">
+        <Card className="bg-card/50 min-h-44">
+          <CardContent className="pt-6 pb-6 h-full flex flex-col">
+            <div className="flex gap-3 h-full">
+              <div className="rounded-lg bg-primary/10 p-2 mt-1 flex-shrink-0">
                 <BarChart3 className="h-5 w-5 text-primary" />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 flex flex-col">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                   This Month
                 </p>
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-2 flex-wrap mb-2">
                   <p className="text-2xl font-bold" data-testid="energy-month-number">
                     {monthNumber}
                   </p>
@@ -126,8 +126,8 @@ export function DailyEnergyCards() {
                     {today.toLocaleDateString("en-US", { month: "short" })}
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2 line-clamp-2">
-                  {monthMeaning.core.split(" &")[0]} • {monthMeaning.essence.substring(0, 60)}...
+                <p className="text-xs text-muted-foreground mt-auto">
+                  {monthMeaning.core.split(" &")[0]} • {monthMeaning.essence.substring(0, 80)}
                 </p>
               </div>
             </div>
@@ -138,10 +138,10 @@ export function DailyEnergyCards() {
       {/* Vietnamese Zodiac Row */}
       <div className="grid gap-4 md:grid-cols-2">
         {/* Today's Zodiac */}
-        <Card className="bg-card/50">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-3">
-              <span className="text-4xl">{todayAnimalIcon}</span>
+        <Card className="bg-card/50 min-h-32">
+          <CardContent className="pt-6 pb-6 h-full flex items-center">
+            <div className="flex items-center gap-4 w-full">
+              <span className="text-5xl flex-shrink-0">{todayAnimalIcon}</span>
               <div className="flex-1">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   Today's Animal
@@ -149,7 +149,7 @@ export function DailyEnergyCards() {
                 <p className="text-lg font-bold" data-testid="energy-today-animal">
                   {todayAnimal}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-muted-foreground mt-2">
                   {getTodayCompatibility() === 'Good' ? '✓ Aligned' : getTodayCompatibility() === 'Enemies' ? '✗ Challenging' : '• Neutral'}
                 </p>
               </div>
@@ -158,10 +158,10 @@ export function DailyEnergyCards() {
         </Card>
 
         {/* This Month's Zodiac */}
-        <Card className="bg-card/50">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-3">
-              <span className="text-4xl">{monthAnimalIcon}</span>
+        <Card className="bg-card/50 min-h-32">
+          <CardContent className="pt-6 pb-6 h-full flex items-center">
+            <div className="flex items-center gap-4 w-full">
+              <span className="text-5xl flex-shrink-0">{monthAnimalIcon}</span>
               <div className="flex-1">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   This Month's Animal
@@ -169,8 +169,8 @@ export function DailyEnergyCards() {
                 <p className="text-lg font-bold" data-testid="energy-month-animal">
                   {monthAnimal}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Energetic theme for {today.toLocaleDateString("en-US", { month: "long" })}
+                <p className="text-xs text-muted-foreground mt-2">
+                  {today.toLocaleDateString("en-US", { month: "long" })} energetic theme
                 </p>
               </div>
             </div>
