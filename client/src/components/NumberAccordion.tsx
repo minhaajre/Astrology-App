@@ -40,7 +40,7 @@ export function NumberAccordion({ highlightNumbers = [] }: NumberAccordionProps)
                       <span className="font-semibold">{meaning.core}</span>
                       {isMaster && (
                         <Badge variant="secondary" className="text-xs">
-                          Master Number
+                          {meaning.masterLabel || "Master Number"}
                         </Badge>
                       )}
                       {isHighlighted && (

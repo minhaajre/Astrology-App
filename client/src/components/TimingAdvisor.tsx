@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Star, Zap } from "lucide-react";
 import { getOptimalDays, type OptimalDay } from "@/lib/numerology";
+import { SpecialDatesInfo } from "./SpecialDatesInfo";
 import { format } from "date-fns";
 
 interface TimingAdvisorProps {
@@ -12,28 +13,32 @@ export function TimingAdvisor({ dob }: TimingAdvisorProps) {
   const optimalDays = getOptimalDays(dob, 30);
 
   return (
-    <Card>
-      <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2">
-          <Calendar className="h-5 w-5 text-primary" />
-          Top 10 Optimal Days
-        </CardTitle>
-        <p className="text-sm text-muted-foreground">
-          Days when your Personal Day aligns with your core numbers
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        {optimalDays.length === 0 ? (
-          <p className="text-sm text-muted-foreground py-4 text-center">
-            No matching days found in the next 30 days
+    <div className="space-y-6">
+      <Card>
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5 text-primary" />
+            Top 10 Optimal Days
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Days when your Personal Day aligns with your core numbers
           </p>
-        ) : (
-          optimalDays.map((day, index) => (
-            <OptimalDayCard key={day.date.toISOString()} day={day} rank={index + 1} />
-          ))
-        )}
-      </CardContent>
-    </Card>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {optimalDays.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-4 text-center">
+              No matching days found in the next 30 days
+            </p>
+          ) : (
+            optimalDays.map((day, index) => (
+              <OptimalDayCard key={day.date.toISOString()} day={day} rank={index + 1} />
+            ))
+          )}
+        </CardContent>
+      </Card>
+
+      <SpecialDatesInfo />
+    </div>
   );
 }
 

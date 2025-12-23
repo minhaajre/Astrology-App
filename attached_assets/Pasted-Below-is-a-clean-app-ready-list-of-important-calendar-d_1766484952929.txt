@@ -1,0 +1,402 @@
+Below is a **clean, app-ready list of important calendar days** based on **Gary G33’s publicly referenced numerology logic**.
+This is framed so it can be used directly in your **Timing** section, **date picker highlights**, or **info cards**.
+
+No private material. No exaggeration. Clear use-cases.
+
+---
+
+# IMPORTANT CALENDAR DAYS (GG33-STYLE)
+
+Gary’s public framework treats **specific calendar dates** as having **strong recurring energetic themes**, regardless of month or year.
+These are best used for **launches, decisions, money moves, negotiations, rest, or avoidance**.
+
+---
+
+## 💰 MONEY & WEALTH DAYS
+
+These are **material, financial, and power-oriented days**.
+
+### 8th of any month
+
+Theme
+Money, authority, business, power, execution
+
+Best for
+
+* Business decisions
+* Negotiations
+* Payments, invoices
+* Career moves
+* Asset discussions
+
+Avoid
+
+* Emotional confrontations
+* Over-promising
+
+---
+
+### 17th (1 + 7 = 8)
+
+Theme
+Earned success, disciplined wealth
+
+Best for
+
+* Long-term planning
+* Structured investments
+* Leadership decisions
+
+---
+
+### 26th (2 + 6 = 8)
+
+Theme
+Partnership money, contractual wealth
+
+Best for
+
+* Contracts
+* Joint ventures
+* Legal or formal agreements
+
+---
+
+### **28th (2 + 8 = 10 → 1)**
+
+Theme
+Money + reset + new financial cycle
+
+This is one of the **most emphasized GG33 money days**.
+
+Best for
+
+* Launching businesses
+* Resetting finances
+* Major decisions about direction
+* High-level planning
+
+Note
+28 combines **8 (money)** with **1 (initiation)**.
+
+---
+
+## 👑 LEADERSHIP, AUTHORITY & CONTROL DAYS
+
+### 1st
+
+Theme
+Initiation, leadership, dominance
+
+Best for
+
+* Starting projects
+* Taking control
+* Announcements
+
+---
+
+### 10th (1 + 0 = 1)
+
+Theme
+Authority reset, leadership clarity
+
+Best for
+
+* Strategic pivots
+* Rebranding
+* Setting direction
+
+---
+
+### 19th (1 + 9 = 10 → 1)
+
+Theme
+Independent leadership after completion
+
+Best for
+
+* Solo decisions
+* Exiting old roles
+* Declaring independence
+
+---
+
+## 🧠 KNOWLEDGE, STRATEGY & INTROSPECTION DAYS
+
+### 7th
+
+Theme
+Analysis, truth, research, spirituality
+
+Best for
+
+* Study
+* Reflection
+* Strategy
+* Diagnostics
+
+Avoid
+
+* Forcing outcomes
+* Emotional arguments
+
+---
+
+### 16th (1 + 6 = 7)
+
+Theme
+Reality check, collapse of illusion
+
+Best for
+
+* Audits
+* Truth-seeking
+* Cutting losses
+
+Caution
+Can bring **humbling experiences** if ego-driven.
+
+---
+
+### 25th (2 + 5 = 7)
+
+Theme
+Strategic withdrawal and recalibration
+
+Best for
+
+* Reviewing plans
+* Pausing decisions
+* Quiet work
+
+---
+
+## ❤️ RELATIONSHIPS, HARMONY & SOCIAL DAYS
+
+### 2nd
+
+Theme
+Partnership, diplomacy, emotional awareness
+
+Best for
+
+* Relationship talks
+* Mediation
+* Team cooperation
+
+---
+
+### 6th
+
+Theme
+Family, responsibility, care
+
+Best for
+
+* Relationship repair
+* Home matters
+* Emotional support
+
+---
+
+### 15th (1 + 5 = 6)
+
+Theme
+Magnetic attraction, charm, bonding
+
+Best for
+
+* Dates
+* Reconciliation
+* Social engagement
+
+---
+
+## 🌍 CHANGE, TRAVEL & UNPREDICTABILITY DAYS
+
+### 5th
+
+Theme
+Movement, freedom, volatility
+
+Best for
+
+* Travel
+* Marketing
+* Promotion
+
+Avoid
+
+* Long-term commitments
+* Rigid plans
+
+---
+
+### 14th (1 + 4 = 5)
+
+Theme
+Disruptive change
+
+Caution
+High risk if careless. Good for **controlled change only**.
+
+---
+
+### 23rd (2 + 3 = 5)
+
+Theme
+Communication-driven movement
+
+Best for
+
+* Media
+* Public speaking
+* Networking
+
+---
+
+## 🧱 STRUCTURE, SYSTEMS & LONG-TERM BUILDING DAYS
+
+### 4th
+
+Theme
+Discipline, structure, foundations
+
+Best for
+
+* Planning
+* Systems
+* Infrastructure work
+
+---
+
+### 13th (1 + 3 = 4)
+
+Theme
+Forced restructuring
+
+Caution
+Often brings **hard work through pressure**.
+
+---
+
+### 22nd (Master 22)
+
+Theme
+Master builder, large-scale systems
+
+Best for
+
+* Serious long-term projects
+* Institutions
+* High-responsibility decisions
+
+Caution
+Heavy karmic load if misused.
+
+---
+
+## 🔮 COMPLETION, ENDINGS & TRANSITION DAYS
+
+### 9th
+
+Theme
+Completion, release, endings
+
+Best for
+
+* Closure
+* Letting go
+* Finishing projects
+
+Avoid
+
+* Starting long-term ventures
+
+---
+
+### 18th (1 + 8 = 9)
+
+Theme
+Karmic clearing tied to power or money
+
+---
+
+### 27th (2 + 7 = 9)
+
+Theme
+Spiritual completion
+
+Best for
+
+* Reflection
+* Closure
+* Inner work
+
+---
+
+## 🧩 MASTER NUMBER DAYS (HIGH INTENSITY)
+
+### 11th
+
+Theme
+Intuition, insight, heightened sensitivity
+
+Best for
+
+* Vision
+* Spiritual work
+* Creativity
+
+---
+
+### 22nd
+
+Theme
+Execution at scale
+
+(Already covered above)
+
+---
+
+### 33rd
+
+Does not occur as a calendar date
+Appears only through **compound calculations** (personal days).
+
+---
+
+## HOW TO USE THIS IN YOUR APP (IMPORTANT)
+
+Suggested implementation:
+
+* Highlight these dates in the **calendar view**
+* Add hover tooltips:
+  “28 — Money reset & business launch day”
+* Add filters:
+  Money Days
+  Relationship Days
+  Strategy Days
+  Avoid Days
+
+Optional:
+
+* Combine with **personal numerology day** for higher accuracy
+* Flag dates where **personal number matches global theme**
+
+---
+
+## SIMPLE USER NOTE (SHOW IN UI)
+
+> These dates amplify certain themes.
+> They do not force outcomes.
+> Awareness determines results.
+
+---
+
+If you want next, I can:
+
+* Convert this into a **JSON date-theme table** for Replit
+* Overlay these days with **personal day calculations**
+* Or create a **Best / Neutral / Avoid day engine** per user

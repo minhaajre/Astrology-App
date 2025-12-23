@@ -9,7 +9,65 @@ export interface NumberMeaning {
   shadowWork: string;
   careers: string[];
   dailyForecast: string;
+  masterLabel?: string;
 }
+
+export const masterNumberLabels: Record<number, string> = {
+  11: "Inspired Healer",
+  22: "Master Builder",
+  33: "Master Teacher",
+};
+
+export interface SpecialDateInfo {
+  date: number;
+  theme: string;
+  number: number;
+  category: string;
+  bestFor: string[];
+  avoidFor?: string[];
+  note?: string;
+}
+
+export const specialDates: SpecialDateInfo[] = [
+  // Money Days
+  { date: 8, theme: "Money, Authority & Power", number: 8, category: "💰 Money & Wealth", bestFor: ["Business decisions", "Negotiations", "Payments", "Career moves"], avoidFor: ["Emotional confrontations"] },
+  { date: 17, theme: "Earned Success & Discipline", number: 8, category: "💰 Money & Wealth", bestFor: ["Long-term planning", "Structured investments", "Leadership decisions"], note: "1+7=8" },
+  { date: 26, theme: "Partnership Money & Contracts", number: 8, category: "💰 Money & Wealth", bestFor: ["Contracts", "Joint ventures", "Legal agreements"], note: "2+6=8" },
+  { date: 28, theme: "Money Reset & New Cycle", number: 1, category: "💰 Money & Wealth", bestFor: ["Launching businesses", "Resetting finances", "Major decisions", "High-level planning"], note: "Most emphasized GG33 money day (8+1)" },
+  
+  // Leadership Days
+  { date: 1, theme: "Initiation & Leadership", number: 1, category: "👑 Leadership & Control", bestFor: ["Starting projects", "Taking control", "Announcements"] },
+  { date: 10, theme: "Authority Reset & Clarity", number: 1, category: "👑 Leadership & Control", bestFor: ["Strategic pivots", "Rebranding", "Setting direction"], note: "1+0=1" },
+  { date: 19, theme: "Independent Leadership", number: 1, category: "👑 Leadership & Control", bestFor: ["Solo decisions", "Exiting old roles", "Declaring independence"], note: "1+9=1" },
+  
+  // Knowledge Days
+  { date: 7, theme: "Analysis, Truth & Research", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Study", "Reflection", "Strategy", "Diagnostics"], avoidFor: ["Forcing outcomes", "Emotional arguments"] },
+  { date: 16, theme: "Reality Check & Truth-Seeking", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Audits", "Truth-seeking", "Cutting losses"], note: "1+6=7. Can be humbling." },
+  { date: 25, theme: "Strategic Withdrawal", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Reviewing plans", "Pausing decisions", "Quiet work"], note: "2+5=7" },
+  
+  // Relationship Days
+  { date: 2, theme: "Partnership & Diplomacy", number: 2, category: "❤️ Relationships & Harmony", bestFor: ["Relationship talks", "Mediation", "Team cooperation"] },
+  { date: 6, theme: "Family & Responsibility", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Relationship repair", "Home matters", "Emotional support"] },
+  { date: 15, theme: "Magnetic Attraction & Bonding", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Dates", "Reconciliation", "Social engagement"], note: "1+5=6" },
+  
+  // Change Days
+  { date: 5, theme: "Movement, Freedom & Change", number: 5, category: "🌍 Change & Travel", bestFor: ["Travel", "Marketing", "Promotion"], avoidFor: ["Long-term commitments", "Rigid plans"] },
+  { date: 14, theme: "Disruptive Change", number: 5, category: "🌍 Change & Travel", bestFor: ["Controlled change"], note: "1+4=5. High risk if careless." },
+  { date: 23, theme: "Communication-Driven Movement", number: 5, category: "🌍 Change & Travel", bestFor: ["Media", "Public speaking", "Networking"], note: "2+3=5" },
+  
+  // Structure Days
+  { date: 4, theme: "Discipline, Structure & Foundations", number: 4, category: "🧱 Structure & Systems", bestFor: ["Planning", "Systems", "Infrastructure work"] },
+  { date: 13, theme: "Forced Restructuring", number: 4, category: "🧱 Structure & Systems", bestFor: ["Hard work"], note: "1+3=4. Brings pressure." },
+  { date: 22, theme: "Master Builder - Large Scale Systems", number: 22, category: "🧱 Structure & Systems", bestFor: ["Serious long-term projects", "Institutions", "High-responsibility decisions"], note: "Master Number 22 - Heavy karmic load if misused" },
+  
+  // Completion Days
+  { date: 9, theme: "Completion, Release & Endings", number: 9, category: "🔮 Completion & Transition", bestFor: ["Closure", "Letting go", "Finishing projects"], avoidFor: ["Starting long-term ventures"] },
+  { date: 18, theme: "Karmic Clearing - Power & Money", number: 9, category: "🔮 Completion & Transition", bestFor: ["Closure"], note: "1+8=9" },
+  { date: 27, theme: "Spiritual Completion", number: 9, category: "🔮 Completion & Transition", bestFor: ["Reflection", "Closure", "Inner work"], note: "2+7=9" },
+  
+  // Master Number Days
+  { date: 11, theme: "Intuition, Insight & Sensitivity", number: 11, category: "🧩 Master Numbers", bestFor: ["Vision", "Spiritual work", "Creativity"], note: "Master Number 11" },
+];
 
 export const numberMeanings: Record<number, NumberMeaning> = {
   1: {
@@ -123,6 +181,7 @@ export const numberMeanings: Record<number, NumberMeaning> = {
   11: {
     number: 11,
     core: "Master Intuition & Illumination",
+    masterLabel: "Inspired Healer",
     essence: "The Inspired Healer. You carry a double dose of the pioneering 1 energy, but elevated to a spiritual plane. Number 11 is the first Master Number—a channel for higher wisdom, intuitive downloads, and inspirational leadership. You are here to illuminate, to inspire, to awaken others to possibilities they couldn't see. Your sensitivity is both your gift and your challenge. You walk between worlds.",
     strengths: ["Powerful intuition and psychic ability", "Inspirational presence", "Visionary leadership", "Magnetic charisma", "Spiritual depth", "Bridge between spiritual and material"],
     traps: ["Nervous system overload", "Anxiety and hypersensitivity", "Unrealistic expectations", "Spiritual bypassing", "Difficulty grounding", "Overwhelming intensity"],
@@ -135,6 +194,7 @@ export const numberMeanings: Record<number, NumberMeaning> = {
   22: {
     number: 22,
     core: "Master Builder",
+    masterLabel: "Master Builder",
     essence: "The Architect of Dreams. You carry the practical foundation of the 4 doubled and elevated to mastery. Number 22 is the most powerful number for manifesting large-scale visions into reality. You don't just dream—you build dreams that serve humanity. You think in terms of systems, institutions, and legacies that outlast a single lifetime. The pressure is immense, but so is the potential.",
     strengths: ["Massive execution capability", "Legacy thinking", "Practical idealism", "System building", "Organizational genius", "Uniting vision with action"],
     traps: ["Crushing pressure and expectation", "Fear of failure", "Workaholic tendencies", "Perfectionism", "Overwhelm from big vision", "Ignoring personal needs"],
@@ -147,6 +207,7 @@ export const numberMeanings: Record<number, NumberMeaning> = {
   33: {
     number: 33,
     core: "Master Teacher",
+    masterLabel: "Master Teacher",
     essence: "The Cosmic Nurturer. You carry the loving responsibility of the 6 doubled and raised to universal service. Number 33 is the rarest Master Number—the master teacher, healer, and uplifter of humanity. You feel the suffering of the world and are called to ease it. Your life is devoted to service on a scale that transcends personal interests. The weight is heavy, but your capacity for love is limitless.",
     strengths: ["Profound healing ability", "Universal love and compassion", "Teaching and uplifting humanity", "Self-sacrifice for higher good", "Emotional wisdom", "Transformational presence"],
     traps: ["Excessive self-sacrifice", "Savior complex", "Emotional burnout", "Neglecting personal boundaries", "Feeling responsible for everyone's pain", "Martyrdom"],
