@@ -247,14 +247,14 @@ export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProp
 
               <Collapsible defaultOpen>
                 <Card>
-                  <CollapsibleTrigger className="w-full">
+                  <CollapsibleTrigger asChild>
                     <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
                       <CardTitle className="flex items-center justify-between text-base">
                         <span className="flex items-center gap-2">
                           <Calculator className="h-4 w-4" />
                           Score Breakdown
                         </span>
-                        <ChevronDown className="h-4 w-4 transition-transform [[data-state=open]_&]:rotate-180" />
+                        <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                       </CardTitle>
                       <p className="text-sm text-muted-foreground text-left">
                         How your compatibility score was calculated

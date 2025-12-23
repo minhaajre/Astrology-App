@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { InputForm } from "@/components/InputForm";
 import { MetricTile } from "@/components/MetricTile";
 import { NumberAccordion } from "@/components/NumberAccordion";
@@ -39,7 +40,8 @@ import {
   AlertTriangle,
   Lightbulb,
   TrendingUp,
-  Info
+  Info,
+  ChevronDown
 } from "lucide-react";
 
 interface PersonData {
@@ -214,129 +216,164 @@ export default function Home() {
 
                 <DailyForecast personalDay={personData.personalDay} />
 
-                <TimePeriodForecasts
-                  personalDay={personData.personalDay}
-                  personalMonth={personData.personalMonth}
-                  personalYear={personData.personalYear}
-                />
+                <Collapsible defaultOpen>
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full flex items-center justify-between py-2 px-1 cursor-pointer hover:bg-muted/30 rounded-md transition-colors text-left">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-5 w-5 text-primary" />
+                        <span className="font-semibold">Time Period Forecasts</span>
+                      </div>
+                      <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <TimePeriodForecasts
+                      personalDay={personData.personalDay}
+                      personalMonth={personData.personalMonth}
+                      personalYear={personData.personalYear}
+                    />
+                  </CollapsibleContent>
+                </Collapsible>
 
-                <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Sparkles className="h-5 w-5 text-primary" />
-                      {template ? `Your Archetype: ${template.name}` : "Your Numerological Profile"}
-                    </CardTitle>
-                    {template && <Badge variant="secondary">{template.archetype}</Badge>}
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {template ? (
-                      <>
-                        <div>
-                          <p className="leading-relaxed text-muted-foreground">
-                            {template.summary}
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-sm font-semibold text-foreground">Key Insights:</p>
-                          <ul className="space-y-2">
-                            {template.keyInsights.map((insight, i) => (
-                              <li key={i} className="flex gap-3 text-sm">
-                                <span className="text-primary font-bold flex-shrink-0">•</span>
-                                <span className="text-muted-foreground leading-relaxed">{insight}</span>
+                <Collapsible defaultOpen>
+                  <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+                    <CollapsibleTrigger asChild>
+                      <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
+                        <CardTitle className="flex items-center justify-between">
+                          <span className="flex items-center gap-2">
+                            <Sparkles className="h-5 w-5 text-primary" />
+                            {template ? `Your Archetype: ${template.name}` : "Your Numerological Profile"}
+                          </span>
+                          <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+                        </CardTitle>
+                        {template && <Badge variant="secondary" className="w-fit">{template.archetype}</Badge>}
+                      </CardHeader>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <CardContent className="space-y-4">
+                        {template ? (
+                          <>
+                            <div>
+                              <p className="leading-relaxed text-muted-foreground">
+                                {template.summary}
+                              </p>
+                            </div>
+                            <div className="space-y-2">
+                              <p className="text-sm font-semibold text-foreground">Key Insights:</p>
+                              <ul className="space-y-2">
+                                {template.keyInsights.map((insight, i) => (
+                                  <li key={i} className="flex gap-3 text-sm">
+                                    <span className="text-primary font-bold flex-shrink-0">•</span>
+                                    <span className="text-muted-foreground leading-relaxed">{insight}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="space-y-2">
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                              Your unique Life Path ({personData.lifePath}), Day ({personData.dayNumber}), and Month ({personData.monthNumber}) combination creates a distinctive numerological signature. Explore the Numerology tab for detailed insights into each number's meaning and how they interact in your life.
+                            </p>
+                            <div className="space-y-2 mt-4">
+                              <p className="text-sm font-semibold text-foreground">Your Numbers:</p>
+                              <ul className="space-y-1">
+                                <li className="flex gap-3 text-sm">
+                                  <span className="text-primary font-bold flex-shrink-0">•</span>
+                                  <span className="text-muted-foreground">Life Path {personData.lifePath}: {numberMeanings[personData.lifePath]?.core}</span>
+                                </li>
+                                <li className="flex gap-3 text-sm">
+                                  <span className="text-primary font-bold flex-shrink-0">•</span>
+                                  <span className="text-muted-foreground">Day {personData.dayNumber}: {numberMeanings[personData.dayNumber]?.core}</span>
+                                </li>
+                                <li className="flex gap-3 text-sm">
+                                  <span className="text-primary font-bold flex-shrink-0">•</span>
+                                  <span className="text-muted-foreground">Month {personData.monthNumber}: {numberMeanings[personData.monthNumber]?.core}</span>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
+
+                <Collapsible defaultOpen>
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full flex items-center justify-between py-2 px-1 cursor-pointer hover:bg-muted/30 rounded-md transition-colors text-left">
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="h-5 w-5 text-primary" />
+                        <span className="font-semibold">Key Themes & Insights</span>
+                      </div>
+                      <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="grid gap-4 md:grid-cols-3">
+                      <Card>
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2 text-base">
+                            <TrendingUp className="h-4 w-4 text-green-500" />
+                            Key Themes
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <div className="text-sm">
+                            <strong>Life Path {personData.lifePath}:</strong>{" "}
+                            {numberMeanings[personData.lifePath]?.core}
+                          </div>
+                          <div className="text-sm">
+                            <strong>Day {personData.dayNumber}:</strong>{" "}
+                            {numberMeanings[personData.dayNumber]?.core}
+                          </div>
+                          <div className="text-sm">
+                            <strong>Month {personData.monthNumber}:</strong>{" "}
+                            {numberMeanings[personData.monthNumber]?.core}
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2 text-base">
+                            <AlertTriangle className="h-4 w-4 text-amber-500" />
+                            Watch Out For
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-1 text-sm">
+                            {numberMeanings[personData.lifePath]?.traps.slice(0, 3).map((trap, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500" />
+                                {trap}
                               </li>
                             ))}
                           </ul>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="space-y-2">
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          Your unique Life Path ({personData.lifePath}), Day ({personData.dayNumber}), and Month ({personData.monthNumber}) combination creates a distinctive numerological signature. Explore the Numerology tab for detailed insights into each number's meaning and how they interact in your life.
-                        </p>
-                        <div className="space-y-2 mt-4">
-                          <p className="text-sm font-semibold text-foreground">Your Numbers:</p>
-                          <ul className="space-y-1">
-                            <li className="flex gap-3 text-sm">
-                              <span className="text-primary font-bold flex-shrink-0">•</span>
-                              <span className="text-muted-foreground">Life Path {personData.lifePath}: {numberMeanings[personData.lifePath]?.core}</span>
-                            </li>
-                            <li className="flex gap-3 text-sm">
-                              <span className="text-primary font-bold flex-shrink-0">•</span>
-                              <span className="text-muted-foreground">Day {personData.dayNumber}: {numberMeanings[personData.dayNumber]?.core}</span>
-                            </li>
-                            <li className="flex gap-3 text-sm">
-                              <span className="text-primary font-bold flex-shrink-0">•</span>
-                              <span className="text-muted-foreground">Month {personData.monthNumber}: {numberMeanings[personData.monthNumber]?.core}</span>
-                            </li>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardHeader className="pb-3">
+                          <CardTitle className="flex items-center gap-2 text-base">
+                            <Lightbulb className="h-4 w-4 text-blue-500" />
+                            Leverage Points
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-1 text-sm">
+                            {numberMeanings[personData.lifePath]?.strengths.slice(0, 3).map((strength, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-blue-500" />
+                                {strength}
+                              </li>
+                            ))}
                           </ul>
-                        </div>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-
-                <div className="grid gap-4 md:grid-cols-3">
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <TrendingUp className="h-4 w-4 text-green-500" />
-                        Key Themes
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="text-sm">
-                        <strong>Life Path {personData.lifePath}:</strong>{" "}
-                        {numberMeanings[personData.lifePath]?.core}
-                      </div>
-                      <div className="text-sm">
-                        <strong>Day {personData.dayNumber}:</strong>{" "}
-                        {numberMeanings[personData.dayNumber]?.core}
-                      </div>
-                      <div className="text-sm">
-                        <strong>Month {personData.monthNumber}:</strong>{" "}
-                        {numberMeanings[personData.monthNumber]?.core}
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <AlertTriangle className="h-4 w-4 text-amber-500" />
-                        Watch Out For
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-1 text-sm">
-                        {numberMeanings[personData.lifePath]?.traps.slice(0, 3).map((trap, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500" />
-                            {trap}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <Lightbulb className="h-4 w-4 text-blue-500" />
-                        Leverage Points
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-1 text-sm">
-                        {numberMeanings[personData.lifePath]?.strengths.slice(0, 3).map((strength, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-blue-500" />
-                            {strength}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
 
                 <Card>
                   <CardHeader className="pb-3">
