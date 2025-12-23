@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { 
   getLifePath, 
   getDayNumber, 
@@ -15,9 +16,18 @@ import {
   calculateCompatibility,
   type CompatibilityResult 
 } from "@/lib/numerology";
-import { Heart, Users, Calculator, User, Hash, MapPin } from "lucide-react";
+import { Heart, Users, Calculator, User, Hash, MapPin, ChevronDown } from "lucide-react";
 import { TriCodeCompatibility } from "./TriCodeCompatibility";
 import { CountryCompatibility } from "./CountryCompatibility";
+import {
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 
 interface CompatibilityCalculatorProps {
   personA?: { name: string; dob: Date };
@@ -188,49 +198,109 @@ export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProp
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-base">
                     <Calculator className="h-4 w-4" />
-                    Score Breakdown
+                    Compatibility Radar
                   </CardTitle>
                   <p className="text-sm text-muted-foreground">
-                    How your compatibility score was calculated
+                    Visual breakdown of compatibility across categories
                   </p>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {result.breakdown.map((item, index) => (
-                    <div key={index} className="space-y-2 rounded-lg border p-4">
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium">{item.category}</span>
-                        <span className="text-sm font-bold">
-                          {item.points}/{item.maxPoints} pts
-                        </span>
-                      </div>
-                      <Progress 
-                        value={(item.points / item.maxPoints) * 100} 
-                        className="h-2"
-                      />
-                      <div className="flex items-center justify-between text-sm">
-                        <div className="flex items-center gap-4">
-                          <Badge variant="outline">{String(item.personA)}</Badge>
-                          <span className="text-muted-foreground">vs</span>
-                          <Badge variant="outline">{String(item.personB)}</Badge>
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        {item.explanation}
-                      </p>
-                    </div>
-                  ))}
-
-                  <div className="mt-4 rounded-lg bg-muted/50 p-4">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold">Total Score</span>
-                      <span className="text-lg font-bold">
-                        {result.breakdown.reduce((sum, b) => sum + b.points, 0)}/
-                        {result.breakdown.reduce((sum, b) => sum + b.maxPoints, 0)} pts
-                      </span>
-                    </div>
+                <CardContent>
+                  <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RadarChart
+                        data={result.breakdown.map((item) => ({
+                          category: item.category.replace(" Match", ""),
+                          score: Math.round((item.points / item.maxPoints) * 100),
+                          fullMark: 100,
+                        }))}
+                      >
+                        <PolarGrid stroke="hsl(var(--muted-foreground) / 0.3)" />
+                        <PolarAngleAxis
+                          dataKey="category"
+                          tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
+                        />
+                        <PolarRadiusAxis
+                          angle={30}
+                          domain={[0, 100]}
+                          tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                        />
+                        <Radar
+                          name="Compatibility"
+                          dataKey="score"
+                          stroke="hsl(var(--primary))"
+                          fill="hsl(var(--primary))"
+                          fillOpacity={0.4}
+                        />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: "hsl(var(--card))",
+                            border: "1px solid hsl(var(--border))",
+                            borderRadius: "6px",
+                          }}
+                          formatter={(value: number) => [`${value}%`, "Score"]}
+                        />
+                      </RadarChart>
+                    </ResponsiveContainer>
                   </div>
                 </CardContent>
               </Card>
+
+              <Collapsible defaultOpen>
+                <Card>
+                  <CollapsibleTrigger className="w-full">
+                    <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
+                      <CardTitle className="flex items-center justify-between text-base">
+                        <span className="flex items-center gap-2">
+                          <Calculator className="h-4 w-4" />
+                          Score Breakdown
+                        </span>
+                        <ChevronDown className="h-4 w-4 transition-transform [[data-state=open]_&]:rotate-180" />
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground text-left">
+                        How your compatibility score was calculated
+                      </p>
+                    </CardHeader>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="space-y-4">
+                      {result.breakdown.map((item, index) => (
+                        <div key={index} className="space-y-2 rounded-lg border p-4">
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{item.category}</span>
+                            <span className="text-sm font-bold">
+                              {item.points}/{item.maxPoints} pts
+                            </span>
+                          </div>
+                          <Progress 
+                            value={(item.points / item.maxPoints) * 100} 
+                            className="h-2"
+                          />
+                          <div className="flex items-center justify-between text-sm">
+                            <div className="flex items-center gap-4">
+                              <Badge variant="outline">{String(item.personA)}</Badge>
+                              <span className="text-muted-foreground">vs</span>
+                              <Badge variant="outline">{String(item.personB)}</Badge>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {item.explanation}
+                          </p>
+                        </div>
+                      ))}
+
+                      <div className="mt-4 rounded-lg bg-muted/50 p-4">
+                        <div className="flex items-center justify-between">
+                          <span className="font-semibold">Total Score</span>
+                          <span className="text-lg font-bold">
+                            {result.breakdown.reduce((sum, b) => sum + b.points, 0)}/
+                            {result.breakdown.reduce((sum, b) => sum + b.maxPoints, 0)} pts
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
             </>
           )}
         </TabsContent>
