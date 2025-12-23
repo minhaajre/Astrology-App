@@ -228,16 +228,22 @@ export default function Home() {
                       </CardTitle>
                       <Badge variant="secondary">{template.archetype}</Badge>
                     </CardHeader>
-                    <CardContent>
-                      <p className="leading-relaxed text-muted-foreground mb-4">
-                        {template.summary}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {template.keyInsights.slice(0, 3).map((insight, i) => (
-                          <Badge key={i} variant="outline" className="text-xs">
-                            {insight.length > 50 ? insight.substring(0, 50) + "..." : insight}
-                          </Badge>
-                        ))}
+                    <CardContent className="space-y-4">
+                      <div>
+                        <p className="leading-relaxed text-muted-foreground">
+                          {template.summary}
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm font-semibold text-foreground">Key Insights:</p>
+                        <ul className="space-y-2">
+                          {template.keyInsights.map((insight, i) => (
+                            <li key={i} className="flex gap-3 text-sm">
+                              <span className="text-primary font-bold flex-shrink-0">•</span>
+                              <span className="text-muted-foreground leading-relaxed">{insight}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </CardContent>
                   </Card>
