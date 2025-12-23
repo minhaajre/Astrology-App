@@ -219,35 +219,60 @@ export default function Home() {
                   personalYear={personData.personalYear}
                 />
 
-                {template && (
-                  <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Sparkles className="h-5 w-5 text-primary" />
-                        Your Archetype: {template.name}
-                      </CardTitle>
-                      <Badge variant="secondary">{template.archetype}</Badge>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div>
-                        <p className="leading-relaxed text-muted-foreground">
-                          {template.summary}
-                        </p>
-                      </div>
+                <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-primary" />
+                      {template ? `Your Archetype: ${template.name}` : "Your Numerological Profile"}
+                    </CardTitle>
+                    {template && <Badge variant="secondary">{template.archetype}</Badge>}
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {template ? (
+                      <>
+                        <div>
+                          <p className="leading-relaxed text-muted-foreground">
+                            {template.summary}
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-foreground">Key Insights:</p>
+                          <ul className="space-y-2">
+                            {template.keyInsights.map((insight, i) => (
+                              <li key={i} className="flex gap-3 text-sm">
+                                <span className="text-primary font-bold flex-shrink-0">•</span>
+                                <span className="text-muted-foreground leading-relaxed">{insight}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </>
+                    ) : (
                       <div className="space-y-2">
-                        <p className="text-sm font-semibold text-foreground">Key Insights:</p>
-                        <ul className="space-y-2">
-                          {template.keyInsights.map((insight, i) => (
-                            <li key={i} className="flex gap-3 text-sm">
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Your unique Life Path ({personData.lifePath}), Day ({personData.dayNumber}), and Month ({personData.monthNumber}) combination creates a distinctive numerological signature. Explore the Numerology tab for detailed insights into each number's meaning and how they interact in your life.
+                        </p>
+                        <div className="space-y-2 mt-4">
+                          <p className="text-sm font-semibold text-foreground">Your Numbers:</p>
+                          <ul className="space-y-1">
+                            <li className="flex gap-3 text-sm">
                               <span className="text-primary font-bold flex-shrink-0">•</span>
-                              <span className="text-muted-foreground leading-relaxed">{insight}</span>
+                              <span className="text-muted-foreground">Life Path {personData.lifePath}: {numberMeanings[personData.lifePath]?.core}</span>
                             </li>
-                          ))}
-                        </ul>
+                            <li className="flex gap-3 text-sm">
+                              <span className="text-primary font-bold flex-shrink-0">•</span>
+                              <span className="text-muted-foreground">Day {personData.dayNumber}: {numberMeanings[personData.dayNumber]?.core}</span>
+                            </li>
+                            <li className="flex gap-3 text-sm">
+                              <span className="text-primary font-bold flex-shrink-0">•</span>
+                              <span className="text-muted-foreground">Month {personData.monthNumber}: {numberMeanings[personData.monthNumber]?.core}</span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                )}
+                    )}
+                  </CardContent>
+                </Card>
 
                 <div className="grid gap-4 md:grid-cols-3">
                   <Card>
