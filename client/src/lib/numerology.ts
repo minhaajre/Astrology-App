@@ -591,3 +591,174 @@ export function getDailyForecast(personalDay: number): string {
   };
   return forecasts[personalDay] || "Today is a neutral day—flow with what comes and stay present.";
 }
+
+export function getWeeklyForecast(personalDay: number): { forecast: string; strategy: string } {
+  const forecasts: Record<number, { forecast: string; strategy: string }> = {
+    1: {
+      forecast: "This week emphasizes courage and independence. You may feel a strong urge to break free from limitations and assert your authority.",
+      strategy: "Channel your leadership energy into one bold decision. Delegate routine tasks so you can focus on pioneering work. Practice asking others for input before acting—it's not weakness, it's wisdom."
+    },
+    2: {
+      forecast: "Partnerships and sensitivity dominate this week. You'll notice emotional currents others miss. Intuition is heightened.",
+      strategy: "Schedule time with trusted people—your listening gifts are needed. Set one clear boundary to protect your peace. Practice saying 'I need to think about that' before committing."
+    },
+    3: {
+      forecast: "Communication and creativity flow abundantly. This is your week to shine—share your ideas, create, connect with your community.",
+      strategy: "Start that creative project you've been avoiding. Share at least one vulnerable truth with someone you trust. Write or journal daily to capture insights."
+    },
+    4: {
+      forecast: "Foundation-building energy surrounds you. Details matter. This is the time to organize, plan, and create systems that serve you long-term.",
+      strategy: "Audit your commitments and structures. Finish one 'stuck' project. Build one new productive habit. Take breaks—discipline without rest becomes burnout."
+    },
+    5: {
+      forecast: "Change is in the air—embrace it. This week offers unexpected opportunities and exciting detours from routine. Stay alert and flexible.",
+      strategy: "Say yes to one new experience. Research something that fascinates you. Don't over-commit; keep options open. Ground yourself with one anchoring routine."
+    },
+    6: {
+      forecast: "Service and care are calling. This week highlights relationships, home, and your capacity to create beauty. Community matters deeply.",
+      strategy: "Reach out to someone who needs support. Create one meaningful gathering or moment of beauty in your space. Ask for help with one thing—receiving is part of service."
+    },
+    7: {
+      forecast: "This is a week for seeking truth and going deeper. Spiritual insights and quiet breakthroughs are available. Trust your inner knowing.",
+      strategy: "Spend time in nature or meditation. Study something that fascinates you. Give yourself permission to say 'I don't know' and sit with mystery. Limit social obligations."
+    },
+    8: {
+      forecast: "Money, power, and opportunity align. This week amplifies your capacity for achievement. Authority and responsibility feel natural.",
+      strategy: "Take action on a financial or career goal. Lead with integrity—karma is active. Make one power move with clear ethics. Avoid dominating others."
+    },
+    9: {
+      forecast: "Completion and compassion frame this week. An ending is approaching. You feel called to serve something larger than yourself.",
+      strategy: "Release what no longer serves you—a relationship, project, or belief. Contribute to something meaningful. Practice non-attachment. Focus on legacy, not control."
+    },
+    11: {
+      forecast: "Intuitive breakthroughs and inspirational moments abound. Your nervous system is sensitive—take care of it. Vision is crystal clear.",
+      strategy: "Meditate or spend quiet time daily. Share your vision with those ready to hear it. Limit overstimulation (noise, crowds, screens). Trust the signs and synchronicities."
+    },
+    22: {
+      forecast: "Your building capacity is strongest now. This week favors projects with grand scope and lasting impact. Think big and act strategically.",
+      strategy: "Outline one major project that excites you. Gather your team or resources. Break the big vision into monthly milestones. Rest deliberately—intensity requires recovery."
+    },
+    33: {
+      forecast: "Your healing and teaching gifts are activated. This week you feel deeply how interconnected we all are. Compassion runs deep.",
+      strategy: "Volunteer, teach, or mentor someone. Create safe space for others to be vulnerable. Practice receiving—let others care for you too. Protect your energy from overwhelm."
+    }
+  };
+  return forecasts[personalDay] || { 
+    forecast: "This week is neutral—focus on presence and small acts of kindness.", 
+    strategy: "Stay grounded in daily routines. Notice what brings you peace." 
+  };
+}
+
+export function getMonthlyForecast(personalMonth: number): { forecast: string; strategy: string } {
+  const forecasts: Record<number, { forecast: string; strategy: string }> = {
+    1: {
+      forecast: "This month is about taking charge of your direction. Leadership opportunities arise. You're in the driver's seat of your life.",
+      strategy: "Set clear intentions for the month. Make one significant decision you've been postponing. Start something new, even if it's small. Avoid trying to control others."
+    },
+    2: {
+      forecast: "Collaboration and diplomacy create new possibilities this month. People gravitate toward you for your wisdom and calm presence.",
+      strategy: "Invest in key relationships through quality time. Listen more than you speak. Mediate one conflict with compassion. Balance giving with receiving."
+    },
+    3: {
+      forecast: "Creativity and connection peak this month. Your words, ideas, and presence inspire others. Social opportunities multiply.",
+      strategy: "Launch a creative project or share your work publicly. Connect with your community. Journal about what you want to express. Finish projects before starting new ones."
+    },
+    4: {
+      forecast: "This is a powerhouse month for building and organizing. Focus and discipline come naturally. Structure creates success.",
+      strategy: "Create a solid plan for a major goal. Tackle one significant organizational project. Build one healthy habit. Monitor perfectionism—progress over perfection."
+    },
+    5: {
+      forecast: "Freedom, variety, and unexpected opportunities fill this month. Routine feels restrictive. Adventure calls.",
+      strategy: "Plan one trip or new experience. Research what excites you. Seek variety in your work and life. Establish one stabilizing routine so freedom doesn't become chaos."
+    },
+    6: {
+      forecast: "Family, home, and responsibility take the spotlight. This month emphasizes your role as nurturer and caretaker. Beauty and harmony matter.",
+      strategy: "Improve your home environment. Deepen one close relationship. Say yes to serving your community. Set clear limits on what you can give."
+    },
+    7: {
+      forecast: "Spiritual seeking and inner wisdom guide this month. You're drawn to deeper understanding and sacred knowledge.",
+      strategy: "Invest in a spiritual practice (meditation, study, nature time). Trust your intuition over logic this month. Take time to be alone. Avoid gossip; protect your peace."
+    },
+    8: {
+      forecast: "Abundance, power, and achievement are prominent. What you build this month can have lasting financial or career impact.",
+      strategy: "Focus on a major money or power goal. Invest in yourself or your business. Lead with vision and integrity. Watch for control issues."
+    },
+    9: {
+      forecast: "Completion and transformation mark this month. An old cycle ends so a new one can begin. Compassion and wisdom are your guides.",
+      strategy: "Close chapters that need closure. Release what's outworn. Contribute to something with purpose. Practice forgiveness, especially of yourself."
+    },
+    11: {
+      forecast: "Inspiration, intuition, and spiritual downloads flow this month. Your gifts of vision are magnified. Ground yourself well.",
+      strategy: "Establish a solid meditation or grounding practice. Share your vision with receptive audiences. Rest deeply—high vibration requires recovery. Trust synchronicity."
+    },
+    22: {
+      forecast: "Legacy building peaks this month. You have the energy and focus to manifest something truly significant and lasting.",
+      strategy: "Work on your signature project or business expansion. Build a foundation for something that will outlast you. Delegate to conserve energy. Rest is productive."
+    },
+    33: {
+      forecast: "Your capacity to heal, teach, and uplift others is at its peak this month. The world needs your compassion and wisdom.",
+      strategy: "Mentor someone or facilitate healing space. Teach what you know. Help one person see their potential. Maintain boundaries—not everyone is your responsibility."
+    }
+  };
+  return forecasts[personalMonth] || { 
+    forecast: "This month brings steady progress on your goals.", 
+    strategy: "Focus on consistent, incremental improvement." 
+  };
+}
+
+export function getYearlyForecast(personalYear: number): { forecast: string; strategy: string } {
+  const forecasts: Record<number, { forecast: string; strategy: string }> = {
+    1: {
+      forecast: "New beginnings and fresh starts define this year. You're stepping into a new cycle of life. Independence and courage are essential.",
+      strategy: "Plant seeds for what you want to build. Make bold decisions. Start the thing you've been fearing. Trust yourself more than you ever have. Leadership will be tested."
+    },
+    2: {
+      forecast: "Relationships, partnerships, and cooperation dominate this year. Patience and trust are your superpowers. Sensitivity opens doors.",
+      strategy: "Deepen key relationships. Form or strengthen one important partnership. Practice patience—things unfold slowly but securely. Listen to your intuition over ego."
+    },
+    3: {
+      forecast: "This is your year of creative expression and joy. Communication, community, and self-expression are heightened.",
+      strategy: "Bring your creative gifts into the world. Connect deeply with community. Share your voice and talents. Avoid scattered energy—focus your gifts."
+    },
+    4: {
+      forecast: "A year of building, organizing, and creating lasting foundations. Hard work pays off. Stability and security become possible.",
+      strategy: "Build something that lasts—invest in real estate, health, or business infrastructure. Work steadily toward long-term goals. Master one skill deeply. Rest is not laziness."
+    },
+    5: {
+      forecast: "Freedom, change, and adventure characterize this year. You're meant to explore, learn, and expand your horizons.",
+      strategy: "Embrace change as it comes. Pursue education or travel. Adapt your path as opportunities appear. Ground yourself with one anchoring commitment."
+    },
+    6: {
+      forecast: "A year of responsibility, family, and service. You're called to nurture—others and yourself. Home and relationships are central.",
+      strategy: "Invest in family or community. Create beauty in your home. Say 'yes' to your nurturing gifts. Remember: you cannot pour from an empty cup. Rest is essential."
+    },
+    7: {
+      forecast: "Spiritual awakening and inner mastery mark this year. You're going deeper, seeking truth, and trusting your intuition.",
+      strategy: "Establish a spiritual practice. Study what fascinates you. Spend time in solitude and nature. Trust the quiet knowing within. Limit socializing for focus."
+    },
+    8: {
+      forecast: "Power, abundance, and achievement are available this year. Your capacity for success and leadership is amplified. Money flows.",
+      strategy: "Go for your biggest goal. Build your business or career. Make power moves with integrity. What goes out returns multiplied—be generous and ethical."
+    },
+    9: {
+      forecast: "Completion and transformation define this year. You're releasing the old to make space for the new. Wisdom and compassion guide you.",
+      strategy: "Release relationships, jobs, or beliefs that have run their course. Forgive others and yourself. Contribute meaningfully to the world. Prepare for the next cycle."
+    },
+    11: {
+      forecast: "This is a watershed year for spiritual awakening and inspired action. Your gifts of vision and intuition are meant to illuminate.",
+      strategy: "Ground your visions in practical steps. Meditate and journal daily. Share your insights with receptive people. Protect your nervous system—rest is non-negotiable."
+    },
+    22: {
+      forecast: "This is your signature year for manifesting something grand and lasting. Your building capacity is unmatched. Legacy is within reach.",
+      strategy: "Commit to your life's work. Build infrastructure for something that will outlast you. Gather your dream team. Expect the path to be intense—recovery time matters."
+    },
+    33: {
+      forecast: "This is a healing and teaching year of profound significance. You're called to uplift humanity. Your presence and wisdom matter.",
+      strategy: "Answer your calling to serve. Mentor, heal, or teach. Create sanctuary for others. Remember: your worth isn't measured by how much you give. Receive too."
+    }
+  };
+  return forecasts[personalYear] || { 
+    forecast: "This year brings steady evolution and growth.", 
+    strategy: "Trust the process and stay committed to your path." 
+  };
+}

@@ -4,6 +4,7 @@ import { InputForm } from "@/components/InputForm";
 import { MetricTile } from "@/components/MetricTile";
 import { NumberAccordion } from "@/components/NumberAccordion";
 import { DailyForecast } from "@/components/DailyForecast";
+import { TimePeriodForecasts } from "@/components/TimePeriodForecasts";
 import { TimingAdvisor } from "@/components/TimingAdvisor";
 import { ZodiacDisplay } from "@/components/ZodiacDisplay";
 import { CompatibilityCalculator } from "@/components/CompatibilityCalculator";
@@ -194,6 +195,12 @@ export default function Home() {
                 </div>
 
                 <DailyForecast personalDay={personData.personalDay} />
+
+                <TimePeriodForecasts
+                  personalDay={personData.personalDay}
+                  personalMonth={personData.personalMonth}
+                  personalYear={personData.personalYear}
+                />
 
                 {template && (
                   <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
