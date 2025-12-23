@@ -4,9 +4,8 @@ import {
   Zap, 
   Calendar, 
   BarChart3,
-  Heart,
-  Brain,
-  Sparkles
+  Star,
+  Heart
 } from "lucide-react";
 import {
   reduceToSingleDigit,
@@ -16,6 +15,7 @@ import {
   animalIconNames,
   numberMeanings,
   getAnimalCompatibility,
+  getZodiacSign,
 } from "@/lib/numerology";
 
 export function DailyEnergyCards() {
@@ -41,6 +41,9 @@ export function DailyEnergyCards() {
   const monthAnimal = getMonthAnimal(today);
   const monthAnimalIcon = animalIconNames[monthAnimal];
 
+  // Western Zodiac
+  const zodiacSign = getZodiacSign(today);
+
   const getTodayCompatibility = () => getAnimalCompatibility(todayAnimal, todayAnimal);
 
   return (
@@ -52,7 +55,7 @@ export function DailyEnergyCards() {
         </p>
       </div>
       
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         {/* Today's Numerology */}
         <Card className="bg-card/50 h-full">
           <CardContent className="pt-6 pb-6 flex flex-col h-full">
@@ -123,6 +126,33 @@ export function DailyEnergyCards() {
                     {monthMeaning.core}
                   </p>
                 </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Today's Zodiac Sign */}
+        <Card className="bg-card/50 h-full">
+          <CardContent className="pt-6 pb-6 flex flex-col h-full">
+            <div className="flex gap-3">
+              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                <Star className="h-5 w-5 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Zodiac Sign
+                </p>
+                <div className="mb-3">
+                  <p className="text-3xl font-bold" data-testid="energy-zodiac-sign">
+                    {zodiacSign.symbol}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {zodiacSign.name}
+                  </p>
+                </div>
+                <p className="text-xs text-muted-foreground mt-auto">
+                  {zodiacSign.element} • {zodiacSign.dates}
+                </p>
               </div>
             </div>
           </CardContent>

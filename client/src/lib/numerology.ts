@@ -252,6 +252,46 @@ export function getVietnamAnimal(year: number): string {
   return vietnamAnimals[idx];
 }
 
+export interface ZodiacSign {
+  name: string;
+  symbol: string;
+  element: string;
+  dates: string;
+}
+
+const zodiacSigns: Record<string, ZodiacSign> = {
+  Capricorn: { name: "Capricorn", symbol: "♑", element: "Earth", dates: "Dec 22 - Jan 19" },
+  Aquarius: { name: "Aquarius", symbol: "♒", element: "Air", dates: "Jan 20 - Feb 18" },
+  Pisces: { name: "Pisces", symbol: "♓", element: "Water", dates: "Feb 19 - Mar 20" },
+  Aries: { name: "Aries", symbol: "♈", element: "Fire", dates: "Mar 21 - Apr 19" },
+  Taurus: { name: "Taurus", symbol: "♉", element: "Earth", dates: "Apr 20 - May 20" },
+  Gemini: { name: "Gemini", symbol: "♊", element: "Air", dates: "May 21 - Jun 20" },
+  Cancer: { name: "Cancer", symbol: "♋", element: "Water", dates: "Jun 21 - Jul 22" },
+  Leo: { name: "Leo", symbol: "♌", element: "Fire", dates: "Jul 23 - Aug 22" },
+  Virgo: { name: "Virgo", symbol: "♍", element: "Earth", dates: "Aug 23 - Sep 22" },
+  Libra: { name: "Libra", symbol: "♎", element: "Air", dates: "Sep 23 - Oct 22" },
+  Scorpio: { name: "Scorpio", symbol: "♏", element: "Water", dates: "Oct 23 - Nov 21" },
+  Sagittarius: { name: "Sagittarius", symbol: "♐", element: "Fire", dates: "Nov 22 - Dec 21" },
+};
+
+export function getZodiacSign(date: Date): ZodiacSign {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return zodiacSigns.Capricorn;
+  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return zodiacSigns.Aquarius;
+  if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return zodiacSigns.Pisces;
+  if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return zodiacSigns.Aries;
+  if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return zodiacSigns.Taurus;
+  if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return zodiacSigns.Gemini;
+  if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return zodiacSigns.Cancer;
+  if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return zodiacSigns.Leo;
+  if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return zodiacSigns.Virgo;
+  if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return zodiacSigns.Libra;
+  if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return zodiacSigns.Scorpio;
+  return zodiacSigns.Sagittarius;
+}
+
 export function getAnimalCompatibility(animalA: string, animalB: string): 'Good' | 'Neutral' | 'Enemies' {
   if (animalA === animalB) return 'Good';
   if ((animalFriends[animalA] || []).includes(animalB)) return 'Good';
