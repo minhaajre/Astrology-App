@@ -6,6 +6,8 @@ import {
   getLifePath,
   getDayNumber,
   getMonthNumber,
+  getVietnamAnimal,
+  animalIconNames,
   calculateCompatibility,
   type CompatibilityResult,
 } from "@/lib/numerology";
@@ -40,7 +42,7 @@ export function CountryCompatibility({
       lifePath: getLifePath(personDob).lifePath,
       dayNumber: getDayNumber(personDob),
       monthNumber: getMonthNumber(personDob),
-      animal: "",
+      animal: getVietnamAnimal(personDob.getFullYear()),
     };
   }, [personDob]);
 
@@ -107,7 +109,7 @@ export function CountryCompatibility({
               <p className="text-xs font-medium text-muted-foreground mb-3">
                 Your Numerology Profile
               </p>
-              <div className="grid gap-3 grid-cols-3">
+              <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
                 <div className="text-center">
                   <p className="text-2xl font-bold text-primary">
                     {personData.lifePath}
@@ -125,6 +127,12 @@ export function CountryCompatibility({
                     {personData.monthNumber}
                   </p>
                   <p className="text-xs text-muted-foreground">Month Number</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-3xl">
+                    {animalIconNames[personData.animal]}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{personData.animal}</p>
                 </div>
               </div>
             </div>
