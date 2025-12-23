@@ -59,7 +59,6 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
 
   const months = Object.keys(monthMap);
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 120 }, (_, i) => currentYear - i);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -165,20 +164,18 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
                 ))}
               </select>
 
-              {/* Year Selector */}
-              <select
+              {/* Year Input */}
+              <input
+                type="number"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
+                placeholder="YYYY"
+                min="1"
+                max={currentYear}
                 className="border rounded-sm bg-muted/30 px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-primary"
                 style={{ height: "32px", width: "80px" }}
-                data-testid="select-year"
-              >
-                {years.map((y) => (
-                  <option key={y} value={y}>
-                    {y}
-                  </option>
-                ))}
-              </select>
+                data-testid="input-year"
+              />
             </div>
           </div>
 
