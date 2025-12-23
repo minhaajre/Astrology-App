@@ -1,0 +1,321 @@
+Perfect — below is the **revised, corrected content** with your requested changes applied cleanly and consistently.
+
+Changes applied:
+
+* “Destiny Code” → **Numerology**
+* “Identity Code” → **Gematria**
+* Remove A/B language → use **actual names as provided**
+* Add a **Top Legend**
+* Repeat short explanations **inside relevant sections**, not only once
+* Keep everything **card-based, instructional, and readable**
+
+You can give this directly to Replit as UI copy + structure.
+
+---
+
+# TRI-CODE COMPATIBILITY
+
+How to Read This Report
+
+Place this as a **Top Legend Card** at the very top of the Tri-Code section.
+
+---
+
+## Top Legend: What Each System Measures
+
+This report combines **three independent systems**.
+Each system measures a **different layer of compatibility**.
+
+They are **not supposed to match**.
+
+| System                        | Measures           | What It Explains                      |
+| ----------------------------- | ------------------ | ------------------------------------- |
+| **Numerology (Dates)**        | Life path & timing | How two lives move together over time |
+| **Gematria – Latin (Names)**  | Public identity    | Communication, perception, social fit |
+| **Gematria – Arabic (Abjad)** | Structural essence | Depth, intensity, karmic weight       |
+
+If results differ, it means **different layers agree or disagree**, not that the calculation is wrong.
+
+---
+
+## What This Analysis Does
+
+This compatibility report evaluates alignment between **named entities** (people, places, or organizations) using:
+
+* **Numerology** → derived from dates
+* **Gematria (Latin)** → derived from names written in Latin letters
+* **Gematria (Arabic / Abjad)** → derived from names written in Arabic letters
+
+Each layer answers a **different question**.
+
+---
+
+# NUMEROLOGY
+
+(Dates)
+
+Place this as the header of the Numerology card.
+
+---
+
+## Numerology — What It Means
+
+**Numerology measures how a person or entity behaves over time.**
+
+It shows:
+
+* Life direction
+* Rhythm and pace
+* Day-to-day compatibility
+* Long-term sustainability
+
+---
+
+## How Numerology Is Calculated
+
+* All digits of the full date are added left-to-right
+* The total is reduced to a single digit
+* Master numbers 11, 22, 33 are preserved if applicable
+
+Example format shown in UI:
+03/08/1985 → 34 → 7
+
+---
+
+## How to Read Numerology Compatibility
+
+* Same or compatible numbers → smoother life flow together
+* Conflicting numbers → friction in priorities, pace, or routines
+
+Numerology explains **how easy or difficult daily interaction feels**.
+
+---
+
+# GEMATRIA (LATIN)
+
+(Names in Latin Letters)
+
+Place this as the header of the Latin Gematria card.
+
+---
+
+## Gematria (Latin) — What It Means
+
+**Gematria (Latin) measures the public identity of a name.**
+
+It reflects:
+
+* How a name is perceived
+* Communication style
+* Branding and social compatibility
+* Surface-level chemistry
+
+This layer explains **first impressions and interaction tone**.
+
+---
+
+## How Gematria (Latin) Is Calculated
+
+* Each Latin letter is converted using Pythagorean mapping
+* Letter values are summed and reduced
+
+Example shown visually:
+M(4) I(9) N(5) H(8) A(1) A(1) J(1) → Total → Reduced
+
+---
+
+## How to Read Gematria (Latin) Compatibility
+
+* Strong here → easy communication and social flow
+* Weak here → misunderstandings or effort required
+
+This layer affects **how things feel**, not necessarily how long they last.
+
+---
+
+# GEMATRIA (ARABIC – ABJAD)
+
+(Names in Arabic Letters)
+
+Place this as the header of the Abjad card.
+
+---
+
+## Gematria (Arabic / Abjad) — What It Means
+
+**Abjad measures the structural and ontological weight of a name.**
+
+This is the **deepest layer** in the system.
+
+It governs:
+
+* Intensity of connection
+* Depth of resonance
+* Why something feels “heavy,” “important,” or unavoidable
+* Structural or karmic pressure
+
+---
+
+## How Abjad Is Calculated
+
+* Arabic letters are normalized (diacritics removed, forms unified)
+* Each letter is mapped using classical Abjad values (1–1000)
+* The **full number is primary**
+* A reduced value is shown only for comparison
+
+UI display rule:
+
+* Large number = full Abjad value
+* Small badge = reduced value
+
+---
+
+## How to Read Abjad Compatibility
+
+* High values = high intensity (not good or bad)
+* Mismatch here = deep adaptation required
+* Alignment here = powerful, stable resonance
+
+This layer explains **why some connections feel profound but demanding**.
+
+---
+
+# COMPATIBILITY MATRIX
+
+How the Scores Are Derived
+
+Place this explanation **above the matrix tiles**.
+
+---
+
+## The Compatibility Axes
+
+Each score tile represents a specific interaction layer:
+
+* **Numerology ↔ Numerology**
+  Life path and timing alignment
+
+* **Gematria (Latin) ↔ Gematria (Latin)**
+  Identity and communication alignment
+
+* **Gematria (Arabic) ↔ Gematria (Arabic)**
+  Structural and intensity alignment
+
+* **Gematria ↔ Numerology (Both Directions)**
+  How much each side must adapt to the other’s life path
+
+---
+
+## What the Scores Mean
+
+* Higher score → less friction, lower energy cost
+* Lower score → more effort, higher awareness required
+
+Scores do **not** judge outcomes.
+They measure **ease vs effort**.
+
+---
+
+# MODE LABELS
+
+How to Interpret the Result
+
+Render this as a legend card.
+
+---
+
+* **Reinforcement**
+  Natural alignment across layers. Minimal effort required.
+
+* **Growth**
+  Values align, behavior or timing clashes. Learning-oriented.
+
+* **Extraction**
+  Produces results but drains energy. Manage carefully.
+
+* **Avoidance**
+  High resistance across layers. Proceed only with awareness.
+
+* **Mixed**
+  Works in specific roles, contexts, or time windows.
+
+---
+
+# TENSION INDEX
+
+What It Tells You
+
+Explain with a short meter description.
+
+---
+
+The Tension Index shows **how much conscious effort is required**.
+
+* Low → alignment feels natural
+* Medium → active management needed
+* High → growth or burnout depending on awareness
+
+Tension is **cost**, not failure.
+
+---
+
+# GUIDANCE
+
+How to Use This Practically
+
+Render as three small cards.
+
+---
+
+## What Works
+
+Generated strengths based on the strongest matching layers.
+
+---
+
+## What Breaks It
+
+Patterns that amplify friction or increase burnout.
+
+---
+
+## How to Make It Work
+
+Specific behaviors that reduce tension and improve outcomes.
+
+---
+
+# FINAL NOTE FOR USERS
+
+This system does not predict fate.
+
+It helps you:
+
+* Understand *why* something feels easy or hard
+* Anticipate energy cost
+* Make conscious decisions
+
+Compatibility is **navigation**, not permission.
+
+---
+
+## Implementation Reminder for Replit
+
+* Use **names exactly as entered** in all cards
+* Avoid A/B labels entirely
+* Every section must answer:
+
+  * What it measures
+  * How it’s calculated
+  * What it affects
+* Keep cards short, scannable, and collapsible
+
+---
+
+If you want next, I can:
+
+* Convert this into **exact UI microcopy JSON**
+* Add **hover tooltips for every score tile**
+* Or map **Abjad value ranges into clear meaning bands**
+
+Just tell me which one.
