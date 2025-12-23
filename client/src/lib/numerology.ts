@@ -259,7 +259,15 @@ export function getUniversalYear(date: Date = new Date()): number {
 export function getPersonalYear(dob: Date, date: Date = new Date()): number {
   const monthNum = reduceToSingleDigit(dob.getMonth() + 1);
   const dayNum = reduceToSingleDigit(dob.getDate());
-  const uy = getUniversalYear(date);
+  
+  // Check if the current date is before the birthday this year
+  const currentYear = date.getFullYear();
+  const birthdayThisYear = new Date(currentYear, dob.getMonth(), dob.getDate());
+  
+  // If current date is before birthday, use previous year's universal year
+  const yearForCalculation = date < birthdayThisYear ? currentYear - 1 : currentYear;
+  const uy = reduceToSingleDigit(sumDigitsOfString(String(yearForCalculation)));
+  
   return reduceToSingleDigit(monthNum + dayNum + uy);
 }
 
