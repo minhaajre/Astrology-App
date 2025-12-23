@@ -118,57 +118,51 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
             <Label className="text-xs uppercase tracking-wide text-muted-foreground">
               Date of Birth
             </Label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="flex gap-2">
               {/* Day Selector */}
-              <div className="border rounded-sm bg-muted/30 overflow-hidden">
-                <select
-                  value={day}
-                  onChange={(e) => setDay(e.target.value)}
-                  className="w-full bg-transparent px-2 py-1 text-sm text-center focus:outline-none focus:ring-1 focus:ring-primary"
-                  style={{ height: "120px" }}
-                  data-testid="select-day"
-                >
-                  {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
-                    <option key={d} value={d}>
-                      {d}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <select
+                value={day}
+                onChange={(e) => setDay(e.target.value)}
+                className="border rounded-sm bg-muted/30 px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                style={{ height: "32px", width: "70px" }}
+                data-testid="select-day"
+              >
+                {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                  <option key={d} value={d}>
+                    {d}
+                  </option>
+                ))}
+              </select>
 
               {/* Month Selector */}
-              <div className="border rounded-sm bg-muted/30 overflow-hidden">
-                <select
-                  value={month}
-                  onChange={(e) => setMonth(e.target.value)}
-                  className="w-full bg-transparent px-2 py-1 text-sm text-center focus:outline-none focus:ring-1 focus:ring-primary"
-                  style={{ height: "120px" }}
-                  data-testid="select-month"
-                >
-                  {months.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <select
+                value={month}
+                onChange={(e) => setMonth(e.target.value)}
+                className="border rounded-sm bg-muted/30 px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                style={{ height: "32px", width: "100px" }}
+                data-testid="select-month"
+              >
+                {months.map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </select>
 
               {/* Year Selector */}
-              <div className="border rounded-sm bg-muted/30 overflow-hidden">
-                <select
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                  className="w-full bg-transparent px-2 py-1 text-sm text-center focus:outline-none focus:ring-1 focus:ring-primary"
-                  style={{ height: "120px" }}
-                  data-testid="select-year"
-                >
-                  {years.map((y) => (
-                    <option key={y} value={y}>
-                      {y}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <select
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                className="border rounded-sm bg-muted/30 px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                style={{ height: "32px", width: "80px" }}
+                data-testid="select-year"
+              >
+                {years.map((y) => (
+                  <option key={y} value={y}>
+                    {y}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
