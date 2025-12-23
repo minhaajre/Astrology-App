@@ -113,70 +113,61 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
             </div>
           </div>
 
-          {/* Date of Birth - Large Scrollable Selectors */}
+          {/* Date of Birth - Scrollable Selectors */}
           <div className="space-y-2">
             <Label className="text-xs uppercase tracking-wide text-muted-foreground">
               Date of Birth
             </Label>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2">
               {/* Day Selector */}
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground text-center font-semibold">Day</p>
-                <div className="border rounded-md bg-muted/30 overflow-hidden">
-                  <select
-                    value={day}
-                    onChange={(e) => setDay(e.target.value)}
-                    className="w-full bg-transparent p-3 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-primary"
-                    style={{ height: "280px" }}
-                    data-testid="select-day"
-                  >
-                    {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
-                      <option key={d} value={d}>
-                        {d}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className="border rounded-sm bg-muted/30 overflow-hidden">
+                <select
+                  value={day}
+                  onChange={(e) => setDay(e.target.value)}
+                  className="w-full bg-transparent px-2 py-1 text-sm text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                  style={{ height: "120px" }}
+                  data-testid="select-day"
+                >
+                  {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                    <option key={d} value={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Month Selector */}
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground text-center font-semibold">Month</p>
-                <div className="border rounded-md bg-muted/30 overflow-hidden">
-                  <select
-                    value={month}
-                    onChange={(e) => setMonth(e.target.value)}
-                    className="w-full bg-transparent p-3 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-primary"
-                    style={{ height: "280px" }}
-                    data-testid="select-month"
-                  >
-                    {months.map((m) => (
-                      <option key={m} value={m}>
-                        {m}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className="border rounded-sm bg-muted/30 overflow-hidden">
+                <select
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
+                  className="w-full bg-transparent px-2 py-1 text-sm text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                  style={{ height: "120px" }}
+                  data-testid="select-month"
+                >
+                  {months.map((m) => (
+                    <option key={m} value={m}>
+                      {m}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Year Selector */}
-              <div className="space-y-2">
-                <p className="text-xs text-muted-foreground text-center font-semibold">Year</p>
-                <div className="border rounded-md bg-muted/30 overflow-hidden">
-                  <select
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                    className="w-full bg-transparent p-3 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-primary"
-                    style={{ height: "280px" }}
-                    data-testid="select-year"
-                  >
-                    {years.map((y) => (
-                      <option key={y} value={y}>
-                        {y}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className="border rounded-sm bg-muted/30 overflow-hidden">
+                <select
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  className="w-full bg-transparent px-2 py-1 text-sm text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                  style={{ height: "120px" }}
+                  data-testid="select-year"
+                >
+                  {years.map((y) => (
+                    <option key={y} value={y}>
+                      {y}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
