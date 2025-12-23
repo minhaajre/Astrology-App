@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   getLifePath,
   getDayNumber,
@@ -13,7 +14,7 @@ import {
   type CompatibilityResult,
 } from "@/lib/numerology";
 import { countries } from "@/lib/countries";
-import { Globe, MapPin, Sparkles, Search, X } from "lucide-react";
+import { Globe, MapPin, Sparkles, Search, X, ChevronDown } from "lucide-react";
 
 interface CountryResult {
   country: string;
@@ -213,65 +214,74 @@ export function CountryCompatibility({
 
       {topCountries.length > 0 && (
         <>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-amber-500" />
-                Top Compatible Countries
-              </CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Click any country to see detailed alignment breakdown
-              </p>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {topCountries.map((countryRes, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() =>
-                      setSelectedCountryIndex(
-                        allResults.findIndex((r) => r.country === countryRes.country)
-                      )
-                    }
-                    className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
-                      selectedCountryIndex === allResults.findIndex((r) => r.country === countryRes.country)
-                        ? "border-primary bg-primary/10"
-                        : "border-muted hover:border-primary/50 hover:bg-muted/30"
-                    }`}
-                    data-testid={`button-country-${idx}`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium">{countryRes.country}</span>
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`text-2xl font-black ${getScoreLabel(countryRes.result.totalScore).color}`}
-                        >
-                          {countryRes.result.totalScore}%
-                        </span>
-                        <Badge
-                          variant={
-                            countryRes.result.totalScore >= 60
-                              ? "default"
-                              : "secondary"
-                          }
-                        >
-                          {getScoreLabel(countryRes.result.totalScore).label}
-                        </Badge>
-                      </div>
-                    </div>
-                    <Progress
-                      value={countryRes.result.totalScore}
-                      className="h-2"
-                    />
-                    <p className="text-xs text-muted-foreground mt-2">
-                      Independence: {String(countryRes.month).padStart(2, "0")}/
-                      {String(countryRes.day).padStart(2, "0")}/{countryRes.year}
-                    </p>
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <Collapsible defaultOpen>
+            <Card>
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
+                  <CardTitle className="flex items-center justify-between gap-2">
+                    <span className="flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-amber-500" />
+                      Top Compatible Countries
+                    </span>
+                    <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Click any country to see detailed alignment breakdown
+                  </p>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent>
+                  <div className="space-y-3">
+                    {topCountries.map((countryRes, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() =>
+                          setSelectedCountryIndex(
+                            allResults.findIndex((r) => r.country === countryRes.country)
+                          )
+                        }
+                        className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
+                          selectedCountryIndex === allResults.findIndex((r) => r.country === countryRes.country)
+                            ? "border-primary bg-primary/10"
+                            : "border-muted hover:border-primary/50 hover:bg-muted/30"
+                        }`}
+                        data-testid={`button-country-${idx}`}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium">{countryRes.country}</span>
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`text-2xl font-black ${getScoreLabel(countryRes.result.totalScore).color}`}
+                            >
+                              {countryRes.result.totalScore}%
+                            </span>
+                            <Badge
+                              variant={
+                                countryRes.result.totalScore >= 60
+                                  ? "default"
+                                  : "secondary"
+                              }
+                            >
+                              {getScoreLabel(countryRes.result.totalScore).label}
+                            </Badge>
+                          </div>
+                        </div>
+                        <Progress
+                          value={countryRes.result.totalScore}
+                          className="h-2"
+                        />
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Independence: {String(countryRes.month).padStart(2, "0")}/
+                          {String(countryRes.day).padStart(2, "0")}/{countryRes.year}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
 
           {activeResult && (
             <>
@@ -294,17 +304,24 @@ export function CountryCompatibility({
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-base">
-                    <Globe className="h-4 w-4" />
-                    Number Comparison & Alignment
-                  </CardTitle>
-                  <p className="text-sm text-muted-foreground">
-                    {personName || "You"} vs {activeResult.country}
-                  </p>
-                </CardHeader>
-                <CardContent className="space-y-5">
+              <Collapsible defaultOpen>
+                <Card>
+                  <CollapsibleTrigger asChild>
+                    <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
+                      <CardTitle className="flex items-center justify-between gap-2 text-base">
+                        <span className="flex items-center gap-2">
+                          <Globe className="h-4 w-4" />
+                          Number Comparison & Alignment
+                        </span>
+                        <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground">
+                        {personName || "You"} vs {activeResult.country}
+                      </p>
+                    </CardHeader>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="space-y-5">
                   {activeResult.result.breakdown.map((item, index) => (
                     <div
                       key={index}
@@ -381,16 +398,23 @@ export function CountryCompatibility({
                       className="h-3"
                     />
                   </div>
-                </CardContent>
-              </Card>
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
 
-              <Card className="border-blue-200/50 bg-blue-50/30 dark:border-blue-900/30 dark:bg-blue-950/20">
-                <CardHeader>
-                  <CardTitle className="text-sm text-blue-900 dark:text-blue-200">
-                    Interpretation Guide
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-xs text-blue-800 dark:text-blue-300 space-y-3">
+              <Collapsible defaultOpen>
+                <Card className="border-blue-200/50 bg-blue-50/30 dark:border-blue-900/30 dark:bg-blue-950/20">
+                  <CollapsibleTrigger asChild>
+                    <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
+                      <CardTitle className="flex items-center justify-between text-sm text-blue-900 dark:text-blue-200">
+                        <span>Interpretation Guide</span>
+                        <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
+                      </CardTitle>
+                    </CardHeader>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="text-xs text-blue-800 dark:text-blue-300 space-y-3">
                   <div>
                     <p className="font-semibold mb-1">Excellent (70+):</p>
                     <p>
@@ -420,8 +444,10 @@ export function CountryCompatibility({
                       significant conscious navigation.
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
             </>
           )}
         </>
