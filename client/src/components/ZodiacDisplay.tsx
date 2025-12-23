@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
   getVietnamAnimal, 
+  animalIconNames,
   animalFriends, 
   animalEnemiesPrimary, 
   animalEnemiesSecondary,
@@ -45,9 +46,10 @@ export function ZodiacDisplay({ birthYear }: ZodiacDisplayProps) {
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
             Vietnamese Zodiac
           </p>
-          <p className="text-6xl font-black mb-2" data-testid="text-zodiac-animal">
-            {animal}
+          <p className="text-7xl mb-2" data-testid="text-zodiac-animal">
+            {animalIconNames[animal]}
           </p>
+          <p className="text-3xl font-black mb-2">{animal}</p>
           <p className="text-sm text-muted-foreground">
             Born in the Year of the {animal}
           </p>
@@ -66,7 +68,7 @@ export function ZodiacDisplay({ birthYear }: ZodiacDisplayProps) {
             <div className="flex flex-wrap gap-2">
               {friends.map((friend) => (
                 <Badge key={friend} variant="secondary" className="text-sm">
-                  {animalEmojis[friend]}
+                  {animalIconNames[friend]} {friend}
                 </Badge>
               ))}
             </div>
@@ -87,7 +89,7 @@ export function ZodiacDisplay({ birthYear }: ZodiacDisplayProps) {
             <div className="flex flex-wrap gap-2">
               {enemiesPrimary.map((enemy) => (
                 <Badge key={enemy} variant="destructive" className="text-sm">
-                  {animalEmojis[enemy]}
+                  {animalIconNames[enemy]} {enemy}
                 </Badge>
               ))}
             </div>
@@ -108,7 +110,7 @@ export function ZodiacDisplay({ birthYear }: ZodiacDisplayProps) {
             <div className="flex flex-wrap gap-2">
               {enemiesSecondary.map((enemy) => (
                 <Badge key={enemy} variant="secondary" className="text-sm border-amber-500/30">
-                  {animalEmojis[enemy]}
+                  {animalIconNames[enemy]} {enemy}
                 </Badge>
               ))}
             </div>

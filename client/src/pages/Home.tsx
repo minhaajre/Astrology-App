@@ -19,6 +19,7 @@ import {
   getDayNumber,
   getMonthNumber,
   getVietnamAnimal,
+  animalIconNames,
   getPersonalYear,
   getPersonalMonth,
   getPersonalDay,
@@ -345,9 +346,10 @@ export default function Home() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center gap-4">
-                      <div className="text-4xl font-black">{personData.animal}</div>
-                      <div className="text-sm text-muted-foreground">
+                    <div className="text-center">
+                      <div className="text-6xl mb-2">{animalIconNames[personData.animal]}</div>
+                      <div className="text-3xl font-black mb-3">{personData.animal}</div>
+                      <div className="text-sm text-muted-foreground space-y-1">
                         <p>Year of the {personData.animal}</p>
                         <p>Birth Year: {personData.dob.getFullYear()}</p>
                       </div>

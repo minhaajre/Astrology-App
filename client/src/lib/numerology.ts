@@ -252,6 +252,21 @@ export function getVietnamAnimal(year: number): string {
   return vietnamAnimals[idx];
 }
 
+export const animalIconNames: Record<string, string> = {
+  Rat: "🐭",
+  Buffalo: "🐃",
+  Tiger: "🐯",
+  Cat: "🐱",
+  Dragon: "🐉",
+  Snake: "🐍",
+  Horse: "🐴",
+  Goat: "🐐",
+  Monkey: "🐵",
+  Rooster: "🐓",
+  Dog: "🐶",
+  Pig: "🐷"
+};
+
 export function getUniversalYear(date: Date = new Date()): number {
   return reduceToSingleDigit(sumDigitsOfString(String(date.getFullYear())));
 }

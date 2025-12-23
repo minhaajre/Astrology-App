@@ -11,6 +11,7 @@ import {
   getDayNumber, 
   getMonthNumber, 
   getVietnamAnimal,
+  animalIconNames,
   calculateCompatibility,
   type CompatibilityResult 
 } from "@/lib/numerology";
@@ -115,7 +116,7 @@ export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProp
                       <div className="flex flex-wrap gap-2">
                         <Badge variant="secondary">LP: {getLifePath(personA.dob).lifePath}</Badge>
                         <Badge variant="secondary">Day: {getDayNumber(personA.dob)}</Badge>
-                        <Badge variant="secondary">{getVietnamAnimal(personA.dob.getFullYear())}</Badge>
+                        <Badge variant="secondary">{animalIconNames[getVietnamAnimal(personA.dob.getFullYear())]} {getVietnamAnimal(personA.dob.getFullYear())}</Badge>
                       </div>
                     </div>
                   ) : (
