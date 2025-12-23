@@ -123,7 +123,7 @@ export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProp
                   </div>
                   <div className="space-y-3">
                     <div className="space-y-2">
-                      <Label htmlFor="personBName" className="text-xs">Name</Label>
+                      <Label htmlFor="personBName" className="text-xs">Name (Latin)</Label>
                       <Input
                         id="personBName"
                         placeholder="Enter name"
