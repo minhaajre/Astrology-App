@@ -770,3 +770,347 @@ export function getYearlyForecast(personalYear: number): { forecast: string; str
     strategy: "Trust the process and stay committed to your path." 
   };
 }
+
+// ==========================================
+// TRI-CODE COMPATIBILITY ENGINE
+// ==========================================
+
+// Standard Abjad letter values
+export const abjadMap: Record<string, number> = {
+  'ا': 1,
+  'ب': 2,
+  'ج': 3,
+  'د': 4,
+  'ه': 5,
+  'و': 6,
+  'ز': 7,
+  'ح': 8,
+  'ط': 9,
+  'ي': 10,
+  'ك': 20,
+  'ل': 30,
+  'م': 40,
+  'ن': 50,
+  'س': 60,
+  'ع': 70,
+  'ف': 80,
+  'ص': 90,
+  'ق': 100,
+  'ر': 200,
+  'ش': 300,
+  'ت': 400,
+  'ث': 500,
+  'خ': 600,
+  'ذ': 700,
+  'ض': 800,
+  'ظ': 900,
+  'غ': 1000
+};
+
+// Arabic normalization - critical for accurate Abjad calculation
+export function normalizeArabic(input: string): string {
+  if (!input) return '';
+  
+  let normalized = input;
+  
+  // Remove harakat and diacritics
+  const diacritics = /[\u064B-\u065F\u0670]/g;
+  normalized = normalized.replace(diacritics, '');
+  
+  // Remove tatweel
+  normalized = normalized.replace(/ـ/g, '');
+  
+  // Normalize hamza variants to base letters
+  normalized = normalized.replace(/[أإآ]/g, 'ا');
+  normalized = normalized.replace(/ؤ/g, 'و');
+  normalized = normalized.replace(/ئ/g, 'ي');
+  
+  // Normalize ta marbuta
+  normalized = normalized.replace(/ة/g, 'ه');
+  
+  // Normalize alif maqsura
+  normalized = normalized.replace(/ى/g, 'ي');
+  
+  // Keep only Arabic letters in the mapping set
+  const validLetters = Object.keys(abjadMap);
+  normalized = normalized.split('').filter(char => validLetters.includes(char)).join('');
+  
+  return normalized;
+}
+
+export interface AbjadResult {
+  normalized: string;
+  sum: number;
+  reduced: number;
+  breakdown: Array<{ letter: string; value: number }>;
+  mod9: number;
+  intensity: 'Low' | 'Medium' | 'High';
+}
+
+export function computeAbjad(arabicStr: string): AbjadResult {
+  const normalized = normalizeArabic(arabicStr);
+  
+  const breakdown: Array<{ letter: string; value: number }> = [];
+  let sum = 0;
+  
+  for (const letter of normalized) {
+    const value = abjadMap[letter] || 0;
+    if (value > 0) {
+      breakdown.push({ letter, value });
+      sum += value;
+    }
+  }
+  
+  const reduced = reduceToSingleDigit(sum);
+  const mod9 = sum % 9 === 0 ? 9 : sum % 9;
+  
+  let intensity: 'Low' | 'Medium' | 'High';
+  if (sum < 200) intensity = 'Low';
+  else if (sum < 1000) intensity = 'Medium';
+  else intensity = 'High';
+  
+  return { normalized, sum, reduced, breakdown, mod9, intensity };
+}
+
+// Tri-Code types
+export interface TriCodeEntity {
+  nameLatin?: string;
+  nameArabic?: string;
+  birthDate?: Date;
+  anchorDate?: Date; // For places
+  isPlace?: boolean;
+}
+
+export interface TriCodeCodes {
+  DC: number | null;  // Destiny Code (Life Path)
+  ICL: number | null; // Identity Code Latin (Expression Number)
+  ECA: AbjadResult | null; // Essence Code Arabic
+}
+
+export interface AxisScore {
+  value: number;
+  type: 'same' | 'complementary' | 'neutral' | 'friction';
+  label: string;
+}
+
+export type ModeLabel = 'Reinforcement' | 'Growth' | 'Extraction' | 'Avoidance' | 'Mixed';
+
+export interface TriCodeResult {
+  A: TriCodeCodes;
+  B: TriCodeCodes;
+  axes: {
+    A1_LatinCore: AxisScore | null;
+    A2_ArabicCore: AxisScore | null;
+    A3_Destiny: AxisScore | null;
+    A4_LatinAdaptAB: AxisScore | null;
+    A5_LatinAdaptBA: AxisScore | null;
+    A6_ArabicAdaptAB: AxisScore | null;
+    A7_ArabicAdaptBA: AxisScore | null;
+  };
+  finalScore: number;
+  tensionIndex: number;
+  modeLabel: ModeLabel;
+  bestUseCases: string[];
+  nameDivergence: 'Low' | 'Medium' | 'High' | null;
+}
+
+// Axis scoring based on relation type
+const axisPoints: Record<string, number> = {
+  same: 25,
+  complementary: 20,
+  neutral: 14,
+  friction: 8
+};
+
+function getAxisScore(numA: number | null, numB: number | null, label: string): AxisScore | null {
+  if (numA === null || numB === null) return null;
+  
+  const type = getRelationType(numA, numB);
+  return {
+    value: axisPoints[type],
+    type,
+    label
+  };
+}
+
+// Get EC-A comparison value based on mode
+function getECACompareValue(eca: AbjadResult | null, useReduced: boolean): number | null {
+  if (!eca) return null;
+  return useReduced ? eca.reduced : eca.mod9;
+}
+
+export function computeTriCodeCompatibility(
+  entityA: TriCodeEntity,
+  entityB: TriCodeEntity,
+  options: { abjadMode: 'reduced' | 'modular' } = { abjadMode: 'modular' }
+): TriCodeResult {
+  const useReduced = options.abjadMode === 'reduced';
+  
+  // Compute codes for Entity A
+  const A: TriCodeCodes = {
+    DC: entityA.birthDate ? calculateLifePath(entityA.birthDate) : null,
+    ICL: entityA.nameLatin ? calculateExpressionNumber(entityA.nameLatin) : null,
+    ECA: entityA.nameArabic ? computeAbjad(entityA.nameArabic) : null
+  };
+  
+  // Compute codes for Entity B
+  const B: TriCodeCodes = {
+    DC: entityB.birthDate 
+      ? calculateLifePath(entityB.birthDate) 
+      : entityB.anchorDate 
+        ? calculateLifePath(entityB.anchorDate) 
+        : null,
+    ICL: entityB.nameLatin ? calculateExpressionNumber(entityB.nameLatin) : null,
+    ECA: entityB.nameArabic ? computeAbjad(entityB.nameArabic) : null
+  };
+  
+  // Get EC-A comparison values
+  const ecaACompare = getECACompareValue(A.ECA, useReduced);
+  const ecaBCompare = getECACompareValue(B.ECA, useReduced);
+  
+  // Compute all 7 axes
+  const axes = {
+    A1_LatinCore: getAxisScore(A.ICL, B.ICL, 'Latin Core Alignment'),
+    A2_ArabicCore: getAxisScore(ecaACompare, ecaBCompare, 'Arabic Core Alignment'),
+    A3_Destiny: getAxisScore(A.DC, B.DC, 'Trajectory Alignment'),
+    A4_LatinAdaptAB: getAxisScore(A.ICL, B.DC, 'Latin Adaptation A→B'),
+    A5_LatinAdaptBA: getAxisScore(B.ICL, A.DC, 'Latin Adaptation B→A'),
+    A6_ArabicAdaptAB: getAxisScore(ecaACompare, B.DC, 'Arabic Adaptation A→B'),
+    A7_ArabicAdaptBA: getAxisScore(ecaBCompare, A.DC, 'Arabic Adaptation B→A')
+  };
+  
+  // Default weights
+  const defaultWeights = {
+    A1: 0.18,
+    A2: 0.18,
+    A3: 0.22,
+    A4: 0.14,
+    A5: 0.14,
+    A6: 0.07,
+    A7: 0.07
+  };
+  
+  // Calculate which axes exist and reweight
+  const activeAxes: Array<{ key: string; score: AxisScore; weight: number }> = [];
+  let totalWeight = 0;
+  
+  if (axes.A1_LatinCore) { activeAxes.push({ key: 'A1', score: axes.A1_LatinCore, weight: defaultWeights.A1 }); totalWeight += defaultWeights.A1; }
+  if (axes.A2_ArabicCore) { activeAxes.push({ key: 'A2', score: axes.A2_ArabicCore, weight: defaultWeights.A2 }); totalWeight += defaultWeights.A2; }
+  if (axes.A3_Destiny) { activeAxes.push({ key: 'A3', score: axes.A3_Destiny, weight: defaultWeights.A3 }); totalWeight += defaultWeights.A3; }
+  if (axes.A4_LatinAdaptAB) { activeAxes.push({ key: 'A4', score: axes.A4_LatinAdaptAB, weight: defaultWeights.A4 }); totalWeight += defaultWeights.A4; }
+  if (axes.A5_LatinAdaptBA) { activeAxes.push({ key: 'A5', score: axes.A5_LatinAdaptBA, weight: defaultWeights.A5 }); totalWeight += defaultWeights.A5; }
+  if (axes.A6_ArabicAdaptAB) { activeAxes.push({ key: 'A6', score: axes.A6_ArabicAdaptAB, weight: defaultWeights.A6 }); totalWeight += defaultWeights.A6; }
+  if (axes.A7_ArabicAdaptBA) { activeAxes.push({ key: 'A7', score: axes.A7_ArabicAdaptBA, weight: defaultWeights.A7 }); totalWeight += defaultWeights.A7; }
+  
+  // Calculate weighted score with renormalized weights
+  let rawScore = 0;
+  for (const axis of activeAxes) {
+    const normalizedWeight = axis.weight / totalWeight;
+    rawScore += normalizedWeight * axis.score.value;
+  }
+  
+  const finalScore = activeAxes.length > 0 ? Math.round((rawScore / 25) * 100) : 0;
+  
+  // Calculate tension index from adaptation axes
+  const adaptAxes = [axes.A4_LatinAdaptAB, axes.A5_LatinAdaptBA, axes.A6_ArabicAdaptAB, axes.A7_ArabicAdaptBA].filter(Boolean) as AxisScore[];
+  const adaptAvg = adaptAxes.length > 0 
+    ? adaptAxes.reduce((sum, a) => sum + a.value, 0) / adaptAxes.length 
+    : 14;
+  const tensionIndex = 100 - Math.round((adaptAvg / 25) * 100);
+  
+  // Calculate mode label
+  const coreAxes = [axes.A1_LatinCore, axes.A2_ArabicCore].filter(Boolean) as AxisScore[];
+  const coreAvg = coreAxes.length > 0 
+    ? coreAxes.reduce((sum, a) => sum + a.value, 0) / coreAxes.length 
+    : 14;
+  const traj = axes.A3_Destiny?.value ?? 14;
+  
+  let modeLabel: ModeLabel;
+  if (coreAvg >= 20 && traj >= 20 && adaptAvg >= 18) {
+    modeLabel = 'Reinforcement';
+  } else if (coreAvg >= 18 && traj <= 14 && adaptAvg >= 14 && adaptAvg <= 18) {
+    modeLabel = 'Growth';
+  } else if (coreAvg <= 14 && traj >= 18 && adaptAvg >= 14 && adaptAvg <= 18) {
+    modeLabel = 'Extraction';
+  } else if (coreAvg <= 14 && traj <= 14 && adaptAvg <= 14) {
+    modeLabel = 'Avoidance';
+  } else {
+    modeLabel = 'Mixed';
+  }
+  
+  // Best use cases based on DC
+  const bestUseCases: string[] = [];
+  const primaryDC = B.DC ?? A.DC;
+  if (primaryDC) {
+    if ([8, 1, 4].includes(primaryDC)) bestUseCases.push('Money');
+    if ([2, 6].includes(primaryDC)) bestUseCases.push('Relationships');
+    if ([7, 9].includes(primaryDC)) bestUseCases.push('Learning');
+    if (primaryDC === 5) bestUseCases.push('Expansion');
+    if ([3].includes(primaryDC)) bestUseCases.push('Creativity');
+    if ([11, 22, 33].includes(primaryDC)) bestUseCases.push('Spiritual Growth');
+  }
+  if (bestUseCases.length === 0) bestUseCases.push('Balanced');
+  
+  // Name form divergence check
+  let nameDivergence: 'Low' | 'Medium' | 'High' | null = null;
+  if (A.ICL !== null && A.ECA !== null) {
+    const diff = Math.abs(A.ICL - A.ECA.reduced);
+    if (diff <= 2) nameDivergence = 'Low';
+    else if (diff <= 5) nameDivergence = 'Medium';
+    else nameDivergence = 'High';
+  }
+  
+  return {
+    A,
+    B,
+    axes,
+    finalScore,
+    tensionIndex,
+    modeLabel,
+    bestUseCases,
+    nameDivergence
+  };
+}
+
+// Get guidance based on mode label and weak axes
+export function getTriCodeGuidance(result: TriCodeResult): {
+  whatWorks: string[];
+  whatBreaks: string[];
+  howToMakeItWork: string[];
+} {
+  const guidance = {
+    whatWorks: [] as string[],
+    whatBreaks: [] as string[],
+    howToMakeItWork: [] as string[]
+  };
+  
+  switch (result.modeLabel) {
+    case 'Reinforcement':
+      guidance.whatWorks = ['Natural alignment', 'Shared goals', 'Mutual respect'];
+      guidance.whatBreaks = ['Complacency', 'Taking it for granted', 'Lack of challenge'];
+      guidance.howToMakeItWork = ['Keep growing together', 'Create shared projects', 'Celebrate wins'];
+      break;
+    case 'Growth':
+      guidance.whatWorks = ['Learning from differences', 'Complementary strengths', 'Patience'];
+      guidance.whatBreaks = ['Impatience', 'Trying to change each other', 'Rushing'];
+      guidance.howToMakeItWork = ['Embrace the slow build', 'Focus on shared values', 'Give space'];
+      break;
+    case 'Extraction':
+      guidance.whatWorks = ['Clear boundaries', 'Defined roles', 'Short-term projects'];
+      guidance.whatBreaks = ['Over-dependence', 'Blurred lines', 'Emotional entanglement'];
+      guidance.howToMakeItWork = ['Keep it transactional', 'Set clear timelines', 'Protect your energy'];
+      break;
+    case 'Avoidance':
+      guidance.whatWorks = ['Minimal contact', 'Professional distance', 'Clear exit strategy'];
+      guidance.whatBreaks = ['Forced closeness', 'Shared responsibilities', 'Long-term commitments'];
+      guidance.howToMakeItWork = ['Keep interactions brief', 'Have backup plans', 'Limit exposure'];
+      break;
+    case 'Mixed':
+      guidance.whatWorks = ['Flexibility', 'Selective engagement', 'Context awareness'];
+      guidance.whatBreaks = ['Rigid expectations', 'All-or-nothing thinking', 'Ignoring signals'];
+      guidance.howToMakeItWork = ['Adapt to each situation', 'Focus on what works', 'Accept complexity'];
+      break;
+  }
+  
+  return guidance;
+}
