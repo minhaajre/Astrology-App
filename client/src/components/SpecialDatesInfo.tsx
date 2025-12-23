@@ -22,6 +22,7 @@ export function SpecialDatesInfo() {
   // Sort categories chronologically by the minimum date in each category
   const categoryOrder = [
     "👑 Leadership & Control",
+    "📢 Expression & Visibility",
     "❤️ Relationships & Harmony",
     "🧱 Structure & Systems",
     "🌍 Change & Travel",

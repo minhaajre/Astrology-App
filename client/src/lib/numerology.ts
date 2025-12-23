@@ -29,6 +29,12 @@ export interface SpecialDateInfo {
 }
 
 export const specialDates: SpecialDateInfo[] = [
+  // Expression Days (3)
+  { date: 3, theme: "Expression, content, social energy, charm, communication", number: 3, category: "📢 Expression & Visibility", bestFor: ["Posting content (LinkedIn, YouTube, ads)", "Sales outreach", "Branding and design work", "Public speaking and interviews", "Announcements that need attention"], avoidFor: ["Overpromising", "Gossip and sloppy wording", "Distraction and procrastination"] },
+  { date: 12, theme: "Structured expression, persuasive messaging", number: 3, category: "📢 Expression & Visibility", bestFor: ["Writing offers and pitches", "Negotiation messages", "PR and marketing strategy", "Editing and refining content"], note: "1+2=3" },
+  { date: 21, theme: "Social expansion through people", number: 3, category: "📢 Expression & Visibility", bestFor: ["Collaboration outreach", "Partnerships", "Community building", "Events and social momentum"], note: "2+1=3" },
+  { date: 30, theme: "Big expression, visibility spike", number: 3, category: "📢 Expression & Visibility", bestFor: ["Launch announcements", "Viral pushes", "High-output creative days"], avoidFor: ["Emotional posting", "Reputation risk if careless"], note: "3+0=3" },
+  
   // Money Days
   { date: 8, theme: "Money, Authority & Power", number: 8, category: "💰 Money & Wealth", bestFor: ["Business decisions", "Negotiations", "Payments", "Career moves"], avoidFor: ["Emotional confrontations"] },
   { date: 17, theme: "Earned Success & Discipline", number: 8, category: "💰 Money & Wealth", bestFor: ["Long-term planning", "Structured investments", "Leadership decisions"], note: "1+7=8" },
@@ -45,10 +51,11 @@ export const specialDates: SpecialDateInfo[] = [
   { date: 16, theme: "Reality Check & Truth-Seeking", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Audits", "Truth-seeking", "Cutting losses"], note: "1+6=7. Can be humbling." },
   { date: 25, theme: "Strategic Withdrawal", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Reviewing plans", "Pausing decisions", "Quiet work"], note: "2+5=7" },
   
-  // Relationship Days
+  // Relationship Days (2, 6, 15, 24)
   { date: 2, theme: "Partnership & Diplomacy", number: 2, category: "❤️ Relationships & Harmony", bestFor: ["Relationship talks", "Mediation", "Team cooperation"] },
-  { date: 6, theme: "Family & Responsibility", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Relationship repair", "Home matters", "Emotional support"] },
-  { date: 15, theme: "Magnetic Attraction & Bonding", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Dates", "Reconciliation", "Social engagement"], note: "1+5=6" },
+  { date: 6, theme: "Relationships, family, care, harmony, responsibility", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Relationship conversations (repair-focused)", "Home decisions and moving logistics", "Customer care and retention", "Team culture, HR, and conflict resolution", "Health routines and self-care systems"], avoidFor: ["Over-giving", "Emotional manipulation or guilt dynamics", "Taking on others' burdens"] },
+  { date: 15, theme: "Magnetism, attraction, bonding", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Dates and reconnection", "Social credibility and charm with responsibility", "Client relationship strengthening"], avoidFor: ["Using charm to avoid truth"], note: "1+5=6" },
+  { date: 24, theme: "Domestic structure, long-term stability", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Housing decisions", "Family planning", "Long-term agreements that require trust", "Building routines that last"], avoidFor: ["Getting stuck in comfort"], note: "2+4=6" },
   
   // Change Days
   { date: 5, theme: "Movement, Freedom & Change", number: 5, category: "🌍 Change & Travel", bestFor: ["Travel", "Marketing", "Promotion"], avoidFor: ["Long-term commitments", "Rigid plans"] },
