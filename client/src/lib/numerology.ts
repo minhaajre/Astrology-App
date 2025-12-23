@@ -1,0 +1,593 @@
+export interface NumberMeaning {
+  number: number;
+  core: string;
+  essence: string;
+  strengths: string[];
+  traps: string[];
+  money: string[];
+  relationships: string[];
+  shadowWork: string;
+  careers: string[];
+  dailyForecast: string;
+}
+
+export const numberMeanings: Record<number, NumberMeaning> = {
+  1: {
+    number: 1,
+    core: "Leadership & Self-Direction",
+    essence: "The Pioneer. You are the initiator, the spark that starts the fire. Number 1 carries the energy of new beginnings, independence, and the courage to forge your own path. You are meant to lead, not follow. Your soul craves autonomy, and you thrive when you can make your own decisions without seeking approval. The world needs your vision and your willingness to go first where others hesitate.",
+    strengths: ["Natural leadership ability", "Strong initiative and drive", "Courage to take risks", "Original thinking", "Self-reliance", "Determination"],
+    traps: ["Ego and arrogance", "Impatience with others", "Isolation and loneliness", "Stubbornness", "Fear of asking for help", "Dominating conversations"],
+    money: ["Best when leading your own ventures", "Thrives as entrepreneur or CEO", "Avoid partnerships that limit control", "Wealth comes through bold decisions"],
+    relationships: ["Needs respect and space to lead", "Attracted to confident partners", "Must balance independence with intimacy", "Can struggle with compromise"],
+    shadowWork: "Learn that true strength includes vulnerability. Your independence is a gift, but isolation is a trap. The greatest leaders lift others—they don't stand alone on a pedestal.",
+    careers: ["Entrepreneur", "CEO", "Military Officer", "Surgeon", "Inventor", "Director", "Life Coach"],
+    dailyForecast: "Today favors bold action. Take initiative on something you've been putting off. Your confidence is magnetic—use it to inspire others, not to overpower them."
+  },
+  2: {
+    number: 2,
+    core: "Cooperation & Diplomacy",
+    essence: "The Mediator. You are the bridge between opposing forces, the gentle hand that brings harmony where there was conflict. Number 2 vibrates with the energy of partnership, intuition, and emotional intelligence. You sense what others miss—the unspoken feelings, the hidden tensions. Your power lies not in force, but in patience and the art of listening. You are the peacemaker the world desperately needs.",
+    strengths: ["Deep emotional intelligence", "Natural mediator and peacemaker", "Excellent listener", "Patient and supportive", "Intuitive perception", "Collaborative spirit"],
+    traps: ["Indecision and self-doubt", "People-pleasing at your own expense", "Over-sensitivity to criticism", "Codependency", "Avoiding conflict", "Losing yourself in relationships"],
+    money: ["Best in team environments", "Thrives in partnerships and collaborations", "Avoid high-risk solo ventures", "Steady accumulation over time"],
+    relationships: ["Needs safety and emotional consistency", "Deeply loyal partner", "Requires open communication", "May attract dominant personalities"],
+    shadowWork: "Your kindness is not weakness, but learn to set boundaries. Saying 'no' doesn't make you unkind—it makes you honest. True peace starts within, not in pleasing everyone around you.",
+    careers: ["Counselor", "Mediator", "Diplomat", "HR Specialist", "Nurse", "Social Worker", "Assistant", "Therapist"],
+    dailyForecast: "Collaboration is your superpower today. Seek partnerships and listen more than you speak. Your intuition is heightened—trust the subtle messages you receive."
+  },
+  3: {
+    number: 3,
+    core: "Expression & Communication",
+    essence: "The Artist. You are the voice, the creative spark, the one who turns thoughts into words and emotions into art. Number 3 carries the vibration of joy, creativity, and self-expression. You have a gift for making the complex simple, the heavy light. Your words can heal, inspire, or entertain—but this same power can wound if misused. You are here to create and communicate your unique truth.",
+    strengths: ["Creative expression", "Excellent communication skills", "Humor and wit", "Social magnetism", "Optimism and enthusiasm", "Artistic talent"],
+    traps: ["Scattered focus and unfinished projects", "Mood-driven speech and actions", "Superficiality", "Gossip and careless words", "Escapism", "Fear of deeper emotions"],
+    money: ["Monetize your voice—writing, speaking, content", "Teaching and coaching opportunities", "Creative industries favor you", "Multiple income streams work well"],
+    relationships: ["Needs fun, laughter, and honesty", "Expressive and affectionate", "May avoid deep emotional conversations", "Requires mental stimulation"],
+    shadowWork: "Your light is a gift, but don't use humor to hide from pain. Depth doesn't diminish your brightness—it grounds it. Learn to finish what you start; completion brings mastery.",
+    careers: ["Writer", "Public Speaker", "Actor", "Artist", "Marketing Creative", "Teacher", "Content Creator", "Comedian"],
+    dailyForecast: "Express yourself today. Write, speak, create, or share something meaningful. Your words carry extra weight—use them to uplift rather than criticize."
+  },
+  4: {
+    number: 4,
+    core: "Structure & Discipline",
+    essence: "The Builder. You are the foundation upon which great things are constructed. Number 4 resonates with order, hard work, and determination. While others dream, you build. You have the rare ability to turn vision into reality through methodical effort. Stability isn't boring to you—it's the platform from which empires rise. The world needs your reliability and your commitment to doing things right.",
+    strengths: ["Reliability and trustworthiness", "Strong work ethic", "Systematic thinking", "Attention to detail", "Patience and perseverance", "Practical problem-solving"],
+    traps: ["Rigidity and resistance to change", "Workaholism", "Stubbornness", "Missing the big picture", "Control issues", "Fear of taking risks"],
+    money: ["Build long-term assets", "Real estate and investments suit you", "Avoid get-rich-quick schemes", "Wealth through steady accumulation"],
+    relationships: ["Needs loyalty and consistency", "Shows love through actions, not words", "May struggle with emotional expression", "Provides security to loved ones"],
+    shadowWork: "Structure serves life—don't let it imprison it. Learn to bend without breaking. Not everything valuable can be measured or scheduled. Allow spontaneity in small doses.",
+    careers: ["Architect", "Engineer", "Accountant", "Project Manager", "Contractor", "Systems Analyst", "Administrator", "Surgeon"],
+    dailyForecast: "Focus on building something lasting today. Tackle tasks that require patience and precision. Your discipline is your advantage—use it to make progress on long-term goals."
+  },
+  5: {
+    number: 5,
+    core: "Change & Freedom",
+    essence: "The Adventurer. You are the wind—impossible to contain, always in motion, bringing change wherever you go. Number 5 vibrates with freedom, curiosity, and the thrill of new experiences. You are here to explore, to taste all that life offers, to break free from limitations. Routine is your enemy; variety is your fuel. Through your experiences, you gain wisdom that others can only read about.",
+    strengths: ["Adaptability and flexibility", "Sales and persuasion ability", "Curiosity and open-mindedness", "Courage for adventure", "Quick thinking", "Magnetic personality"],
+    traps: ["Restlessness and instability", "Impulsive decisions", "Commitment phobia", "Overindulgence in sensory pleasures", "Irresponsibility", "Scattered energy"],
+    money: ["Fast cycles and variety work best", "Sales and commission-based income", "Multiple streams and side hustles", "Avoid long-term commitments that feel restrictive"],
+    relationships: ["Needs independence and excitement", "Fears being trapped or controlled", "Must balance freedom with commitment", "Requires a partner who grows with you"],
+    shadowWork: "Freedom without roots is just running away. Learn that commitment can be liberating, not constraining. The deepest adventures happen within, not just outside.",
+    careers: ["Sales Representative", "Travel Writer", "Pilot", "Entrepreneur", "Marketing Strategist", "Tour Guide", "Journalist", "Stunt Performer"],
+    dailyForecast: "Embrace change today—something unexpected may shift your plans for the better. Your adaptability is needed. Stay curious and say yes to new opportunities."
+  },
+  6: {
+    number: 6,
+    core: "Care & Responsibility",
+    essence: "The Nurturer. You are the heart of the home, the one who creates sanctuaries and holds families together. Number 6 carries the energy of love, responsibility, and service. You find purpose in caring for others, in creating beauty and harmony in your environment. Your sense of duty is profound, and your capacity for love runs deep. You are the rock that others lean on in times of need.",
+    strengths: ["Nurturing and supportive nature", "Strong sense of responsibility", "Creating beauty and harmony", "Loyalty and devotion", "Community building", "Healing presence"],
+    traps: ["Over-giving until depleted", "Control disguised as care", "Martyrdom and guilt", "Difficulty receiving", "Meddling in others' lives", "Neglecting self-care"],
+    money: ["Steady service-based income", "Healthcare and wellness fields", "Home-related businesses", "Teaching and mentoring roles"],
+    relationships: ["Needs commitment and appreciation", "Deeply devoted partner", "May over-sacrifice for loved ones", "Creates beautiful home environments"],
+    shadowWork: "Your love is not a debt others must repay. Give freely or not at all. Taking care of yourself is not selfish—it's necessary. You cannot pour from an empty cup.",
+    careers: ["Nurse", "Teacher", "Interior Designer", "Chef", "Counselor", "Veterinarian", "Social Worker", "Event Planner"],
+    dailyForecast: "Your nurturing energy is needed today. Care for someone who needs support, but don't forget yourself. Create something beautiful in your environment."
+  },
+  7: {
+    number: 7,
+    core: "Truth & Inner Mastery",
+    essence: "The Seeker. You are the philosopher, the mystic, the one who looks beyond the surface to find deeper meaning. Number 7 vibrates with the frequency of spiritual wisdom, analytical precision, and inner knowing. You are not satisfied with easy answers—you dig until you find truth. Your mind is a powerful instrument for pattern recognition and research. In a world of noise, you seek the silence where wisdom whispers.",
+    strengths: ["Deep research abilities", "Pattern recognition", "Spiritual depth and intuition", "Analytical precision", "Independent thinking", "Wisdom and insight"],
+    traps: ["Cynicism and distrust", "Isolation and withdrawal", "Overthinking and analysis paralysis", "Fear of vulnerability", "Intellectual arrogance", "Depression from disconnection"],
+    money: ["Wealth through expertise", "Consulting and specialized knowledge", "Research and development", "Avoid partnership-dependent ventures"],
+    relationships: ["Needs depth and authenticity", "Requires significant alone time", "Trust is earned slowly", "Values intellectual connection"],
+    shadowWork: "Knowledge without connection is lonely. Your fortress of analysis can become a prison. Let people in. Wisdom includes knowing that some truths are felt, not thought.",
+    careers: ["Researcher", "Scientist", "Philosopher", "Analyst", "Professor", "Detective", "Programmer", "Spiritual Teacher"],
+    dailyForecast: "Seek solitude and reflection today. Answers you've been searching for may surface in quiet moments. Trust your intuition over external opinions."
+  },
+  8: {
+    number: 8,
+    core: "Power & Material Mastery",
+    essence: "The Executive. You are meant for positions of authority and influence. Number 8 carries the vibration of abundance, power, and karmic balance. What you send out returns multiplied—for better or worse. You have the capacity to build empires, to create lasting wealth, to command respect. But this power comes with responsibility. Your relationship with money and authority defines your path.",
+    strengths: ["Executive leadership", "Strategic thinking", "Financial acumen", "Authority and presence", "Goal achievement", "Organizational ability"],
+    traps: ["Control and domination", "Material obsession", "Harshness and intimidation", "Karmic backlash from misused power", "Workaholism", "Measuring worth by wealth"],
+    money: ["High ceiling with integrity", "Business ownership and investment", "Real estate and large-scale ventures", "Karma affects finances directly"],
+    relationships: ["Needs trust and mutual respect", "Can dominate or be dominated", "Power dynamics must be balanced", "Provides security but may neglect emotions"],
+    shadowWork: "Power reveals character—it doesn't create it. The goal isn't to have power over others, but over yourself. Money is a tool, not a measure of your worth.",
+    careers: ["CEO", "Financial Advisor", "Real Estate Developer", "Banker", "Judge", "Politician", "Business Owner", "Corporate Attorney"],
+    dailyForecast: "Financial and career matters are highlighted today. Make bold decisions about money or authority. What you give returns amplified—be generous and ethical."
+  },
+  9: {
+    number: 9,
+    core: "Completion & Universal Love",
+    essence: "The Humanitarian. You are the old soul, the one who has walked many paths and gained wisdom from each. Number 9 vibrates with completion, universal love, and selfless service. You see the bigger picture when others are lost in details. Your purpose transcends personal gain—you are here to leave the world better than you found it. Endings and transformations are your territory.",
+    strengths: ["Compassion and empathy", "Big-picture vision", "Artistic and creative talent", "Wisdom from experience", "Humanitarian drive", "Transformational leadership"],
+    traps: ["Martyrdom complex", "Difficulty letting go", "Messiah syndrome", "Emotional overwhelm", "Unresolved past trauma", "Resentment from over-giving"],
+    money: ["Impact-driven wealth creation", "Non-profit and social enterprise", "Arts and healing professions", "Money flows when aligned with purpose"],
+    relationships: ["Needs shared vision and purpose", "Old soul seeking depth", "Must release attachment to outcomes", "Loves unconditionally"],
+    shadowWork: "You cannot save everyone, and that's not your burden. Endings are not failures—they are completions. Let go of what has served its purpose so something new can begin.",
+    careers: ["Humanitarian Worker", "Artist", "Healer", "Activist", "Filmmaker", "Philanthropist", "Life Coach", "End-of-Life Counselor"],
+    dailyForecast: "Focus on the bigger picture today. Release something that has run its course. Your compassion can make a real difference—serve without expectation of return."
+  },
+  11: {
+    number: 11,
+    core: "Master Intuition & Illumination",
+    essence: "The Inspired Healer. You carry a double dose of the pioneering 1 energy, but elevated to a spiritual plane. Number 11 is the first Master Number—a channel for higher wisdom, intuitive downloads, and inspirational leadership. You are here to illuminate, to inspire, to awaken others to possibilities they couldn't see. Your sensitivity is both your gift and your challenge. You walk between worlds.",
+    strengths: ["Powerful intuition and psychic ability", "Inspirational presence", "Visionary leadership", "Magnetic charisma", "Spiritual depth", "Bridge between spiritual and material"],
+    traps: ["Nervous system overload", "Anxiety and hypersensitivity", "Unrealistic expectations", "Spiritual bypassing", "Difficulty grounding", "Overwhelming intensity"],
+    money: ["Best as visionary or spiritual leader", "Consulting and inspirational speaking", "Avoid mundane, routine work", "Income through influence"],
+    relationships: ["Needs grounding partner", "Intense emotional connections", "May overwhelm less sensitive people", "Spiritual bond is essential"],
+    shadowWork: "Your light is meant to be shared, not hidden. But you must ground your vision in reality. The nervous system needs care—meditation, nature, and rest are not optional.",
+    careers: ["Spiritual Teacher", "Intuitive Coach", "Inspirational Speaker", "Artist", "Musician", "Inventor", "Visionary Leader", "Healer"],
+    dailyForecast: "Your intuition is extra sharp today. Pay attention to downloads, signs, and synchronicities. Share your vision with someone who needs inspiration."
+  },
+  22: {
+    number: 22,
+    core: "Master Builder",
+    essence: "The Architect of Dreams. You carry the practical foundation of the 4 doubled and elevated to mastery. Number 22 is the most powerful number for manifesting large-scale visions into reality. You don't just dream—you build dreams that serve humanity. You think in terms of systems, institutions, and legacies that outlast a single lifetime. The pressure is immense, but so is the potential.",
+    strengths: ["Massive execution capability", "Legacy thinking", "Practical idealism", "System building", "Organizational genius", "Uniting vision with action"],
+    traps: ["Crushing pressure and expectation", "Fear of failure", "Workaholic tendencies", "Perfectionism", "Overwhelm from big vision", "Ignoring personal needs"],
+    money: ["Scale systems for income", "Infrastructure and institution building", "Large-scale business", "Generational wealth potential"],
+    relationships: ["Needs stable, supportive partner", "Work can overshadow relationships", "Requires understanding of mission", "Loyal and committed"],
+    shadowWork: "Not every vision requires completion in your lifetime. Learn to delegate and trust others. Your worth is not determined by the scale of your achievements.",
+    careers: ["Architect", "Urban Planner", "CEO of Large Corporation", "Political Leader", "Infrastructure Developer", "Philanthropist", "Technology Founder", "Institution Builder"],
+    dailyForecast: "Think big and plan strategically today. Your capacity to turn vision into reality is amplified. Focus on building something that will outlast you."
+  },
+  33: {
+    number: 33,
+    core: "Master Teacher",
+    essence: "The Cosmic Nurturer. You carry the loving responsibility of the 6 doubled and raised to universal service. Number 33 is the rarest Master Number—the master teacher, healer, and uplifter of humanity. You feel the suffering of the world and are called to ease it. Your life is devoted to service on a scale that transcends personal interests. The weight is heavy, but your capacity for love is limitless.",
+    strengths: ["Profound healing ability", "Universal love and compassion", "Teaching and uplifting humanity", "Self-sacrifice for higher good", "Emotional wisdom", "Transformational presence"],
+    traps: ["Excessive self-sacrifice", "Savior complex", "Emotional burnout", "Neglecting personal boundaries", "Feeling responsible for everyone's pain", "Martyrdom"],
+    money: ["Earn through uplifting others", "Education and healing professions", "Non-profit and spiritual work", "Money as tool for service"],
+    relationships: ["Needs reciprocity and appreciation", "May over-give in relationships", "Attracts those who need healing", "Must maintain boundaries"],
+    shadowWork: "You cannot heal the world by depleting yourself. Healthy boundaries are not selfish—they are necessary. Receive as openly as you give.",
+    careers: ["Spiritual Master", "Renowned Healer", "Humanitarian Leader", "University Professor", "Medical Pioneer", "Religious Leader", "Global Philanthropist"],
+    dailyForecast: "Your healing presence is needed. Teach, guide, or simply be present for someone who needs you. But also take time to receive—you deserve care too."
+  }
+};
+
+export const vietnamAnimals = ["Rat", "Buffalo", "Tiger", "Cat", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
+
+export const animalFriends: Record<string, string[]> = {
+  Rat: ["Dragon", "Monkey"],
+  Buffalo: ["Snake", "Rooster"],
+  Tiger: ["Horse", "Dog"],
+  Cat: ["Goat", "Pig"],
+  Dragon: ["Rat", "Monkey"],
+  Snake: ["Buffalo", "Rooster"],
+  Horse: ["Tiger", "Dog"],
+  Goat: ["Cat", "Pig"],
+  Monkey: ["Rat", "Dragon"],
+  Rooster: ["Buffalo", "Snake"],
+  Dog: ["Tiger", "Horse"],
+  Pig: ["Cat", "Goat"]
+};
+
+export const animalEnemiesPrimary: Record<string, string[]> = {
+  Rat: ["Horse"],
+  Buffalo: ["Goat"],
+  Tiger: ["Monkey"],
+  Cat: ["Rooster"],
+  Dragon: ["Dog"],
+  Snake: ["Pig"],
+  Horse: ["Rat"],
+  Goat: ["Buffalo"],
+  Monkey: ["Tiger"],
+  Rooster: ["Cat"],
+  Dog: ["Dragon"],
+  Pig: ["Snake"]
+};
+
+export const animalEnemiesSecondary: Record<string, string[]> = {
+  Rat: ["Goat"],
+  Buffalo: ["Horse"],
+  Tiger: ["Snake"],
+  Cat: ["Dragon"],
+  Dragon: ["Cat"],
+  Snake: ["Tiger"],
+  Horse: ["Buffalo"],
+  Goat: ["Rat"],
+  Monkey: ["Pig"],
+  Rooster: ["Dog"],
+  Dog: ["Rooster"],
+  Pig: ["Monkey"]
+};
+
+export const letterMap: Record<string, number> = {};
+"AJS".split("").forEach(c => letterMap[c] = 1);
+"BKT".split("").forEach(c => letterMap[c] = 2);
+"CLU".split("").forEach(c => letterMap[c] = 3);
+"DMV".split("").forEach(c => letterMap[c] = 4);
+"ENW".split("").forEach(c => letterMap[c] = 5);
+"FOX".split("").forEach(c => letterMap[c] = 6);
+"GPY".split("").forEach(c => letterMap[c] = 7);
+"HQZ".split("").forEach(c => letterMap[c] = 8);
+"IR".split("").forEach(c => letterMap[c] = 9);
+
+export const vowels = new Set(["A", "E", "I", "O", "U"]);
+
+export function reduceToSingleDigit(n: number): number {
+  while (true) {
+    if (n === 11 || n === 22 || n === 33) return n;
+    if (n < 10) return n;
+    n = String(n).split("").reduce((a, d) => a + Number(d), 0);
+  }
+}
+
+export function sumDigitsOfString(s: string): number {
+  return s.split("").reduce((a, ch) => a + (/\d/.test(ch) ? Number(ch) : 0), 0);
+}
+
+export function getLifePath(dob: Date): { lifePath: number; rawTotal: number; mm: string; dd: string; yyyy: string } {
+  const mm = String(dob.getMonth() + 1).padStart(2, "0");
+  const dd = String(dob.getDate()).padStart(2, "0");
+  const yyyy = String(dob.getFullYear());
+  const raw = sumDigitsOfString(mm + dd + yyyy);
+  return { lifePath: reduceToSingleDigit(raw), rawTotal: raw, mm, dd, yyyy };
+}
+
+export function getDayNumber(dob: Date): number {
+  return reduceToSingleDigit(dob.getDate());
+}
+
+export function getMonthNumber(dob: Date): number {
+  return reduceToSingleDigit(dob.getMonth() + 1);
+}
+
+export function getVietnamAnimal(year: number): string {
+  let idx = (year - 2020) % 12;
+  if (idx < 0) idx += 12;
+  return vietnamAnimals[idx];
+}
+
+export function getUniversalYear(date: Date = new Date()): number {
+  return reduceToSingleDigit(sumDigitsOfString(String(date.getFullYear())));
+}
+
+export function getPersonalYear(dob: Date, date: Date = new Date()): number {
+  const monthNum = reduceToSingleDigit(dob.getMonth() + 1);
+  const dayNum = reduceToSingleDigit(dob.getDate());
+  const uy = getUniversalYear(date);
+  return reduceToSingleDigit(monthNum + dayNum + uy);
+}
+
+export function getPersonalMonth(dob: Date, date: Date = new Date()): number {
+  const py = getPersonalYear(dob, date);
+  const currentMonth = reduceToSingleDigit(date.getMonth() + 1);
+  return reduceToSingleDigit(py + currentMonth);
+}
+
+export function getPersonalDay(dob: Date, date: Date = new Date()): number {
+  const pm = getPersonalMonth(dob, date);
+  const currentDay = reduceToSingleDigit(date.getDate());
+  return reduceToSingleDigit(pm + currentDay);
+}
+
+export function getNameNumerology(name: string): { 
+  clean: string; 
+  expressionNumber: number; 
+  soulUrge: number; 
+  personality: number 
+} {
+  const clean = (name || "").toUpperCase().replace(/[^A-Z]/g, "");
+  let sum = 0, vowelSum = 0, consonantSum = 0;
+  for (const ch of clean) {
+    const v = letterMap[ch] || 0;
+    sum += v;
+    if (vowels.has(ch)) vowelSum += v;
+    else consonantSum += v;
+  }
+  return {
+    clean,
+    expressionNumber: reduceToSingleDigit(sum),
+    soulUrge: reduceToSingleDigit(vowelSum),
+    personality: reduceToSingleDigit(consonantSum)
+  };
+}
+
+export function getNextYearsByAnimals(targetAnimals: string[], count: number, startYear: number): { year: number; animal: string }[] {
+  const out: { year: number; animal: string }[] = [];
+  let y = startYear;
+  while (out.length < count) {
+    const a = getVietnamAnimal(y);
+    if (targetAnimals.includes(a)) out.push({ year: y, animal: a });
+    y += 1;
+  }
+  return out;
+}
+
+export interface CompatibilityResult {
+  totalScore: number;
+  breakdown: {
+    category: string;
+    personA: number | string;
+    personB: number | string;
+    points: number;
+    maxPoints: number;
+    explanation: string;
+  }[];
+}
+
+export function getRelationType(a: number, b: number): "same" | "complementary" | "friction" | "neutral" {
+  if (a === b) return "same";
+  const comp: Record<number, number[]> = {
+    1: [3, 5, 7], 2: [4, 6, 8], 3: [1, 5, 9], 4: [2, 8], 5: [1, 3, 7], 6: [2, 9], 7: [1, 5], 8: [2, 4], 9: [3, 6]
+  };
+  const fric: Record<number, number[]> = {
+    1: [2, 6], 2: [1, 5], 3: [4, 8], 4: [3, 9], 5: [2, 8], 6: [1, 7], 7: [6, 8], 8: [3, 5, 7], 9: [4]
+  };
+  if ((comp[a] || []).includes(b)) return "complementary";
+  if ((fric[a] || []).includes(b)) return "friction";
+  return "neutral";
+}
+
+export function calculateCompatibility(
+  personA: { lifePath: number; dayNumber: number; monthNumber: number; animal: string },
+  personB: { lifePath: number; dayNumber: number; monthNumber: number; animal: string }
+): CompatibilityResult {
+  const breakdown: CompatibilityResult["breakdown"] = [];
+  
+  const lpRelation = getRelationType(personA.lifePath, personB.lifePath);
+  const lpPoints = lpRelation === "same" ? 25 : lpRelation === "complementary" ? 30 : lpRelation === "neutral" ? 15 : 5;
+  breakdown.push({
+    category: "Life Path",
+    personA: personA.lifePath,
+    personB: personB.lifePath,
+    points: lpPoints,
+    maxPoints: 30,
+    explanation: `Life Paths ${personA.lifePath} and ${personB.lifePath} are ${lpRelation}`
+  });
+
+  const dayRelation = getRelationType(personA.dayNumber, personB.dayNumber);
+  const dayPoints = dayRelation === "same" ? 18 : dayRelation === "complementary" ? 20 : dayRelation === "neutral" ? 10 : 3;
+  breakdown.push({
+    category: "Day Number",
+    personA: personA.dayNumber,
+    personB: personB.dayNumber,
+    points: dayPoints,
+    maxPoints: 20,
+    explanation: `Day Numbers ${personA.dayNumber} and ${personB.dayNumber} are ${dayRelation}`
+  });
+
+  const monthRelation = getRelationType(personA.monthNumber, personB.monthNumber);
+  const monthPoints = monthRelation === "same" ? 8 : monthRelation === "complementary" ? 10 : monthRelation === "neutral" ? 5 : 2;
+  breakdown.push({
+    category: "Month Number",
+    personA: personA.monthNumber,
+    personB: personB.monthNumber,
+    points: monthPoints,
+    maxPoints: 10,
+    explanation: `Month Numbers ${personA.monthNumber} and ${personB.monthNumber} are ${monthRelation}`
+  });
+
+  let zodiacPoints = 20;
+  let zodiacExplanation = "Neutral compatibility";
+  if (personA.animal === personB.animal) {
+    zodiacPoints = 28;
+    zodiacExplanation = "Same animal sign - strong understanding";
+  } else if ((animalFriends[personA.animal] || []).includes(personB.animal)) {
+    zodiacPoints = 40;
+    zodiacExplanation = "Natural allies - excellent harmony";
+  } else if ((animalEnemiesPrimary[personA.animal] || []).includes(personB.animal)) {
+    zodiacPoints = 0;
+    zodiacExplanation = "Primary clash - significant challenges";
+  } else if ((animalEnemiesSecondary[personA.animal] || []).includes(personB.animal)) {
+    zodiacPoints = 10;
+    zodiacExplanation = "Secondary tension - requires work";
+  }
+  breakdown.push({
+    category: "Zodiac Animals",
+    personA: personA.animal,
+    personB: personB.animal,
+    points: zodiacPoints,
+    maxPoints: 40,
+    explanation: zodiacExplanation
+  });
+
+  const totalScore = breakdown.reduce((sum, b) => sum + b.points, 0);
+
+  return { totalScore, breakdown };
+}
+
+export interface OptimalDay {
+  date: Date;
+  personalDay: number;
+  matches: string[];
+  score: number;
+}
+
+export function getOptimalDays(dob: Date, days: number = 30): OptimalDay[] {
+  const lifePath = getLifePath(dob).lifePath;
+  const dayNum = getDayNumber(dob);
+  const monthNum = getMonthNumber(dob);
+  
+  const results: OptimalDay[] = [];
+  const today = new Date();
+  
+  for (let i = 0; i < days; i++) {
+    const checkDate = new Date(today);
+    checkDate.setDate(today.getDate() + i);
+    
+    const pd = getPersonalDay(dob, checkDate);
+    const matches: string[] = [];
+    let score = 0;
+    
+    if (pd === lifePath) {
+      matches.push("Life Path");
+      score += 3;
+    }
+    if (pd === dayNum) {
+      matches.push("Day Number");
+      score += 2;
+    }
+    if (pd === monthNum) {
+      matches.push("Month Number");
+      score += 1;
+    }
+    
+    if (matches.length > 0) {
+      results.push({ date: checkDate, personalDay: pd, matches, score });
+    }
+  }
+  
+  return results.sort((a, b) => b.score - a.score).slice(0, 10);
+}
+
+export interface ReportTemplate {
+  id: string;
+  combo: string;
+  name: string;
+  archetype: string;
+  summary: string;
+  keyInsights: string[];
+}
+
+export const reportTemplates: ReportTemplate[] = [
+  {
+    id: "7-3-8",
+    combo: "7-3-8",
+    name: "The Analyst-Communicator",
+    archetype: "Strategic Voice of Authority",
+    summary: "You possess a rare combination: the depth of a researcher, the gift of communication, and the power to manifest in the material world. Your life path (7) drives you to seek truth and master specialized knowledge. Your day energy (3) gives you the ability to articulate complex ideas in accessible ways. Your month arena (8) positions you in environments of power, money, and authority.",
+    keyInsights: [
+      "Your sarcasm and sharp wit can be your greatest asset or liability—words carry 8x karmic weight",
+      "Wealth comes through expertise translated into influence, not through charm alone",
+      "Isolation protects your research mind but blocks the partnerships you need for impact",
+      "Authority figures either become your greatest allies or your most significant blockers",
+      "Teaching and advising are your natural monetization paths"
+    ]
+  },
+  {
+    id: "8-1-4",
+    combo: "8-1-4",
+    name: "The Empire Builder",
+    archetype: "Structured Power Executive",
+    summary: "You are designed to build lasting structures of power and wealth. Your life path (8) orients you toward material mastery and karmic lessons around authority. Your day energy (1) amplifies your leadership and self-direction. Your month arena (4) grounds you in systems, discipline, and practical execution.",
+    keyInsights: [
+      "You have CEO energy—but ego can derail the empire before it's built",
+      "Every business decision creates karmic ripples; integrity is non-negotiable",
+      "Real estate, construction, and infrastructure are your natural domains",
+      "Patience with the building process is your hidden superpower",
+      "Delegation is harder for you but essential for scale"
+    ]
+  },
+  {
+    id: "9-6-2",
+    combo: "9-6-2",
+    name: "The Compassionate Healer",
+    archetype: "Nurturing Universal Servant",
+    summary: "Your entire blueprint is oriented toward service and healing. Your life path (9) gives you the wisdom of completion and universal love. Your day energy (6) amplifies your nurturing instincts and responsibility to others. Your month arena (2) positions you in cooperative, emotionally intelligent environments.",
+    keyInsights: [
+      "Burnout is your greatest risk—you give until empty and wonder why you're depleted",
+      "Healthcare, counseling, and community work are natural fits",
+      "Learning to receive is as important as giving",
+      "Partnerships amplify your impact—you're not meant to serve alone",
+      "Endings and transitions are where you offer the most profound support"
+    ]
+  },
+  {
+    id: "1-5-9",
+    combo: "1-5-9",
+    name: "The Visionary Pioneer",
+    archetype: "Freedom-Seeking World Changer",
+    summary: "You are designed for big-picture impact with the freedom to pursue it your way. Your life path (1) makes you a natural leader and initiator. Your day energy (5) gives you adaptability and hunger for new experiences. Your month arena (9) positions you in humanitarian or creative spheres.",
+    keyInsights: [
+      "Routine kills your spirit—build flexibility into everything you do",
+      "Your restlessness is a feature, not a bug; channel it into meaningful pursuits",
+      "Leadership through inspiration, not authority, is your style",
+      "Travel, media, and global initiatives suit your energy",
+      "Letting go of control allows bigger possibilities to emerge"
+    ]
+  },
+  {
+    id: "3-6-9",
+    combo: "3-6-9",
+    name: "The Creative Nurturer",
+    archetype: "Artistic Humanitarian",
+    summary: "You carry the triple vibration of creativity, care, and universal love. Your life path (3) makes you a natural communicator and artist. Your day energy (6) grounds you in responsibility and home. Your month arena (9) expands your canvas to global impact.",
+    keyInsights: [
+      "Your creativity serves healing—don't separate art from heart",
+      "Family dynamics are central to your growth and expression",
+      "Teaching through storytelling is your superpower",
+      "Over-giving is your shadow; set boundaries early and often",
+      "Legacy comes through what you create and nurture"
+    ]
+  },
+  {
+    id: "4-2-6",
+    combo: "4-2-6",
+    name: "The Steady Builder",
+    archetype: "Reliable Foundation Creator",
+    summary: "You are the rock that others depend on. Your life path (4) gives you the discipline to build lasting structures. Your day energy (2) makes you cooperative and emotionally aware. Your month arena (6) centers you in home, family, and community service.",
+    keyInsights: [
+      "Real estate, healthcare, and family businesses suit you perfectly",
+      "Your reliability is your competitive advantage—don't undervalue it",
+      "Partnerships need to be built on mutual respect and shared values",
+      "Workaholism is your escape from emotional discomfort",
+      "Creating sanctuaries for others is both your gift and your purpose"
+    ]
+  },
+  {
+    id: "5-7-1",
+    combo: "5-7-1",
+    name: "The Independent Seeker",
+    archetype: "Curious Truth Pioneer",
+    summary: "You blend freedom, wisdom, and leadership into a unique path. Your life path (5) drives you toward constant change and new experiences. Your day energy (7) gives you analytical depth and spiritual seeking. Your month arena (1) positions you as an initiator.",
+    keyInsights: [
+      "Traditional employment rarely satisfies you—entrepreneurship calls",
+      "Research and exploration fund your lifestyle",
+      "Solo travel and independent study are essential, not optional",
+      "Commitment issues stem from fear of losing freedom",
+      "Innovation through unconventional thinking is your hallmark"
+    ]
+  },
+  {
+    id: "11-22-33",
+    combo: "11-22-33",
+    name: "The Master Trinity",
+    archetype: "Cosmic Channel",
+    summary: "You carry the weight of three Master Numbers—an extremely rare and powerful configuration. Your life path (11) gives you intuitive illumination. Your day energy (22) provides massive building capability. Your month arena (33) positions you as a master teacher.",
+    keyInsights: [
+      "Your nervous system requires extra care—meditation and rest are mandatory",
+      "You are meant for institutional-level impact, not small projects",
+      "The pressure you feel is proportional to your potential",
+      "Ground your visions in practical steps or overwhelm takes over",
+      "Service to humanity is not optional—it's your contract"
+    ]
+  }
+];
+
+export function getReportTemplate(lifePath: number, dayNum: number, monthNum: number): ReportTemplate | null {
+  const combo = `${lifePath}-${dayNum}-${monthNum}`;
+  return reportTemplates.find(t => t.combo === combo) || null;
+}
+
+export function getDailyForecast(personalDay: number): string {
+  const forecasts: Record<number, string> = {
+    1: "Today favors bold initiative—start something new or take the lead on a stalled project.",
+    2: "Collaboration is your power today; listen deeply and let partnerships guide you forward.",
+    3: "Express yourself creatively—write, speak, or share something meaningful with others.",
+    4: "Focus on building and organizing; tackle tasks that require patience and attention to detail.",
+    5: "Embrace change and stay flexible—unexpected opportunities may redirect your day positively.",
+    6: "Nurture your relationships and environment; create beauty and offer support where needed.",
+    7: "Seek solitude for reflection; answers emerge in quiet moments of contemplation today.",
+    8: "Financial and power matters are highlighted—make decisions with integrity and authority.",
+    9: "Release what no longer serves you; focus on the bigger picture and acts of compassion.",
+    11: "Your intuition is amplified—trust inner guidance and share your vision with others.",
+    22: "Think in terms of legacy today; plan and build something that will outlast you.",
+    33: "Your healing presence is needed—teach, guide, and hold space for those who need you."
+  };
+  return forecasts[personalDay] || "Today is a neutral day—flow with what comes and stay present.";
+}
