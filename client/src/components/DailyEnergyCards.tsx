@@ -54,25 +54,25 @@ export function DailyEnergyCards() {
       
       <div className="grid gap-4 md:grid-cols-3">
         {/* Today's Numerology */}
-        <Card className="bg-card/50 min-h-44">
-          <CardContent className="pt-6 pb-6 h-full flex flex-col">
-            <div className="flex gap-3 h-full">
-              <div className="rounded-lg bg-primary/10 p-2 mt-1 flex-shrink-0">
+        <Card className="bg-card/50 h-full">
+          <CardContent className="pt-6 pb-6 flex flex-col h-full">
+            <div className="flex gap-3">
+              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
                 <Zap className="h-5 w-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                  Numerology
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Today's Number
                 </p>
-                <div className="flex items-baseline gap-2 flex-wrap mb-2">
-                  <p className="text-2xl font-bold" data-testid="energy-today-number">
+                <div className="mb-3">
+                  <p className="text-3xl font-bold" data-testid="energy-today-number">
                     {todayNumber}
                   </p>
-                  <Badge variant="secondary" className="text-xs whitespace-nowrap">
-                    {todayMeaning.core.split(" &")[0]}
-                  </Badge>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {todayMeaning.core}
+                  </p>
                 </div>
-                <p className="text-xs text-muted-foreground mt-auto">
+                <p className="text-xs text-muted-foreground mt-auto leading-relaxed">
                   {todayMeaning.dailyForecast}
                 </p>
               </div>
@@ -81,54 +81,48 @@ export function DailyEnergyCards() {
         </Card>
 
         {/* This Week's Energy */}
-        <Card className="bg-card/50 min-h-44">
-          <CardContent className="pt-6 pb-6 h-full flex flex-col">
-            <div className="flex gap-3 h-full">
-              <div className="rounded-lg bg-primary/10 p-2 mt-1 flex-shrink-0">
+        <Card className="bg-card/50 h-full">
+          <CardContent className="pt-6 pb-6 flex flex-col h-full">
+            <div className="flex gap-3">
+              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
                 <Calendar className="h-5 w-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                  This Week
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Week {weekNumber} Theme
                 </p>
-                <div className="flex items-baseline gap-2 flex-wrap mb-2">
-                  <p className="text-2xl font-bold" data-testid="energy-week-number">
+                <div className="mb-3">
+                  <p className="text-3xl font-bold" data-testid="energy-week-number">
                     {weekNumber1}
                   </p>
-                  <Badge variant="secondary" className="text-xs whitespace-nowrap">
-                    Week {weekNumber}
-                  </Badge>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {weekMeaning.core}
+                  </p>
                 </div>
-                <p className="text-xs text-muted-foreground mt-auto">
-                  {weekMeaning.core.split(" &")[0]} • {weekMeaning.essence.substring(0, 80)}
-                </p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* This Month's Energy */}
-        <Card className="bg-card/50 min-h-44">
-          <CardContent className="pt-6 pb-6 h-full flex flex-col">
-            <div className="flex gap-3 h-full">
-              <div className="rounded-lg bg-primary/10 p-2 mt-1 flex-shrink-0">
+        <Card className="bg-card/50 h-full">
+          <CardContent className="pt-6 pb-6 flex flex-col h-full">
+            <div className="flex gap-3">
+              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
                 <BarChart3 className="h-5 w-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                  This Month
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  {today.toLocaleDateString("en-US", { month: "long" })} Theme
                 </p>
-                <div className="flex items-baseline gap-2 flex-wrap mb-2">
-                  <p className="text-2xl font-bold" data-testid="energy-month-number">
+                <div className="mb-3">
+                  <p className="text-3xl font-bold" data-testid="energy-month-number">
                     {monthNumber}
                   </p>
-                  <Badge variant="secondary" className="text-xs whitespace-nowrap">
-                    {today.toLocaleDateString("en-US", { month: "short" })}
-                  </Badge>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {monthMeaning.core}
+                  </p>
                 </div>
-                <p className="text-xs text-muted-foreground mt-auto">
-                  {monthMeaning.core.split(" &")[0]} • {monthMeaning.essence.substring(0, 80)}
-                </p>
               </div>
             </div>
           </CardContent>
