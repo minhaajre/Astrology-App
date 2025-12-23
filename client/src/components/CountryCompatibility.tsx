@@ -28,11 +28,13 @@ interface CountryResult {
 interface CountryCompatibilityProps {
   personDob?: Date;
   personName?: string;
+  initialCountry?: string;
 }
 
 export function CountryCompatibility({
   personDob,
   personName,
+  initialCountry,
 }: CountryCompatibilityProps) {
   const [allResults, setAllResults] = useState<CountryResult[]>([]);
   const [selectedCountryIndex, setSelectedCountryIndex] = useState<number | null>(
@@ -40,6 +42,16 @@ export function CountryCompatibility({
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [customCountryResult, setCustomCountryResult] = useState<CountryResult | null>(null);
+
+  // Auto-analyze if initialCountry provided
+  useEffect(() => {
+    if (!initialCountry || !allResults.length) return;
+    
+    const countryIndex = allResults.findIndex(r => r.country === initialCountry);
+    if (countryIndex >= 0) {
+      setSelectedCountryIndex(countryIndex);
+    }
+  }, [initialCountry, allResults]);
 
   const personData = useMemo(() => {
     if (!personDob) return null;

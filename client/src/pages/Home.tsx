@@ -66,13 +66,14 @@ interface PersonData {
   personalYear: number;
   personalMonth: number;
   personalDay: number;
+  country?: string;
 }
 
 export default function Home() {
   const [personData, setPersonData] = useState<PersonData | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const handleGenerate = (name: string, dob: Date) => {
+  const handleGenerate = (name: string, dob: Date, country?: string) => {
     const lp = getLifePath(dob);
     const dayNum = getDayNumber(dob);
     const monthNum = getMonthNumber(dob);
@@ -93,6 +94,7 @@ export default function Home() {
       personalYear: py,
       personalMonth: pm,
       personalDay: pd,
+      country,
     });
     setActiveTab("overview");
   };
@@ -261,9 +263,9 @@ export default function Home() {
                           <div className="flex items-center justify-between">
                             <div>
                               <p className="text-sm text-muted-foreground">Expression</p>
-                              <p className="text-2xl font-bold" data-testid="text-expression">{nameNumerology.expression}</p>
+                              <p className="text-2xl font-bold" data-testid="text-expression">{nameNumerology.expressionNumber}</p>
                             </div>
-                            <StatusBadge status={evaluateCycleStatus(personData.lifePath, nameNumerology.expression)} testId="status-gematria" />
+                            <StatusBadge status={evaluateCycleStatus(personData.lifePath, nameNumerology.expressionNumber)} testId="status-gematria" />
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="flex items-center justify-between">
@@ -295,30 +297,10 @@ export default function Home() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      {nameNumerology && (
-                        <>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-sm text-muted-foreground">Abjad Total</p>
-                              <p className="text-2xl font-bold" data-testid="text-abjad">{nameNumerology.abjad}</p>
-                            </div>
-                            <StatusBadge status={evaluateCycleStatus(personData.lifePath, nameNumerology.abjadReduced)} testId="status-abjad" />
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <p className="text-xs text-muted-foreground">Reduced Value</p>
-                              <p className="text-lg font-semibold" data-testid="text-abjad-reduced">{nameNumerology.abjadReduced}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-muted-foreground">Intensity</p>
-                              <p className="text-lg font-semibold" data-testid="text-abjad-intensity">{nameNumerology.abjadIntensity}</p>
-                            </div>
-                          </div>
-                          <div className="pt-2 border-t text-sm text-muted-foreground">
-                            Traditional Arabic numeral system
-                          </div>
-                        </>
-                      )}
+                      <div>
+                        <p className="text-sm text-muted-foreground">Abjad System</p>
+                        <p className="text-sm text-muted-foreground mt-2">Arabic gematria system not yet implemented in this release</p>
+                      </div>
                     </CardContent>
                   </Card>
 
@@ -542,7 +524,7 @@ export default function Home() {
                   <NameNumerology initialName={personData.name} />
                 </div>
 
-                <CountryCompatibility personDob={personData.dob} personName={personData.name} />
+                <CountryCompatibility personDob={personData.dob} personName={personData.name} initialCountry={personData.country} />
               </TabsContent>
 
               <TabsContent value="zodiac" className="space-y-6">
