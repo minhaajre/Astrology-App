@@ -14,15 +14,16 @@ import {
   calculateCompatibility,
   type CompatibilityResult 
 } from "@/lib/numerology";
-import { Heart, Users, Calculator, User, Hash } from "lucide-react";
+import { Heart, Users, Calculator, User, Hash, MapPin } from "lucide-react";
 import { TriCodeCompatibility } from "./TriCodeCompatibility";
+import { CountryCompatibility } from "./CountryCompatibility";
 
 interface CompatibilityCalculatorProps {
   personA?: { name: string; dob: Date };
 }
 
 export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProps) {
-  const [mode, setMode] = useState<"standard" | "tricode">("standard");
+  const [mode, setMode] = useState<"standard" | "tricode" | "country">("standard");
   const [personBName, setPersonBName] = useState("");
   const [personBDob, setPersonBDob] = useState("");
   const [result, setResult] = useState<CompatibilityResult | null>(null);
@@ -66,8 +67,8 @@ export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProp
 
   return (
     <div className="space-y-6">
-      <Tabs value={mode} onValueChange={(v) => setMode(v as "standard" | "tricode")}>
-        <TabsList className="grid w-full grid-cols-2 mb-6">
+      <Tabs value={mode} onValueChange={(v) => setMode(v as "standard" | "tricode" | "country")}>
+        <TabsList className="grid w-full grid-cols-3 mb-6">
           <TabsTrigger value="standard" className="flex items-center gap-2" data-testid="tab-standard-compatibility">
             <Heart className="h-4 w-4" />
             Standard
@@ -76,10 +77,18 @@ export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProp
             <Hash className="h-4 w-4" />
             Tri-Code
           </TabsTrigger>
+          <TabsTrigger value="country" className="flex items-center gap-2" data-testid="tab-country-compatibility">
+            <MapPin className="h-4 w-4" />
+            Country
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="tricode" className="mt-0">
           <TriCodeCompatibility personA={personA} />
+        </TabsContent>
+
+        <TabsContent value="country" className="mt-0">
+          <CountryCompatibility personDob={personA?.dob} personName={personA?.name} />
         </TabsContent>
 
         <TabsContent value="standard" className="mt-0 space-y-6">
