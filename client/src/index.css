@@ -43,8 +43,8 @@
   --chart-3: 20 45% 55%;
   --chart-4: 20 35% 60%;
   --chart-5: 20 25% 65%;
-  --font-sans: Georgia, "Anthropic Serif", serif;
-  --font-serif: Georgia, "Anthropic Serif", serif;
+  --font-sans: Lora, Georgia, "Anthropic Serif", serif;
+  --font-serif: Lora, Georgia, "Anthropic Serif", serif;
   --font-mono: Menlo, monospace;
   --radius: .5rem;
   --shadow-2xs: 0px 2px 0px 0px hsl(240 6% 10% / 0.00);
@@ -122,6 +122,8 @@
   --destructive-foreground: 0 0% 100%;
   --input: 20 18% 35%;
   --ring: 20 68% 52%;
+  --font-sans: Lora, Georgia, "Anthropic Serif", serif;
+  --font-serif: Lora, Georgia, "Anthropic Serif", serif;
   --chart-1: 20 68% 62%;
   --chart-2: 280 70% 68%;
   --chart-3: 200 75% 60%;
