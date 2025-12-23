@@ -292,6 +292,28 @@ export function getZodiacSign(date: Date): ZodiacSign {
   return zodiacSigns.Sagittarius;
 }
 
+export function generateDailyInsight(todayNumber: number, weekNumber: number, monthNumber: number, zodiacSign: ZodiacSign, yearAnimal: string, monthAnimal: string): string {
+  const todayMeaning = numberMeanings[todayNumber];
+  const weekMeaning = numberMeanings[weekNumber];
+  const monthMeaning = numberMeanings[monthNumber];
+  
+  const insights: string[] = [];
+  
+  if (todayNumber === weekNumber && weekNumber === monthNumber) {
+    insights.push(`All cycles align on ${todayMeaning.core.toLowerCase()} — extraordinary clarity and momentum today.`);
+  } else if (todayNumber === weekNumber || todayNumber === monthNumber) {
+    insights.push(`Today's ${todayMeaning.core.toLowerCase()} reinforces the week's energy.`);
+  } else {
+    insights.push(`Today's ${todayMeaning.core.toLowerCase()} flows with the month's ${monthMeaning.core.toLowerCase()} theme.`);
+  }
+
+  if (monthAnimal === yearAnimal) {
+    return insights[0] + ` Your ${yearAnimal} energy peaks this month — embrace opportunities in ${zodiacSign.element.toLowerCase()} matters.`;
+  }
+  
+  return insights[0] + ` The ${monthAnimal} month brings ${zodiacSign.name} into focus — balance action with reflection.`;
+}
+
 export function getAnimalCompatibility(animalA: string, animalB: string): 'Good' | 'Neutral' | 'Enemies' {
   if (animalA === animalB) return 'Good';
   if ((animalFriends[animalA] || []).includes(animalB)) return 'Good';

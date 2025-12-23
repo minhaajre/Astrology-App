@@ -16,6 +16,7 @@ import {
   numberMeanings,
   getAnimalCompatibility,
   getZodiacSign,
+  generateDailyInsight,
 } from "@/lib/numerology";
 
 export function DailyEnergyCards() {
@@ -44,14 +45,20 @@ export function DailyEnergyCards() {
   // Western Zodiac
   const zodiacSign = getZodiacSign(today);
 
+  // Generate daily insight
+  const dailyInsight = generateDailyInsight(todayNumber, weekNumber1, monthNumber, zodiacSign, todayAnimal, monthAnimal);
+
   const getTodayCompatibility = () => getAnimalCompatibility(todayAnimal, todayAnimal);
 
   return (
     <div className="space-y-4 mb-8">
-      <div className="text-center mb-2">
+      <div className="text-center mb-4">
         <h2 className="text-lg font-semibold tracking-tight">Today's Energies</h2>
         <p className="text-xs text-muted-foreground">
           {today.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
+        </p>
+        <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+          {dailyInsight}
         </p>
       </div>
       

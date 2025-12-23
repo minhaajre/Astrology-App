@@ -664,18 +664,7 @@ export default function Home() {
                 <ExportPanel name={personData.name} dob={personData.dob} />
               </TabsContent>
             </Tabs>
-          ) : (
-            <div className="text-center py-16">
-              <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-muted">
-                <Sparkles className="h-12 w-12 text-muted-foreground" />
-              </div>
-              <h2 className="text-2xl font-bold mb-2">Discover Your Numbers</h2>
-              <p className="text-muted-foreground max-w-md mx-auto">
-                Enter your name and date of birth above to generate your personalized
-                numerology report with life path analysis, timing advice, and compatibility insights.
-              </p>
-            </div>
-          )}
+          ) : null}
         </div>
       </main>
 
