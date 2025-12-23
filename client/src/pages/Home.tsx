@@ -13,6 +13,7 @@ import { CountryCompatibility } from "@/components/CountryCompatibility";
 import { ExportPanel } from "@/components/ExportPanel";
 import { NameNumerology } from "@/components/NameNumerology";
 import { DailyEnergyCards } from "@/components/DailyEnergyCards";
+import { SpecialDatesInfo } from "@/components/SpecialDatesInfo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -162,6 +163,7 @@ export default function Home() {
       <main className="mx-auto max-w-7xl px-4 py-8 md:px-6">
         <div className="space-y-8">
           <DailyEnergyCards />
+          <SpecialDatesInfo />
           <InputForm onGenerate={handleGenerate} />
 
           {personData ? (
