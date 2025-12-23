@@ -15,6 +15,7 @@ import { NameNumerology } from "@/components/NameNumerology";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   getLifePath,
   getDayNumber,
@@ -32,6 +33,7 @@ import {
   getAnimalCompatibility,
   evaluateCycleStatus,
   getNameNumerology,
+  getArabicNumerology,
   type NumberStatus,
 } from "@/lib/numerology";
 import { 
@@ -67,13 +69,14 @@ interface PersonData {
   personalMonth: number;
   personalDay: number;
   country?: string;
+  arabicName?: string;
 }
 
 export default function Home() {
   const [personData, setPersonData] = useState<PersonData | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const handleGenerate = (name: string, dob: Date, country?: string) => {
+  const handleGenerate = (name: string, dob: Date, country?: string, arabicName?: string) => {
     const lp = getLifePath(dob);
     const dayNum = getDayNumber(dob);
     const monthNum = getMonthNumber(dob);
@@ -95,6 +98,7 @@ export default function Home() {
       personalMonth: pm,
       personalDay: pd,
       country,
+      arabicName,
     });
     setActiveTab("overview");
   };
@@ -207,6 +211,20 @@ export default function Home() {
                       <CardTitle className="flex items-center gap-2 text-base">
                         <Star className="h-5 w-5 text-primary" />
                         Numerology
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="w-64 space-y-2">
+                              <p className="font-semibold">Numerology</p>
+                              <p className="text-xs">Based on your birth date, revealing your life path number and daily guidance.</p>
+                              <p className="text-xs mt-3"><strong>Good:</strong> Numbers in harmony with your life path</p>
+                              <p className="text-xs"><strong>Neutral:</strong> Numbers with neither positive nor challenging energy</p>
+                              <p className="text-xs"><strong>Challenging:</strong> Numbers that create friction - requiring conscious growth</p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -255,6 +273,20 @@ export default function Home() {
                       <CardTitle className="flex items-center gap-2 text-base">
                         <Type className="h-5 w-5 text-primary" />
                         Gematria (Latin)
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="w-64 space-y-2">
+                              <p className="font-semibold">Gematria (Latin)</p>
+                              <p className="text-xs">Pythagorean numerology of your name using the Latin alphabet.</p>
+                              <p className="text-xs mt-2"><strong>Expression:</strong> How you express yourself and your talents</p>
+                              <p className="text-xs"><strong>Soul Urge:</strong> Your inner desires and motivations</p>
+                              <p className="text-xs"><strong>Personality:</strong> How others perceive you</p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -294,13 +326,54 @@ export default function Home() {
                       <CardTitle className="flex items-center gap-2 text-base">
                         <BookOpen className="h-5 w-5 text-primary" />
                         Abjad (Arabic)
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="w-64 space-y-2">
+                              <p className="font-semibold">Abjad (Arabic)</p>
+                              <p className="text-xs">Traditional Arabic numerology system where each letter has a numerical value.</p>
+                              <p className="text-xs mt-2">Enter your Arabic name on the front page to calculate this value.</p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Abjad System</p>
-                        <p className="text-sm text-muted-foreground mt-2">Arabic gematria system not yet implemented in this release</p>
-                      </div>
+                      {personData?.arabicName ? (
+                        (() => {
+                          const abjad = getArabicNumerology(personData.arabicName);
+                          return abjad ? (
+                            <>
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="text-sm text-muted-foreground">Abjad Total</p>
+                                  <p className="text-2xl font-bold" data-testid="text-abjad">{abjad.total}</p>
+                                </div>
+                                <StatusBadge status={evaluateCycleStatus(personData.lifePath, abjad.reduced)} testId="status-abjad" />
+                              </div>
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <p className="text-xs text-muted-foreground">Reduced Value</p>
+                                  <p className="text-lg font-semibold" data-testid="text-abjad-reduced">{abjad.reduced}</p>
+                                </div>
+                                <div>
+                                  <p className="text-xs text-muted-foreground">Average Per Letter</p>
+                                  <p className="text-lg font-semibold" data-testid="text-abjad-intensity">{abjad.intensity}</p>
+                                </div>
+                              </div>
+                              <div className="pt-2 border-t text-sm text-muted-foreground">
+                                Calculated from "{personData.arabicName}"
+                              </div>
+                            </>
+                          ) : (
+                            <p className="text-sm text-muted-foreground">Unable to calculate for this name</p>
+                          );
+                        })()
+                      ) : (
+                        <p className="text-sm text-muted-foreground">Arabic name was not provided. Enter your Arabic name on the front page to calculate this value.</p>
+                      )}
                     </CardContent>
                   </Card>
 
@@ -309,6 +382,20 @@ export default function Home() {
                       <CardTitle className="flex items-center gap-2 text-base">
                         <Target className="h-5 w-5 text-primary" />
                         Vietnamese Zodiac
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="w-64 space-y-2">
+                              <p className="font-semibold">Vietnamese Zodiac</p>
+                              <p className="text-xs">The 12-year zodiac cycle determining your animal sign and its characteristics.</p>
+                              <p className="text-xs mt-2"><strong>Your Animal:</strong> Determined by your birth year</p>
+                              <p className="text-xs"><strong>Current Year/Month:</strong> Today's animal sign</p>
+                              <p className="text-xs"><strong>Compatibility:</strong> How your animal interacts with current energies</p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">

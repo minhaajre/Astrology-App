@@ -384,6 +384,29 @@ export function getNameNumerology(name: string): {
   };
 }
 
+export function getArabicNumerology(name: string): { 
+  clean: string; 
+  total: number; 
+  reduced: number;
+  intensity: number;
+} | null {
+  if (!name || !name.trim()) return null;
+  
+  const clean = (name || "").trim();
+  let total = 0;
+  
+  for (const ch of clean) {
+    total += abjadMap[ch] || 0;
+  }
+  
+  return {
+    clean,
+    total,
+    reduced: reduceToSingleDigit(total),
+    intensity: Math.floor(total / clean.length)
+  };
+}
+
 export function getNextYearsByAnimals(targetAnimals: string[], count: number, startYear: number): { year: number; animal: string }[] {
   const out: { year: number; animal: string }[] = [];
   let y = startYear;

@@ -14,12 +14,13 @@ import {
 import { countries } from "@/lib/countries";
 
 interface InputFormProps {
-  onGenerate: (name: string, dob: Date, country?: string) => void;
+  onGenerate: (name: string, dob: Date, country?: string, arabicName?: string) => void;
   isLoading?: boolean;
 }
 
 export function InputForm({ onGenerate, isLoading }: InputFormProps) {
   const [name, setName] = useState("");
+  const [arabicName, setArabicName] = useState("");
   const [day, setDay] = useState("1");
   const [month, setMonth] = useState("January");
   const [year, setYear] = useState(new Date().getFullYear().toString());
@@ -64,7 +65,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
     e.preventDefault();
     if (name && day && month && year) {
       const dob = new Date(parseInt(year), monthMap[month] - 1, parseInt(day));
-      onGenerate(name, dob, country || undefined);
+      onGenerate(name, dob, country || undefined, arabicName || undefined);
     }
   };
 
@@ -111,6 +112,21 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
                 </Select>
               </div>
             </div>
+          </div>
+
+          {/* Arabic Name (optional for Abjad calculation) */}
+          <div className="space-y-2">
+            <Label htmlFor="arabicName" className="text-xs uppercase tracking-wide text-muted-foreground">
+              Arabic Name (optional for Abjad numerology)
+            </Label>
+            <Input
+              id="arabicName"
+              placeholder="Enter your name in Arabic (ع ل ي)"
+              value={arabicName}
+              onChange={(e) => setArabicName(e.target.value)}
+              dir="rtl"
+              data-testid="input-arabic-name"
+            />
           </div>
 
           {/* Date of Birth - Scrollable Selectors */}
