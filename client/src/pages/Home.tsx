@@ -27,6 +27,12 @@ import {
   getUniversalYear,
   numberMeanings,
   getReportTemplate,
+  getCurrentYearAnimal,
+  getMonthAnimal,
+  getAnimalCompatibility,
+  evaluateCycleStatus,
+  getNameNumerology,
+  type NumberStatus,
 } from "@/lib/numerology";
 import { 
   Sparkles, 
@@ -41,7 +47,12 @@ import {
   Lightbulb,
   TrendingUp,
   Info,
-  ChevronDown
+  ChevronDown,
+  Type,
+  BookOpen,
+  CheckCircle,
+  XCircle,
+  MinusCircle
 } from "lucide-react";
 
 interface PersonData {
@@ -89,6 +100,40 @@ export default function Home() {
   const template = personData
     ? getReportTemplate(personData.lifePath, personData.dayNumber, personData.monthNumber)
     : null;
+
+  // Helper for status badge rendering
+  const StatusBadge = ({ status, testId }: { status: NumberStatus | 'Good' | 'Neutral' | 'Enemies'; testId?: string }) => {
+    if (status === 'Good') {
+      return (
+        <Badge variant="default" data-testid={testId || "status-good"}>
+          <CheckCircle className="h-3 w-3 mr-1" />
+          Good
+        </Badge>
+      );
+    }
+    if (status === 'Challenging' || status === 'Enemies') {
+      return (
+        <Badge variant="destructive" data-testid={testId || "status-challenging"}>
+          <XCircle className="h-3 w-3 mr-1" />
+          Challenging
+        </Badge>
+      );
+    }
+    return (
+      <Badge variant="secondary" data-testid={testId || "status-neutral"}>
+        <MinusCircle className="h-3 w-3 mr-1" />
+        Neutral
+      </Badge>
+    );
+  };
+
+  // Current zodiac data
+  const currentDate = new Date();
+  const currentYearAnimal = getCurrentYearAnimal(currentDate);
+  const currentMonthAnimal = getMonthAnimal(currentDate);
+
+  // Name numerology for gematria section
+  const nameNumerology = personData ? getNameNumerology(personData.name) : null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -154,65 +199,166 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-3">
-                  <MetricTile
-                    label="Life Path"
-                    value={personData.lifePath}
-                    description={numberMeanings[personData.lifePath]?.core}
-                    variant="primary"
-                    size="lg"
-                  />
-                  <MetricTile
-                    label="Day Number"
-                    value={personData.dayNumber}
-                    description={numberMeanings[personData.dayNumber]?.core}
-                  />
-                  <MetricTile
-                    label="Month Number"
-                    value={personData.monthNumber}
-                    description={numberMeanings[personData.monthNumber]?.core}
-                  />
-                </div>
-
-                <div className="grid gap-4 md:grid-cols-4">
-                  <MetricTile
-                    label="Universal Year"
-                    value={personData.universalYear}
-                    size="sm"
-                  />
-                  <MetricTile
-                    label="Personal Year"
-                    value={personData.personalYear}
-                    size="sm"
-                  />
-                  <MetricTile
-                    label="Personal Month"
-                    value={personData.personalMonth}
-                    size="sm"
-                  />
-                  <MetricTile
-                    label="Personal Day"
-                    value={personData.personalDay}
-                    size="sm"
-                    variant="accent"
-                  />
-                </div>
-
-                <Card className="border-blue-200/50 bg-blue-50/30 dark:border-blue-900/30 dark:bg-blue-950/20">
-                  <CardContent className="pt-6">
-                    <div className="flex gap-4">
-                      <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-                      <div>
-                        <p className="font-medium text-blue-900 dark:text-blue-200 mb-2">
-                          Personal Year Calculation
-                        </p>
-                        <p className="text-sm text-blue-800 dark:text-blue-300 leading-relaxed">
-                          Your Personal Year cycle resets on your birthday each year, not on January 1st. This means your current Personal Year is calculated based on when you were born. As you approach your next birthday, your Personal Year will advance to the next number.
-                        </p>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base">
+                        <Star className="h-5 w-5 text-primary" />
+                        Numerology
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-muted-foreground">Life Path</p>
+                          <p className="text-2xl font-bold" data-testid="text-lifepath">{personData.lifePath}</p>
+                        </div>
+                        <StatusBadge status={evaluateCycleStatus(personData.lifePath, personData.personalYear)} testId="status-numerology" />
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-xs text-muted-foreground">Day Number</p>
+                            <p className="text-lg font-semibold" data-testid="text-daynumber">{personData.dayNumber}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-xs text-muted-foreground">Month Number</p>
+                            <p className="text-lg font-semibold" data-testid="text-monthnumber">{personData.monthNumber}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="pt-2 border-t">
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div>
+                            <p className="text-xs text-muted-foreground">Personal Year</p>
+                            <p className="text-lg font-semibold" data-testid="text-personalyear">{personData.personalYear}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Personal Month</p>
+                            <p className="text-lg font-semibold" data-testid="text-personalmonth">{personData.personalMonth}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Personal Day</p>
+                            <p className="text-lg font-semibold text-primary" data-testid="text-personalday">{personData.personalDay}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base">
+                        <Type className="h-5 w-5 text-primary" />
+                        Gematria (Latin)
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {nameNumerology && (
+                        <>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-sm text-muted-foreground">Expression</p>
+                              <p className="text-2xl font-bold" data-testid="text-expression">{nameNumerology.expression}</p>
+                            </div>
+                            <StatusBadge status={evaluateCycleStatus(personData.lifePath, nameNumerology.expression)} testId="status-gematria" />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-xs text-muted-foreground">Soul Urge</p>
+                                <p className="text-lg font-semibold" data-testid="text-soulurge">{nameNumerology.soulUrge}</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-xs text-muted-foreground">Personality</p>
+                                <p className="text-lg font-semibold" data-testid="text-personality">{nameNumerology.personality}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="pt-2 border-t text-sm text-muted-foreground">
+                            Pythagorean system calculation from "{personData.name}"
+                          </div>
+                        </>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base">
+                        <BookOpen className="h-5 w-5 text-primary" />
+                        Abjad (Arabic)
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {nameNumerology && (
+                        <>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-sm text-muted-foreground">Abjad Total</p>
+                              <p className="text-2xl font-bold" data-testid="text-abjad">{nameNumerology.abjad}</p>
+                            </div>
+                            <StatusBadge status={evaluateCycleStatus(personData.lifePath, nameNumerology.abjadReduced)} testId="status-abjad" />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <p className="text-xs text-muted-foreground">Reduced Value</p>
+                              <p className="text-lg font-semibold" data-testid="text-abjad-reduced">{nameNumerology.abjadReduced}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">Intensity</p>
+                              <p className="text-lg font-semibold" data-testid="text-abjad-intensity">{nameNumerology.abjadIntensity}</p>
+                            </div>
+                          </div>
+                          <div className="pt-2 border-t text-sm text-muted-foreground">
+                            Traditional Arabic numeral system
+                          </div>
+                        </>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base">
+                        <Target className="h-5 w-5 text-primary" />
+                        Vietnamese Zodiac
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-4xl">{animalIconNames[personData.animal]}</span>
+                          <div>
+                            <p className="text-sm text-muted-foreground">Your Animal</p>
+                            <p className="text-xl font-bold" data-testid="text-zodiac-animal">{personData.animal}</p>
+                          </div>
+                        </div>
+                        <StatusBadge status={getAnimalCompatibility(personData.animal, currentYearAnimal)} testId="status-zodiac" />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4 pt-2 border-t">
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl">{animalIconNames[currentYearAnimal]}</span>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Current Year</p>
+                            <p className="text-sm font-semibold" data-testid="text-current-year-animal">{currentYearAnimal}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl">{animalIconNames[currentMonthAnimal]}</span>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Current Month</p>
+                            <p className="text-sm font-semibold" data-testid="text-current-month-animal">{currentMonthAnimal}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
 
                 <DailyForecast personalDay={personData.personalDay} />
 
@@ -263,7 +409,7 @@ export default function Home() {
                               <ul className="space-y-2">
                                 {template.keyInsights.map((insight, i) => (
                                   <li key={i} className="flex gap-3 text-sm">
-                                    <span className="text-primary font-bold flex-shrink-0">•</span>
+                                    <span className="text-primary font-bold flex-shrink-0">-</span>
                                     <span className="text-muted-foreground leading-relaxed">{insight}</span>
                                   </li>
                                 ))}
@@ -279,15 +425,15 @@ export default function Home() {
                               <p className="text-sm font-semibold text-foreground">Your Numbers:</p>
                               <ul className="space-y-1">
                                 <li className="flex gap-3 text-sm">
-                                  <span className="text-primary font-bold flex-shrink-0">•</span>
+                                  <span className="text-primary font-bold flex-shrink-0">-</span>
                                   <span className="text-muted-foreground">Life Path {personData.lifePath}: {numberMeanings[personData.lifePath]?.core}</span>
                                 </li>
                                 <li className="flex gap-3 text-sm">
-                                  <span className="text-primary font-bold flex-shrink-0">•</span>
+                                  <span className="text-primary font-bold flex-shrink-0">-</span>
                                   <span className="text-muted-foreground">Day {personData.dayNumber}: {numberMeanings[personData.dayNumber]?.core}</span>
                                 </li>
                                 <li className="flex gap-3 text-sm">
-                                  <span className="text-primary font-bold flex-shrink-0">•</span>
+                                  <span className="text-primary font-bold flex-shrink-0">-</span>
                                   <span className="text-muted-foreground">Month {personData.monthNumber}: {numberMeanings[personData.monthNumber]?.core}</span>
                                 </li>
                               </ul>
@@ -299,7 +445,7 @@ export default function Home() {
                   </Card>
                 </Collapsible>
 
-                <Collapsible defaultOpen>
+                <Collapsible>
                   <CollapsibleTrigger asChild>
                     <button className="w-full flex items-center justify-between py-2 px-1 cursor-pointer hover:bg-muted/30 rounded-md transition-colors text-left">
                       <div className="flex items-center gap-2">
@@ -310,7 +456,7 @@ export default function Home() {
                     </button>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <div className="grid gap-4 md:grid-cols-3">
+                    <div className="grid gap-4 md:grid-cols-3 mt-4">
                       <Card>
                         <CardHeader className="pb-3">
                           <CardTitle className="flex items-center gap-2 text-base">
@@ -374,25 +520,6 @@ export default function Home() {
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
-
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-base">
-                      <Target className="h-4 w-4" />
-                      Vietnamese Zodiac
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-center">
-                      <div className="text-6xl mb-2">{animalIconNames[personData.animal]}</div>
-                      <div className="text-3xl font-black mb-3">{personData.animal}</div>
-                      <div className="text-sm text-muted-foreground space-y-1">
-                        <p>Year of the {personData.animal}</p>
-                        <p>Birth Year: {personData.dob.getFullYear()}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               </TabsContent>
 
               <TabsContent value="numerology" className="space-y-6">
@@ -415,7 +542,7 @@ export default function Home() {
                   <NameNumerology initialName={personData.name} />
                 </div>
 
-                <CountryCompatibility lifePath={personData.lifePath} />
+                <CountryCompatibility personDob={personData.dob} personName={personData.name} />
               </TabsContent>
 
               <TabsContent value="zodiac" className="space-y-6">

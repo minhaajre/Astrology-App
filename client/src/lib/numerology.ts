@@ -260,6 +260,62 @@ export function getAnimalCompatibility(animalA: string, animalB: string): 'Good'
   return 'Neutral';
 }
 
+// Get the zodiac animal for the current year
+export function getCurrentYearAnimal(date: Date = new Date()): string {
+  return getVietnamAnimal(date.getFullYear());
+}
+
+// Get the zodiac animal for the current month (Vietnamese lunar month mapping)
+// Months cycle through the 12 animals starting with Tiger for month 1 (January)
+export function getMonthAnimal(date: Date = new Date()): string {
+  const monthIndex = date.getMonth(); // 0-11
+  // Vietnamese zodiac months: Tiger starts at month 1 (January/Tháng Giêng)
+  const monthAnimals = ["Tiger", "Cat", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig", "Rat", "Buffalo"];
+  return monthAnimals[monthIndex];
+}
+
+// Evaluate if two numbers have good harmony, are neutral, or are challenging
+export type NumberStatus = 'Good' | 'Neutral' | 'Challenging';
+
+export function evaluateNumberHarmony(numberA: number, numberB: number): NumberStatus {
+  // Same numbers are always good
+  if (numberA === numberB) return 'Good';
+  
+  // Define harmonious pairs (complementary energies)
+  const harmoniousPairs: [number, number][] = [
+    [1, 9], [1, 5], [2, 6], [2, 8], [3, 6], [3, 9],
+    [4, 8], [5, 7], [6, 9], [7, 9], [11, 2], [22, 4], [33, 6]
+  ];
+  
+  // Define challenging pairs (conflicting energies)
+  const challengingPairs: [number, number][] = [
+    [1, 8], [2, 5], [3, 4], [4, 5], [6, 7], [7, 8],
+    [1, 4], [2, 7], [3, 8], [5, 9]
+  ];
+  
+  // Check harmonious
+  for (const [a, b] of harmoniousPairs) {
+    if ((numberA === a && numberB === b) || (numberA === b && numberB === a)) {
+      return 'Good';
+    }
+  }
+  
+  // Check challenging
+  for (const [a, b] of challengingPairs) {
+    if ((numberA === a && numberB === b) || (numberA === b && numberB === a)) {
+      return 'Challenging';
+    }
+  }
+  
+  return 'Neutral';
+}
+
+// Evaluate overall cycle alignment for personal year/month/day
+export function evaluateCycleStatus(lifePath: number, personalCycle: number): NumberStatus {
+  // Use the harmony evaluation between life path and personal cycle
+  return evaluateNumberHarmony(lifePath, personalCycle);
+}
+
 export const animalIconNames: Record<string, string> = {
   Rat: "🐭",
   Buffalo: "🐃",
