@@ -7,7 +7,7 @@ import { DailyForecast } from "@/components/DailyForecast";
 import { TimingAdvisor } from "@/components/TimingAdvisor";
 import { ZodiacDisplay } from "@/components/ZodiacDisplay";
 import { CompatibilityCalculator } from "@/components/CompatibilityCalculator";
-import { ReportTemplates } from "@/components/ReportTemplates";
+import { CountryCompatibility } from "@/components/CountryCompatibility";
 import { ExportPanel } from "@/components/ExportPanel";
 import { NameNumerology } from "@/components/NameNumerology";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -321,11 +321,7 @@ export default function Home() {
                   <NameNumerology initialName={personData.name} />
                 </div>
 
-                <ReportTemplates
-                  lifePath={personData.lifePath}
-                  dayNumber={personData.dayNumber}
-                  monthNumber={personData.monthNumber}
-                />
+                <CountryCompatibility lifePath={personData.lifePath} />
               </TabsContent>
 
               <TabsContent value="zodiac" className="space-y-6">
