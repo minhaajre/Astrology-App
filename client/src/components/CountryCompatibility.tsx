@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
 import {
   getLifePath,
   getDayNumber,
@@ -12,7 +13,7 @@ import {
   type CompatibilityResult,
 } from "@/lib/numerology";
 import { countries } from "@/lib/countries";
-import { Globe, MapPin, Sparkles } from "lucide-react";
+import { Globe, MapPin, Sparkles, Search, X } from "lucide-react";
 
 interface CountryResult {
   country: string;
@@ -35,6 +36,8 @@ export function CountryCompatibility({
   const [selectedCountryIndex, setSelectedCountryIndex] = useState<number | null>(
     null
   );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [customCountryResult, setCustomCountryResult] = useState<CountryResult | null>(null);
 
   const personData = useMemo(() => {
     if (!personDob) return null;
@@ -82,8 +85,36 @@ export function CountryCompatibility({
     return { label: "Difficult", color: "text-red-600 dark:text-red-400" };
   };
 
+  const filteredCountries = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    return countries.filter((c) =>
+      c.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
+
+  const handleCountrySelect = (country: typeof countries[0]) => {
+    if (!personData) return;
+    const countryDob = new Date(country.year, country.month - 1, country.day);
+    const countryData = {
+      lifePath: getLifePath(countryDob).lifePath,
+      dayNumber: getDayNumber(countryDob),
+      monthNumber: getMonthNumber(countryDob),
+      animal: "",
+    };
+    const result = calculateCompatibility(personData, countryData);
+    setCustomCountryResult({
+      country: country.name,
+      result,
+      month: country.month,
+      day: country.day,
+      year: country.year,
+    });
+    setSearchQuery("");
+  };
+
   const topCountries = allResults.slice(0, 10);
   const selectedResult = selectedCountryIndex !== null ? allResults[selectedCountryIndex] : null;
+  const activeResult = customCountryResult || selectedResult;
 
   return (
     <div className="space-y-6">
@@ -102,6 +133,46 @@ export function CountryCompatibility({
             <p>
               <strong>How it works:</strong> Your birth date numerology is automatically compared with all countries' independence date numerology. Higher compatibility scores indicate natural alignment with that nation's founding energy.
             </p>
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-sm font-medium">Search for any country</label>
+            <div className="relative">
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Type country name..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9"
+                data-testid="input-country-search"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-2.5 h-4 w-4 text-muted-foreground hover:text-foreground"
+                  data-testid="button-clear-search"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+            {filteredCountries.length > 0 && (
+              <div className="border rounded-md max-h-48 overflow-y-auto">
+                {filteredCountries.slice(0, 10).map((country) => (
+                  <button
+                    key={`${country.name}-${country.year}`}
+                    onClick={() => handleCountrySelect(country)}
+                    className="w-full text-left px-3 py-2 hover:bg-muted/50 text-sm border-b last:border-b-0 transition-colors"
+                    data-testid={`button-select-country-${country.name}`}
+                  >
+                    <span className="font-medium">{country.name}</span>
+                    <span className="text-xs text-muted-foreground ml-2">
+                      {String(country.month).padStart(2, "0")}/{String(country.day).padStart(2, "0")}/{country.year}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {personData && (
@@ -202,23 +273,23 @@ export function CountryCompatibility({
             </CardContent>
           </Card>
 
-          {selectedResult && (
+          {activeResult && (
             <>
               <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
                 <CardContent className="p-8 text-center">
                   <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
-                    {selectedResult.country} — Alignment Score
+                    {activeResult.country} — Alignment Score
                   </p>
                   <p
-                    className={`text-6xl font-black ${getScoreLabel(selectedResult.result.totalScore).color}`}
+                    className={`text-6xl font-black ${getScoreLabel(activeResult.result.totalScore).color}`}
                     data-testid="text-country-score"
                   >
-                    {selectedResult.result.totalScore}%
+                    {activeResult.result.totalScore}%
                   </p>
                   <p
-                    className={`text-lg font-medium mt-2 ${getScoreLabel(selectedResult.result.totalScore).color}`}
+                    className={`text-lg font-medium mt-2 ${getScoreLabel(activeResult.result.totalScore).color}`}
                   >
-                    {getScoreLabel(selectedResult.result.totalScore).label}
+                    {getScoreLabel(activeResult.result.totalScore).label}
                   </p>
                 </CardContent>
               </Card>
@@ -230,11 +301,11 @@ export function CountryCompatibility({
                     Number Comparison & Alignment
                   </CardTitle>
                   <p className="text-sm text-muted-foreground">
-                    {personName || "You"} vs {selectedResult.country}
+                    {personName || "You"} vs {activeResult.country}
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-5">
-                  {selectedResult.result.breakdown.map((item, index) => (
+                  {activeResult.result.breakdown.map((item, index) => (
                     <div
                       key={index}
                       className="space-y-3 rounded-lg border p-4 bg-muted/20"
@@ -265,7 +336,7 @@ export function CountryCompatibility({
 
                         <div className="rounded-lg bg-background border border-green-200/50 dark:border-green-900/50 p-3">
                           <p className="text-xs font-medium text-green-900 dark:text-green-200 mb-1">
-                            {selectedResult.country}'s Number
+                            {activeResult.country}'s Number
                           </p>
                           <div className="flex items-baseline gap-2">
                             <span className="text-2xl font-bold text-green-600 dark:text-green-400">
@@ -293,12 +364,12 @@ export function CountryCompatibility({
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-semibold">Total Alignment Score</span>
                       <span className="text-lg font-bold">
-                        {selectedResult.result.breakdown.reduce(
+                        {activeResult.result.breakdown.reduce(
                           (sum, b) => sum + b.points,
                           0
                         )}
                         /
-                        {selectedResult.result.breakdown.reduce(
+                        {activeResult.result.breakdown.reduce(
                           (sum, b) => sum + b.maxPoints,
                           0
                         )}{" "}
@@ -306,7 +377,7 @@ export function CountryCompatibility({
                       </span>
                     </div>
                     <Progress
-                      value={selectedResult.result.totalScore}
+                      value={activeResult.result.totalScore}
                       className="h-3"
                     />
                   </div>
@@ -323,7 +394,7 @@ export function CountryCompatibility({
                   <div>
                     <p className="font-semibold mb-1">Excellent (70+):</p>
                     <p>
-                      Your numerology resonates deeply with {selectedResult.country}'s
+                      Your numerology resonates deeply with {activeResult.country}'s
                       founding energy. You may feel natural affinity, ease of
                       adaptation, or sense of belonging there.
                     </p>
