@@ -161,18 +161,18 @@ export const numberMeanings: Record<number, NumberMeaning> = {
 export const vietnamAnimals = ["Rat", "Buffalo", "Tiger", "Cat", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
 
 export const animalFriends: Record<string, string[]> = {
-  Rat: ["Dragon", "Monkey"],
-  Buffalo: ["Snake", "Rooster"],
-  Tiger: ["Horse", "Dog"],
-  Cat: ["Goat", "Pig"],
-  Dragon: ["Rat", "Monkey"],
-  Snake: ["Buffalo", "Rooster"],
-  Horse: ["Tiger", "Dog"],
-  Goat: ["Cat", "Pig"],
-  Monkey: ["Rat", "Dragon"],
-  Rooster: ["Buffalo", "Snake"],
-  Dog: ["Tiger", "Horse"],
-  Pig: ["Cat", "Goat"]
+  Rat: ["Dragon", "Monkey", "Buffalo"],
+  Buffalo: ["Snake", "Rooster", "Rat"],
+  Tiger: ["Horse", "Dog", "Pig"],
+  Cat: ["Goat", "Pig", "Dog"],
+  Dragon: ["Rat", "Monkey", "Rooster"],
+  Snake: ["Buffalo", "Rooster", "Monkey"],
+  Horse: ["Tiger", "Dog", "Goat"],
+  Goat: ["Cat", "Pig", "Horse"],
+  Monkey: ["Rat", "Dragon", "Snake"],
+  Rooster: ["Buffalo", "Snake", "Dragon"],
+  Dog: ["Tiger", "Horse", "Cat"],
+  Pig: ["Cat", "Goat", "Tiger"]
 };
 
 export const animalEnemiesPrimary: Record<string, string[]> = {
