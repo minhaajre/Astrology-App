@@ -1422,3 +1422,54 @@ export function getTriCodeGuidance(result: TriCodeResult): {
   
   return guidance;
 }
+
+// Lunar phase calculations
+export interface LunarPhaseInfo {
+  phaseName: string;
+  percentage: number;
+  isWaxing: boolean;
+  nextNewMoon: Date;
+  lastNewMoon: Date;
+  lastFullMoon: Date;
+}
+
+export function getLunarPhase(date: Date = new Date()): LunarPhaseInfo {
+  // Known new moon: January 29, 2025 at 02:36 UTC
+  const knownNewMoon = new Date(Date.UTC(2025, 0, 29, 2, 36, 0));
+  const lunarCycle = 29.53058867; // days
+  
+  const timeSinceNewMoon = (date.getTime() - knownNewMoon.getTime()) / (1000 * 60 * 60 * 24);
+  const cyclePosition = ((timeSinceNewMoon % lunarCycle) + lunarCycle) % lunarCycle;
+  const percentage = Math.round((cyclePosition / lunarCycle) * 100);
+  const isWaxing = cyclePosition < lunarCycle / 2;
+  
+  // Determine phase name
+  let phaseName = '';
+  if (cyclePosition < 1.84) phaseName = 'New Moon';
+  else if (cyclePosition < 7.38) phaseName = 'Waxing Crescent';
+  else if (cyclePosition < 9.23) phaseName = 'First Quarter';
+  else if (cyclePosition < 14.77) phaseName = 'Waxing Gibbous';
+  else if (cyclePosition < 16.61) phaseName = 'Full Moon';
+  else if (cyclePosition < 22.15) phaseName = 'Waning Gibbous';
+  else if (cyclePosition < 23.99) phaseName = 'Last Quarter';
+  else phaseName = 'Waning Crescent';
+  
+  // Calculate next new moon
+  const newMoonsBefore = Math.floor(timeSinceNewMoon / lunarCycle);
+  const nextNewMoon = new Date(knownNewMoon.getTime() + (newMoonsBefore + 1) * lunarCycle * 24 * 60 * 60 * 1000);
+  
+  // Calculate last new moon
+  const lastNewMoon = new Date(knownNewMoon.getTime() + newMoonsBefore * lunarCycle * 24 * 60 * 60 * 1000);
+  
+  // Calculate last full moon (half cycle after last new moon)
+  const lastFullMoon = new Date(lastNewMoon.getTime() + (lunarCycle / 2) * 24 * 60 * 60 * 1000);
+  
+  return {
+    phaseName,
+    percentage,
+    isWaxing,
+    nextNewMoon,
+    lastNewMoon,
+    lastFullMoon
+  };
+}

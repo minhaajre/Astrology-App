@@ -11,13 +11,13 @@ import {
   reduceToSingleDigit,
   sumDigitsOfString,
   getVietnamAnimal,
-  getMonthAnimal,
   animalIconNames,
   numberMeanings,
   getAnimalCompatibility,
   getZodiacSign,
   generateDailyInsight,
   specialDates,
+  getLunarPhase,
 } from "@/lib/numerology";
 
 export function DailyEnergyCards() {
@@ -42,14 +42,15 @@ export function DailyEnergyCards() {
   // This month's energy
   const monthNumber = reduceToSingleDigit(today.getMonth() + 1);
   const monthMeaning = numberMeanings[monthNumber];
-  const monthAnimal = getMonthAnimal(today);
-  const monthAnimalIcon = animalIconNames[monthAnimal];
+  
+  // Lunar phase data
+  const lunarPhase = getLunarPhase(today);
 
   // Western Zodiac
   const zodiacSign = getZodiacSign(today);
 
   // Generate daily insight - use reduced number for insights
-  const dailyInsight = generateDailyInsight(todayReducedNumber, weekNumber1, monthNumber, zodiacSign, todayAnimal, monthAnimal);
+  const dailyInsight = generateDailyInsight(todayReducedNumber, weekNumber1, monthNumber, zodiacSign, todayAnimal, "");
 
   const getTodayCompatibility = () => getAnimalCompatibility(todayAnimal, todayAnimal);
 
@@ -171,7 +172,7 @@ export function DailyEnergyCards() {
         </Card>
       </div>
 
-      {/* Vietnamese Zodiac Row */}
+      {/* Vietnamese Zodiac & Lunar Phase Row */}
       <div className="grid gap-4 md:grid-cols-2">
         {/* Today's Zodiac */}
         <Card className="bg-card/50 min-h-32">
@@ -193,22 +194,35 @@ export function DailyEnergyCards() {
           </CardContent>
         </Card>
 
-        {/* This Month's Zodiac */}
+        {/* Lunar Phase */}
         <Card className="bg-card/50 min-h-32">
-          <CardContent className="pt-6 pb-6 h-full flex items-center">
-            <div className="flex items-center gap-4 w-full">
-              <span className="text-5xl flex-shrink-0">{monthAnimalIcon}</span>
-              <div className="flex-1">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  This Month's Animal
-                </p>
-                <p className="text-lg font-bold" data-testid="energy-month-animal">
-                  {monthAnimal}
-                </p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  {today.toLocaleDateString("en-US", { month: "long" })} energetic theme
-                </p>
+          <CardContent className="pt-6 pb-6 h-full flex flex-col">
+            <div className="mb-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                Lunar Phase
+              </p>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-lg font-bold" data-testid="lunar-phase-name">
+                    {lunarPhase.phaseName}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {lunarPhase.isWaxing ? 'Waxing' : 'Waning'} • {lunarPhase.percentage}%
+                  </p>
+                </div>
+                <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                  <div 
+                    className="bg-primary h-full transition-all"
+                    style={{ width: `${lunarPhase.percentage}%` }}
+                    data-testid="lunar-progress-bar"
+                  />
+                </div>
               </div>
+            </div>
+            <div className="mt-auto space-y-1 text-xs text-muted-foreground">
+              <p>Last New: {lunarPhase.lastNewMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+              <p>Full Moon: {lunarPhase.lastFullMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+              <p>Next New: {lunarPhase.nextNewMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
             </div>
           </CardContent>
         </Card>
