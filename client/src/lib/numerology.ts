@@ -29,51 +29,95 @@ export interface SpecialDateInfo {
 }
 
 export const specialDates: SpecialDateInfo[] = [
-  // Expression Days (3)
-  { date: 3, theme: "Expression, content, social energy, charm, communication", number: 3, category: "📢 Expression & Visibility", bestFor: ["Posting content (LinkedIn, YouTube, ads)", "Sales outreach", "Branding and design work", "Public speaking and interviews", "Announcements that need attention"], avoidFor: ["Overpromising", "Gossip and sloppy wording", "Distraction and procrastination"] },
-  { date: 12, theme: "Structured expression, persuasive messaging", number: 3, category: "📢 Expression & Visibility", bestFor: ["Writing offers and pitches", "Negotiation messages", "PR and marketing strategy", "Editing and refining content"], note: "1+2=3" },
-  { date: 21, theme: "Social expansion through people", number: 3, category: "📢 Expression & Visibility", bestFor: ["Collaboration outreach", "Partnerships", "Community building", "Events and social momentum"], note: "2+1=3" },
-  { date: 30, theme: "Big expression, visibility spike", number: 3, category: "📢 Expression & Visibility", bestFor: ["Launch announcements", "Viral pushes", "High-output creative days"], avoidFor: ["Emotional posting", "Reputation risk if careless"], note: "3+0=3" },
+  // Day 1
+  { date: 1, theme: "Initiation · Leadership · Independence", number: 1, category: "👑 Leadership & Control", bestFor: ["Starting projects", "Deciding", "Asserting"], avoidFor: ["Waiting", "Indecision"] },
   
-  // Money Days
-  { date: 8, theme: "Money, Authority & Power", number: 8, category: "💰 Money & Wealth", bestFor: ["Business decisions", "Negotiations", "Payments", "Career moves"], avoidFor: ["Emotional confrontations"] },
-  { date: 17, theme: "Earned Success & Discipline", number: 8, category: "💰 Money & Wealth", bestFor: ["Long-term planning", "Structured investments", "Leadership decisions"], note: "1+7=8" },
-  { date: 26, theme: "Partnership Money & Contracts", number: 8, category: "💰 Money & Wealth", bestFor: ["Contracts", "Joint ventures", "Legal agreements"], note: "2+6=8" },
-  { date: 28, theme: "Money Reset & New Cycle", number: 1, category: "💰 Money & Wealth", bestFor: ["Launching businesses", "Resetting finances", "Major decisions", "High-level planning"], note: "Most emphasized GG33 money day (8+1)" },
+  // Day 2
+  { date: 2, theme: "Partnership · Sensitivity · Diplomacy", number: 2, category: "❤️ Relationships & Harmony", bestFor: ["Cooperation", "Mediation", "Team work"], avoidFor: ["Confrontation"] },
   
-  // Leadership Days
-  { date: 1, theme: "Initiation & Leadership", number: 1, category: "👑 Leadership & Control", bestFor: ["Starting projects", "Taking control", "Announcements"] },
-  { date: 10, theme: "Authority Reset & Clarity", number: 1, category: "👑 Leadership & Control", bestFor: ["Strategic pivots", "Rebranding", "Setting direction"], note: "1+0=1" },
-  { date: 19, theme: "Independent Leadership", number: 1, category: "👑 Leadership & Control", bestFor: ["Solo decisions", "Exiting old roles", "Declaring independence"], note: "1+9=1" },
+  // Day 3
+  { date: 3, theme: "Expression · Creativity · Communication", number: 3, category: "📢 Expression & Visibility", bestFor: ["Content creation", "Marketing", "Speaking"], avoidFor: ["Gossip", "Overpromising"] },
   
-  // Knowledge Days
-  { date: 7, theme: "Analysis, Truth & Research", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Study", "Reflection", "Strategy", "Diagnostics"], avoidFor: ["Forcing outcomes", "Emotional arguments"] },
-  { date: 16, theme: "Reality Check & Truth-Seeking", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Audits", "Truth-seeking", "Cutting losses"], note: "1+6=7. Can be humbling." },
-  { date: 25, theme: "Strategic Withdrawal", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Reviewing plans", "Pausing decisions", "Quiet work"], note: "2+5=7" },
+  // Day 4
+  { date: 4, theme: "Structure · Discipline · Foundations", number: 4, category: "🧱 Structure & Systems", bestFor: ["Planning", "Systems building", "Infrastructure"], avoidFor: ["Shortcuts"] },
   
-  // Relationship Days (2, 6, 15, 24)
-  { date: 2, theme: "Partnership & Diplomacy", number: 2, category: "❤️ Relationships & Harmony", bestFor: ["Relationship talks", "Mediation", "Team cooperation"] },
-  { date: 6, theme: "Relationships, family, care, harmony, responsibility", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Relationship conversations (repair-focused)", "Home decisions and moving logistics", "Customer care and retention", "Team culture, HR, and conflict resolution", "Health routines and self-care systems"], avoidFor: ["Over-giving", "Emotional manipulation or guilt dynamics", "Taking on others' burdens"] },
-  { date: 15, theme: "Magnetism, attraction, bonding", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Dates and reconnection", "Social credibility and charm with responsibility", "Client relationship strengthening"], avoidFor: ["Using charm to avoid truth"], note: "1+5=6" },
-  { date: 24, theme: "Domestic structure, long-term stability", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Housing decisions", "Family planning", "Long-term agreements that require trust", "Building routines that last"], avoidFor: ["Getting stuck in comfort"], note: "2+4=6" },
+  // Day 5
+  { date: 5, theme: "Change · Movement · Freedom", number: 5, category: "🌍 Change & Travel", bestFor: ["Travel", "Promotion", "Outreach"], avoidFor: ["Long-term commitments", "Rigidity"] },
   
-  // Change Days
-  { date: 5, theme: "Movement, Freedom & Change", number: 5, category: "🌍 Change & Travel", bestFor: ["Travel", "Marketing", "Promotion"], avoidFor: ["Long-term commitments", "Rigid plans"] },
-  { date: 14, theme: "Disruptive Change", number: 5, category: "🌍 Change & Travel", bestFor: ["Controlled change"], note: "1+4=5. High risk if careless." },
-  { date: 23, theme: "Communication-Driven Movement", number: 5, category: "🌍 Change & Travel", bestFor: ["Media", "Public speaking", "Networking"], note: "2+3=5" },
+  // Day 6
+  { date: 6, theme: "Responsibility · Harmony · Care", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Relationships", "Family", "Repair work"], avoidFor: ["Over-giving"] },
   
-  // Structure Days
-  { date: 4, theme: "Discipline, Structure & Foundations", number: 4, category: "🧱 Structure & Systems", bestFor: ["Planning", "Systems", "Infrastructure work"] },
-  { date: 13, theme: "Forced Restructuring", number: 4, category: "🧱 Structure & Systems", bestFor: ["Hard work"], note: "1+3=4. Brings pressure." },
-  { date: 22, theme: "Master Builder - Large Scale Systems", number: 22, category: "🧱 Structure & Systems", bestFor: ["Serious long-term projects", "Institutions", "High-responsibility decisions"], note: "Master Number 22 - Heavy karmic load if misused" },
+  // Day 7
+  { date: 7, theme: "Analysis · Truth · Introspection", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Research", "Strategy", "Reflection"], avoidFor: ["Forcing outcomes"] },
   
-  // Completion Days
-  { date: 9, theme: "Completion, Release & Endings", number: 9, category: "🔮 Completion & Transition", bestFor: ["Closure", "Letting go", "Finishing projects"], avoidFor: ["Starting long-term ventures"] },
-  { date: 18, theme: "Karmic Clearing - Power & Money", number: 9, category: "🔮 Completion & Transition", bestFor: ["Closure"], note: "1+8=9" },
-  { date: 27, theme: "Spiritual Completion", number: 9, category: "🔮 Completion & Transition", bestFor: ["Reflection", "Closure", "Inner work"], note: "2+7=9" },
+  // Day 8
+  { date: 8, theme: "Money · Power · Authority", number: 8, category: "💰 Money & Wealth", bestFor: ["Business decisions", "Negotiations", "Finance"], avoidFor: ["Emotional decisions"] },
   
-  // Master Number Days
-  { date: 11, theme: "Intuition, Insight & Sensitivity", number: 11, category: "🧩 Master Numbers", bestFor: ["Vision", "Spiritual work", "Creativity"], note: "Master Number 11" },
+  // Day 9
+  { date: 9, theme: "Completion · Release · Closure", number: 9, category: "🔮 Completion & Transition", bestFor: ["Endings", "Finishing projects", "Letting go"], avoidFor: ["Starting long-term ventures"] },
+  
+  // Day 10 (1+0=1)
+  { date: 10, theme: "Leadership Reset · Authority", number: 1, category: "👑 Leadership & Control", bestFor: ["Strategic direction", "Rebranding"], avoidFor: ["Hesitation"], note: "Double-digit: How to achieve leadership. Single-digit: Where it ends (1)" },
+  
+  // Day 11 - MASTER NUMBER
+  { date: 11, theme: "Intuition · Insight · Sensitivity", number: 11, category: "🧩 Master Numbers", bestFor: ["Vision", "Creativity", "Spiritual work"], avoidFor: ["Emotional overload"], note: "Master Number 11: Vision with high emotional cost" },
+  
+  // Day 12 (1+2=3)
+  { date: 12, theme: "Structured Communication", number: 3, category: "📢 Expression & Visibility", bestFor: ["Writing pitches", "Negotiation", "PR strategy"], avoidFor: ["Charm without clarity"], note: "Double-digit: Persuasive messaging. Reduces to 3" },
+  
+  // Day 13 (1+3=4)
+  { date: 13, theme: "Forced Discipline · Hard Work", number: 4, category: "🧱 Structure & Systems", bestFor: ["Restructuring", "System building"], avoidFor: ["Laziness"], note: "Double-digit: Pressure to build. Reduces to 4" },
+  
+  // Day 14 (1+4=5)
+  { date: 14, theme: "Unstable Change · Risk", number: 5, category: "🌍 Change & Travel", bestFor: ["Controlled transitions"], avoidFor: ["Recklessness", "Addiction"], note: "Double-digit: High-risk energy. Reduces to 5" },
+  
+  // Day 15 (1+5=6)
+  { date: 15, theme: "Attraction · Magnetism · Bonding", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Dates", "Reconciliation", "Client relationships"], avoidFor: ["Manipulation"], note: "Double-digit: Social magnetism. Reduces to 6" },
+  
+  // Day 16 (1+6=7)
+  { date: 16, theme: "Reality Check · Ego Collapse", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Audits", "Truth-seeking"], avoidFor: ["Pride", "Denial"], note: "Double-digit: Can be humbling. Reduces to 7" },
+  
+  // Day 17 (1+7=8)
+  { date: 17, theme: "Earned Wealth · Disciplined Power", number: 8, category: "💰 Money & Wealth", bestFor: ["Long-term investments", "Leadership"], avoidFor: ["Ego", "Isolation"], note: "Double-digit: Earned success through discipline. Reduces to 8" },
+  
+  // Day 18 (1+8=9)
+  { date: 18, theme: "Karmic Clearing", number: 9, category: "🔮 Completion & Transition", bestFor: ["Closure tied to power/money"], avoidFor: ["Revenge"], note: "Double-digit: Karmic weight. Reduces to 9" },
+  
+  // Day 19 (1+9=10→1)
+  { date: 19, theme: "Independent Leadership", number: 1, category: "👑 Leadership & Control", bestFor: ["Solo decisions", "Independence", "Exits"], avoidFor: ["Burning bridges"], note: "Double-digit: Independence path. Reduces to 1" },
+  
+  // Day 20 (2+0=2)
+  { date: 20, theme: "Heightened Sensitivity · Cooperation", number: 2, category: "❤️ Relationships & Harmony", bestFor: ["Negotiation", "Diplomacy"], avoidFor: ["Emotional dependency"], note: "Double-digit: Amplified intuition. Reduces to 2" },
+  
+  // Day 21 (2+1=3)
+  { date: 21, theme: "Social Expansion · Networking", number: 3, category: "📢 Expression & Visibility", bestFor: ["Collaboration", "Community building"], avoidFor: ["Overcommitment"], note: "Double-digit: People-centered expression. Reduces to 3" },
+  
+  // Day 22 - MASTER NUMBER
+  { date: 22, theme: "Master Builder · Large-Scale Execution", number: 22, category: "🧱 Structure & Systems", bestFor: ["Institutions", "Long-term projects"], avoidFor: ["Misuse of power"], note: "Master Number 22: Builds systems that outlast the individual" },
+  
+  // Day 23 (2+3=5)
+  { date: 23, theme: "Communication-Driven Change", number: 5, category: "🌍 Change & Travel", bestFor: ["Marketing", "Sales", "Media"], avoidFor: ["Gossip"], note: "Double-digit: Words drive movement. Reduces to 5" },
+  
+  // Day 24 (2+4=6)
+  { date: 24, theme: "Domestic Stability · Trust", number: 6, category: "❤️ Relationships & Harmony", bestFor: ["Housing", "Family agreements"], avoidFor: ["Stagnation"], note: "Double-digit: Long-term trust. Reduces to 6" },
+  
+  // Day 25 (2+5=7)
+  { date: 25, theme: "Strategic Withdrawal", number: 7, category: "🧠 Knowledge & Strategy", bestFor: ["Review", "Recalibration"], avoidFor: ["Rushing"], note: "Double-digit: Pause for wisdom. Reduces to 7" },
+  
+  // Day 26 (2+6=8)
+  { date: 26, theme: "Partnership Wealth · Contracts", number: 8, category: "💰 Money & Wealth", bestFor: ["Joint ventures", "Legal matters"], avoidFor: ["Unequal effort"], note: "Double-digit: Shared power dynamics. Reduces to 8" },
+  
+  // Day 27 (2+7=9)
+  { date: 27, theme: "Spiritual Completion", number: 9, category: "🔮 Completion & Transition", bestFor: ["Reflection", "Endings"], avoidFor: ["Attachment"], note: "Double-digit: Soul-level closure. Reduces to 9" },
+  
+  // Day 28 (2+8=10→1)
+  { date: 28, theme: "Money Reset · Forced Independence", number: 1, category: "💰 Money & Wealth", bestFor: ["Business launches", "Financial pivots"], avoidFor: ["Relying on others"], note: "Most emphasized GG33 money day. Reduces to 1" },
+  
+  // Day 29 (2+9=11)
+  { date: 29, theme: "Emotional Mastery · Tests", number: 11, category: "🧩 Master Numbers", bestFor: ["Inner work", "Compassion"], avoidFor: ["Emotional extremes"], note: "Double-digit: Emotional insight. Master energy" },
+  
+  // Day 30 (3+0=3)
+  { date: 30, theme: "Visibility Spike · Big Expression", number: 3, category: "📢 Expression & Visibility", bestFor: ["Announcements", "Creative pushes"], avoidFor: ["Careless reputation damage"], note: "Double-digit: Maximum visibility. Reduces to 3" },
 ];
 
 export const numberMeanings: Record<number, NumberMeaning> = {
