@@ -18,6 +18,7 @@ import {
   generateDailyInsight,
   specialDates,
   getLunarPhase,
+  getUniversalYear,
 } from "@/lib/numerology";
 
 export function DailyEnergyCards() {
@@ -46,6 +47,10 @@ export function DailyEnergyCards() {
   // Lunar phase data
   const lunarPhase = getLunarPhase(today);
 
+  // Year theme
+  const yearNumber = getUniversalYear(today);
+  const yearMeaning = numberMeanings[yearNumber];
+
   // Western Zodiac
   const zodiacSign = getZodiacSign(today);
 
@@ -66,7 +71,34 @@ export function DailyEnergyCards() {
         </p>
       </div>
       
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-5">
+        {/* This Year's Theme */}
+        <Card className="bg-card/50 h-full">
+          <CardContent className="pt-6 pb-6 flex flex-col h-full">
+            <div className="flex gap-3">
+              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                <Star className="h-5 w-5 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Year Theme
+                </p>
+                <div className="mb-3">
+                  <p className="text-3xl font-bold" data-testid="energy-year-number">
+                    {yearNumber}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {yearMeaning.core}
+                  </p>
+                </div>
+                <p className="text-xs text-muted-foreground mt-auto leading-relaxed">
+                  {today.getFullYear()} yearly focus
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Today's Numerology */}
         <Card className="bg-card/50 h-full">
           <CardContent className="pt-6 pb-6 flex flex-col h-full">
@@ -220,9 +252,9 @@ export function DailyEnergyCards() {
               </div>
             </div>
             <div className="mt-auto space-y-1 text-xs text-muted-foreground">
-              <p>Last New: {lunarPhase.lastNewMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+              <p>Last New Moon: {lunarPhase.lastNewMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
               <p>Full Moon: {lunarPhase.lastFullMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
-              <p>Next New: {lunarPhase.nextNewMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+              <p>Next New Moon: {lunarPhase.nextNewMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
             </div>
           </CardContent>
         </Card>
