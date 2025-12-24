@@ -17,15 +17,18 @@ import {
   getAnimalCompatibility,
   getZodiacSign,
   generateDailyInsight,
+  specialDates,
 } from "@/lib/numerology";
 
 export function DailyEnergyCards() {
   const today = new Date();
   
-  // Today's energy
+  // Today's energy - use actual date from GG33 system
   const todayDate = today.getDate();
-  const todayNumber = reduceToSingleDigit(todayDate);
-  const todayMeaning = numberMeanings[todayNumber];
+  const todaySpecialDate = specialDates.find(d => d.date === todayDate);
+  const todayNumber = todayDate; // Display the actual date
+  const todayReducedNumber = todaySpecialDate?.number || reduceToSingleDigit(todayDate);
+  const todayMeaning = numberMeanings[todayReducedNumber];
   const todayAnimal = getVietnamAnimal(today.getFullYear());
   const todayAnimalIcon = animalIconNames[todayAnimal];
   
@@ -45,8 +48,8 @@ export function DailyEnergyCards() {
   // Western Zodiac
   const zodiacSign = getZodiacSign(today);
 
-  // Generate daily insight
-  const dailyInsight = generateDailyInsight(todayNumber, weekNumber1, monthNumber, zodiacSign, todayAnimal, monthAnimal);
+  // Generate daily insight - use reduced number for insights
+  const dailyInsight = generateDailyInsight(todayReducedNumber, weekNumber1, monthNumber, zodiacSign, todayAnimal, monthAnimal);
 
   const getTodayCompatibility = () => getAnimalCompatibility(todayAnimal, todayAnimal);
 
@@ -79,11 +82,13 @@ export function DailyEnergyCards() {
                     {todayNumber}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {todayMeaning.core}
+                    {todaySpecialDate?.theme || todayMeaning.core}
                   </p>
                 </div>
                 <p className="text-xs text-muted-foreground mt-auto leading-relaxed">
-                  {todayMeaning.dailyForecast}
+                  {todaySpecialDate?.bestFor && todaySpecialDate.bestFor.length > 0 
+                    ? `Best for: ${todaySpecialDate.bestFor.slice(0, 2).join(", ")}`
+                    : todayMeaning.dailyForecast}
                 </p>
               </div>
             </div>
