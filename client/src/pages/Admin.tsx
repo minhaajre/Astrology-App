@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,18 +13,114 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, LogOut, Shield, Users, ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Loader2, LogOut, Shield, Users, ArrowLeft, ChevronDown, ChevronUp, Plus, Pencil, Trash2 } from "lucide-react";
 import { Link } from "wouter";
 import type { Evaluation } from "@shared/schema";
 import { NumberAccordion } from "@/components/NumberAccordion";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { animalFriends, animalEnemiesPrimary, vietnamAnimals, getVietnamAnimal } from "@/lib/numerology";
+
+function getCautionYears(animal: string, startYear: number = new Date().getFullYear()): number[] {
+  const enemies = animalEnemiesPrimary[animal] || [];
+  if (enemies.length === 0) return [];
+  
+  const cautionYears: number[] = [];
+  let year = startYear;
+  
+  // Find the next 3 years where the calendar year's animal is an enemy
+  // Each enemy animal appears every 12 years, so search up to 36 years to find 3
+  while (cautionYears.length < 3 && year <= startYear + 36) {
+    const yearAnimal = getVietnamAnimal(year);
+    if (enemies.includes(yearAnimal)) {
+      cautionYears.push(year);
+    }
+    year++;
+  }
+  return cautionYears;
+}
+
+function getFriendlySignsFromAnimal(animal: string): string[] {
+  return animalFriends[animal] || [];
+}
 
 export default function Admin() {
   const { user, isLoading: authLoading, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
   const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedEvaluation, setSelectedEvaluation] = useState<Evaluation | null>(null);
+  const [formData, setFormData] = useState({ name: "", birthDate: "" });
 
   const toggleRow = (id: number) => {
     setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await apiRequest("DELETE", `/api/evaluations/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/evaluations"] });
+      toast({ title: "Deleted", description: "Evaluation removed successfully" });
+      setDeleteDialogOpen(false);
+      setSelectedEvaluation(null);
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to delete evaluation", variant: "destructive" });
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: number; data: Partial<Evaluation> }) => {
+      await apiRequest("PUT", `/api/evaluations/${id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/evaluations"] });
+      toast({ title: "Updated", description: "Evaluation updated successfully" });
+      setEditDialogOpen(false);
+      setSelectedEvaluation(null);
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to update evaluation", variant: "destructive" });
+    },
+  });
+
+  const handleEdit = (evaluation: Evaluation) => {
+    setSelectedEvaluation(evaluation);
+    setFormData({ name: evaluation.name, birthDate: evaluation.birthDate });
+    setEditDialogOpen(true);
+  };
+
+  const handleDelete = (evaluation: Evaluation) => {
+    setSelectedEvaluation(evaluation);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (selectedEvaluation) {
+      updateMutation.mutate({ id: selectedEvaluation.id, data: formData });
+    }
   };
 
   const { data: adminCheck, isLoading: adminCheckLoading } = useQuery<{
@@ -164,10 +260,10 @@ export default function Admin() {
                       <TableHead>Birth Date</TableHead>
                       <TableHead>Life Path</TableHead>
                       <TableHead>Zodiac</TableHead>
-                      <TableHead>Zodiac Sign</TableHead>
-                      <TableHead>Expression</TableHead>
-                      <TableHead>Compatibility</TableHead>
-                      <TableHead>Date</TableHead>
+                      <TableHead>Personal Year</TableHead>
+                      <TableHead>Friendly Signs</TableHead>
+                      <TableHead>Caution Years</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -211,26 +307,50 @@ export default function Admin() {
                               </Badge>
                             </TableCell>
                             <TableCell>{evaluation.zodiacAnimal || "-"}</TableCell>
-                            <TableCell>{evaluation.zodiacSign || "-"}</TableCell>
-                            <TableCell>{evaluation.expressionNumber || "-"}</TableCell>
                             <TableCell>
-                              {evaluation.compatibilityPartner ? (
-                                <span>
-                                  {evaluation.compatibilityPartner}
-                                  {evaluation.compatibilityScore && (
-                                    <Badge variant="secondary" className="ml-2">
-                                      {evaluation.compatibilityScore}%
-                                    </Badge>
-                                  )}
-                                </span>
-                              ) : (
-                                "-"
-                              )}
+                              {fullData?.personalYear ? (
+                                <Badge variant="outline">{fullData.personalYear}</Badge>
+                              ) : "-"}
                             </TableCell>
-                            <TableCell className="text-muted-foreground text-sm">
-                              {evaluation.createdAt
-                                ? new Date(evaluation.createdAt).toLocaleDateString()
-                                : "-"}
+                            <TableCell>
+                              {evaluation.zodiacAnimal ? (
+                                <span className="text-sm text-muted-foreground">
+                                  {getFriendlySignsFromAnimal(evaluation.zodiacAnimal).slice(0, 3).join(", ") || "-"}
+                                </span>
+                              ) : "-"}
+                            </TableCell>
+                            <TableCell>
+                              {evaluation.zodiacAnimal ? (
+                                <span className="text-sm text-muted-foreground">
+                                  {getCautionYears(evaluation.zodiacAnimal).join(", ") || "-"}
+                                </span>
+                              ) : "-"}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleEdit(evaluation);
+                                  }}
+                                  data-testid={`button-edit-${evaluation.id}`}
+                                >
+                                  <Pencil className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleDelete(evaluation);
+                                  }}
+                                  data-testid={`button-delete-${evaluation.id}`}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </TableCell>
                           </TableRow>
                           {isExpanded && fullData && (
@@ -279,6 +399,71 @@ export default function Admin() {
           </CardContent>
         </Card>
       </main>
+
+      {/* Edit Dialog */}
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Evaluation</DialogTitle>
+            <DialogDescription>
+              Update the name or birth date for this evaluation.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="edit-name">Name</Label>
+              <Input
+                id="edit-name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                data-testid="input-edit-name"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="edit-birthdate">Birth Date</Label>
+              <Input
+                id="edit-birthdate"
+                type="date"
+                value={formData.birthDate}
+                onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
+                data-testid="input-edit-birthdate"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditDialogOpen(false)} data-testid="button-cancel-edit">
+              Cancel
+            </Button>
+            <Button onClick={handleSaveEdit} disabled={updateMutation.isPending} data-testid="button-save-edit">
+              {updateMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Evaluation</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete the evaluation for "{selectedEvaluation?.name}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel data-testid="button-cancel-delete">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => selectedEvaluation && deleteMutation.mutate(selectedEvaluation.id)}
+              className="bg-destructive text-destructive-foreground"
+              data-testid="button-confirm-delete"
+            >
+              {deleteMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
