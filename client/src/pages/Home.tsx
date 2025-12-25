@@ -306,11 +306,9 @@ export default function Home() {
                           <div>
                             <div className="flex items-center gap-1.5">
                               <p className="text-xs text-muted-foreground">Day</p>
-                              {masterNumberLabels[personData.dayNumber] && (
-                                <Badge variant="outline" className="h-4 py-0 text-[9px] font-bold border-primary/20 text-primary">
-                                  {masterNumberLabels[personData.dayNumber]}
-                                </Badge>
-                              )}
+                              <Badge variant="outline" className="h-4 py-0 text-[9px] font-bold border-primary/20 text-primary">
+                                {masterNumberLabels[personData.dayNumber] || "Your Number"}
+                              </Badge>
                             </div>
                             <p className="text-lg font-semibold" data-testid="text-daynumber">{personData.dayNumber}</p>
                           </div>
@@ -320,11 +318,9 @@ export default function Home() {
                           <div>
                             <div className="flex items-center gap-1.5">
                               <p className="text-xs text-muted-foreground">Month</p>
-                              {masterNumberLabels[personData.monthNumber] && (
-                                <Badge variant="outline" className="h-4 py-0 text-[9px] font-bold border-primary/20 text-primary">
-                                  {masterNumberLabels[personData.monthNumber]}
-                                </Badge>
-                              )}
+                              <Badge variant="outline" className="h-4 py-0 text-[9px] font-bold border-primary/20 text-primary">
+                                {masterNumberLabels[personData.monthNumber] || "Your Number"}
+                              </Badge>
                             </div>
                             <p className="text-lg font-semibold" data-testid="text-monthnumber">{personData.monthNumber}</p>
                           </div>
