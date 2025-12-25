@@ -736,6 +736,7 @@ export interface ReportTemplate {
   archetype: string;
   summary: string;
   keyInsights: string[];
+  advice: string[];
 }
 
 export const reportTemplates: ReportTemplate[] = [
@@ -751,6 +752,30 @@ export const reportTemplates: ReportTemplate[] = [
       "Isolation protects your research mind but blocks the partnerships you need for impact",
       "Authority figures either become your greatest allies or your most significant blockers",
       "Teaching and advising are your natural monetization paths"
+    ],
+    advice: [
+      "Schedule deep solitude for research, but force social interaction for execution",
+      "Verify every financial contract twice—month 8 energy attracts complex legalities",
+      "Use your voice to teach what you've mastered, not just to criticize what is broken"
+    ]
+  },
+  {
+    id: "2-5-7",
+    combo: "2-5-7",
+    name: "The Intuitive Explorer",
+    archetype: "Sensitive Strategic Nomad",
+    summary: "You possess a unique blend of deep sensitivity, restless curiosity, and analytical depth. Your life path (2) makes you a natural mediator, but your day energy (5) pushes you toward constant movement. Your month arena (7) ensures that every experience is analyzed for deeper truth.",
+    keyInsights: [
+      "Restlessness is your internal compass seeking new levels of wisdom",
+      "You sense emotional undercurrents that others miss, making you a powerful strategist",
+      "Freedom is your primary requirement—without it, your intuition shuts down",
+      "You translate abstract concepts into relatable human experiences better than most",
+      "Your biggest growth comes from staying when you want to run"
+    ],
+    advice: [
+      "Travel with a purpose—field research or spiritual retreats ground your 5 energy",
+      "Build a career that rewards mobility and specialized research",
+      "Practice emotional boundaries to prevent taking on others' stress as your own"
     ]
   },
   {
@@ -765,6 +790,11 @@ export const reportTemplates: ReportTemplate[] = [
       "Real estate, construction, and infrastructure are your natural domains",
       "Patience with the building process is your hidden superpower",
       "Delegation is harder for you but essential for scale"
+    ],
+    advice: [
+      "Audit your business integrity quarterly; karmic 8 energy reacts quickly to shortcuts",
+      "Build from the ground up—your 4 month arena rewards solid foundations over speed",
+      "Practice humility in leadership to keep your team's loyalty"
     ]
   },
   {
@@ -779,6 +809,11 @@ export const reportTemplates: ReportTemplate[] = [
       "Learning to receive is as important as giving",
       "Partnerships amplify your impact—you're not meant to serve alone",
       "Endings and transitions are where you offer the most profound support"
+    ],
+    advice: [
+      "Set strict 'off' hours for your service work to prevent depletion",
+      "Practice asking for help once a day—it builds the 2 month's receptivity",
+      "Trust that ending a project is a sacred completion, not a personal failure"
     ]
   },
   {
@@ -793,6 +828,11 @@ export const reportTemplates: ReportTemplate[] = [
       "Leadership through inspiration, not authority, is your style",
       "Travel, media, and global initiatives suit your energy",
       "Letting go of control allows bigger possibilities to emerge"
+    ],
+    advice: [
+      "Structure your business to allow for seasonal shifts or travel",
+      "Focus on the 'why' to keep your restless 5 energy engaged in the 1's goal",
+      "Practice 'unplugging' to let the humanitarian 9 vision clarify"
     ]
   },
   {
@@ -807,6 +847,11 @@ export const reportTemplates: ReportTemplate[] = [
       "Teaching through storytelling is your superpower",
       "Over-giving is your shadow; set boundaries early and often",
       "Legacy comes through what you create and nurture"
+    ],
+    advice: [
+      "Monetize your creative gifts through community or teaching projects",
+      "Release family expectations that block your creative voice",
+      "Create for the joy of it, not just for the service of it"
     ]
   },
   {
@@ -821,6 +866,11 @@ export const reportTemplates: ReportTemplate[] = [
       "Partnerships need to be built on mutual respect and shared values",
       "Workaholism is your escape from emotional discomfort",
       "Creating sanctuaries for others is both your gift and your purpose"
+    ],
+    advice: [
+      "Schedule emotional check-ins with yourself as strictly as work meetings",
+      "Build your empire around home or family legacy to stay motivated",
+      "Learn that resting is part of the building process"
     ]
   },
   {
@@ -835,6 +885,11 @@ export const reportTemplates: ReportTemplate[] = [
       "Solo travel and independent study are essential, not optional",
       "Commitment issues stem from fear of losing freedom",
       "Innovation through unconventional thinking is your hallmark"
+    ],
+    advice: [
+      "Design a location-independent business or consulting practice",
+      "Trust your 'gut' research over popular opinion or trends",
+      "Build a network of independent allies who don't require daily maintenance"
     ]
   },
   {
@@ -849,6 +904,11 @@ export const reportTemplates: ReportTemplate[] = [
       "The pressure you feel is proportional to your potential",
       "Ground your visions in practical steps or overwhelm takes over",
       "Service to humanity is not optional—it's your contract"
+    ],
+    advice: [
+      "Prioritize silence and nature daily to manage the master vibration",
+      "Say 'no' to projects that aren't large-scale or high-impact",
+      "Seek a mentor who understands the weight of master energy"
     ]
   }
 ];

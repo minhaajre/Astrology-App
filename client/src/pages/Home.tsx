@@ -299,12 +299,18 @@ export default function Home() {
                           <div>
                             <p className="text-xs text-muted-foreground">Day Number</p>
                             <p className="text-lg font-semibold" data-testid="text-daynumber">{personData.dayNumber}</p>
+                            {masterNumberLabels[personData.dayNumber] && (
+                              <p className="text-[10px] text-primary font-medium">{masterNumberLabels[personData.dayNumber]}</p>
+                            )}
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
                             <p className="text-xs text-muted-foreground">Month Number</p>
                             <p className="text-lg font-semibold" data-testid="text-monthnumber">{personData.monthNumber}</p>
+                            {masterNumberLabels[personData.monthNumber] && (
+                              <p className="text-[10px] text-primary font-medium">{masterNumberLabels[personData.monthNumber]}</p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -414,24 +420,47 @@ export default function Home() {
                       </CardContent>
                     </Card>
 
-                    <Card className="border-green-500/20 bg-green-500/5">
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400">
-                          <Lightbulb className="h-5 w-5" />
-                          Key Insights
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="space-y-2">
-                          {template.keyInsights.map((s: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-green-500 shrink-0" />
-                              <span className="text-sm">{s}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <Card className="border-green-500/20 bg-green-500/5">
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                            <Lightbulb className="h-5 w-5" />
+                            Key Insights
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-2">
+                            {template.keyInsights.map((s: string, i: number) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-green-500 shrink-0" />
+                                <span className="text-sm">{s}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+
+                      {template.advice && (
+                        <Card className="border-blue-500/20 bg-blue-500/5">
+                          <CardHeader>
+                            <CardTitle className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+                              <Target className="h-5 w-5" />
+                              Strategic Advice
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <ul className="space-y-2">
+                              {template.advice.map((s: string, i: number) => (
+                                <li key={i} className="flex items-start gap-2">
+                                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-blue-500 shrink-0" />
+                                  <span className="text-sm">{s}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </CardContent>
+                        </Card>
+                      )}
+                    </div>
                   </div>
                 )}
               </TabsContent>
