@@ -303,6 +303,7 @@ export default function Home() {
                               <p className="text-[10px] text-primary font-medium">{masterNumberLabels[personData.dayNumber]}</p>
                             )}
                           </div>
+                          <StatusBadge status={evaluateCycleStatus(personData.dayNumber, personData.personalYear)} testId="status-daynumber" />
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
@@ -312,6 +313,7 @@ export default function Home() {
                               <p className="text-[10px] text-primary font-medium">{masterNumberLabels[personData.monthNumber]}</p>
                             )}
                           </div>
+                          <StatusBadge status={evaluateCycleStatus(personData.monthNumber, personData.personalYear)} testId="status-monthnumber" />
                         </div>
                       </div>
                       <div className="pt-2 border-t">

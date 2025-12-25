@@ -934,7 +934,26 @@ export const reportTemplates: ReportTemplate[] = [
 ];
 
 export function getReportTemplate(lifePath: number, dayNum: number, monthNum: number): ReportTemplate | null {
-  const combo = `${lifePath}-${dayNum}-${monthNum}`;
+  // Normalize master numbers (11, 22, 33) to their base vibrations (2, 4, 6) for template matching
+  // because we only have templates for single digit combinations (except the rare 11-22-33)
+  const normalize = (n: number) => {
+    if (n === 11) return 2;
+    if (n === 22) return 4;
+    if (n === 33) return 6;
+    return n;
+  };
+
+  const lp = normalize(lifePath);
+  const d = normalize(dayNum);
+  const m = normalize(monthNum);
+
+  const combo = `${lp}-${d}-${m}`;
+  
+  // Try exact match first (for the 11-22-33 case)
+  const exactCombo = `${lifePath}-${dayNum}-${monthNum}`;
+  const exactMatch = reportTemplates.find(t => t.combo === exactCombo);
+  if (exactMatch) return exactMatch;
+
   return reportTemplates.find(t => t.combo === combo) || null;
 }
 
