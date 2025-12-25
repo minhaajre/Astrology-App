@@ -265,6 +265,120 @@ export default function Home() {
                   </p>
                 </div>
 
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base">
+                        <Star className="h-5 w-5 text-primary" />
+                        Numerology
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="w-64 space-y-2">
+                              <p className="font-semibold">Numerology</p>
+                              <p className="text-xs">Based on your birth date, revealing your life path number and daily guidance.</p>
+                              <p className="text-xs mt-3"><strong>Good:</strong> Numbers in harmony with your life path</p>
+                              <p className="text-xs"><strong>Neutral:</strong> Numbers with neither positive nor challenging energy</p>
+                              <p className="text-xs"><strong>Challenging:</strong> Numbers that create friction - requiring conscious growth</p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm text-muted-foreground">Life Path</p>
+                          </div>
+                          <p className="text-2xl font-bold" data-testid="text-lifepath">{personData.lifePath}</p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="flex items-center gap-1.5">
+                              <p className="text-xs text-muted-foreground">Day</p>
+                            </div>
+                            <p className="text-lg font-semibold" data-testid="text-daynumber">{personData.dayNumber}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="flex items-center gap-1.5">
+                              <p className="text-xs text-muted-foreground">Month</p>
+                            </div>
+                            <p className="text-lg font-semibold" data-testid="text-monthnumber">{personData.monthNumber}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="pt-2 border-t">
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div>
+                            <p className="text-xs text-muted-foreground">Personal Year</p>
+                            <p className="text-lg font-semibold" data-testid="text-personalyear">{personData.personalYear}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Personal Month</p>
+                            <p className="text-lg font-semibold" data-testid="text-personalmonth">{personData.personalMonth}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">Personal Day</p>
+                            <p className="text-lg font-semibold text-primary" data-testid="text-personalday">{personData.personalDay}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base">
+                        <Type className="h-5 w-5 text-primary" />
+                        Gematria (Latin)
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="w-64 space-y-2">
+                              <p className="font-semibold">Gematria (Latin)</p>
+                              <p className="text-xs">Pythagorean numerology of your name using the Latin alphabet.</p>
+                              <p className="text-xs mt-2"><strong>Expression:</strong> How you express yourself and your talents</p>
+                              <p className="text-xs"><strong>Soul Urge:</strong> Your inner desires and motivations</p>
+                              <p className="text-xs"><strong>Personality:</strong> How others perceive you</p>
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {nameNumerology && (
+                        <>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-xs text-muted-foreground">Expression</p>
+                              <p className="text-lg font-bold" data-testid="text-expression">{nameNumerology.expressionNumber}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <p className="text-xs text-muted-foreground">Soul Urge</p>
+                              <p className="text-base font-semibold" data-testid="text-soulurge">{nameNumerology.soulUrge}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">Personality</p>
+                              <p className="text-base font-semibold" data-testid="text-personality">{nameNumerology.personality}</p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+
                 <div className="bg-muted/30 rounded-xl p-6 border">
                   <div className="flex items-center gap-3 mb-4">
                     <Sparkles className="h-6 w-6 text-primary" />
@@ -356,124 +470,6 @@ export default function Home() {
                       </CardContent>
                     </Card>
                   </div>
-                </div>
-
-                <div className="grid gap-4 md:grid-cols-2">
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <Star className="h-5 w-5 text-primary" />
-                        Numerology
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <div className="w-64 space-y-2">
-                              <p className="font-semibold">Numerology</p>
-                              <p className="text-xs">Based on your birth date, revealing your life path number and daily guidance.</p>
-                              <p className="text-xs mt-3"><strong>Good:</strong> Numbers in harmony with your life path</p>
-                              <p className="text-xs"><strong>Neutral:</strong> Numbers with neither positive nor challenging energy</p>
-                              <p className="text-xs"><strong>Challenging:</strong> Numbers that create friction - requiring conscious growth</p>
-                            </div>
-                          </TooltipContent>
-                        </Tooltip>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <p className="text-sm text-muted-foreground">Life Path</p>
-                          </div>
-                          <p className="text-2xl font-bold" data-testid="text-lifepath">{personData.lifePath}</p>
-                        </div>
-                        <StatusBadge status={evaluateCycleStatus(personData.lifePath, personData.personalYear)} testId="status-numerology" />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <p className="text-xs text-muted-foreground">Day</p>
-                            </div>
-                            <p className="text-lg font-semibold" data-testid="text-daynumber">{personData.dayNumber}</p>
-                          </div>
-                          <StatusBadge status={evaluateCycleStatus(personData.dayNumber, personData.personalYear)} testId="status-daynumber" />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <p className="text-xs text-muted-foreground">Month</p>
-                            </div>
-                            <p className="text-lg font-semibold" data-testid="text-monthnumber">{personData.monthNumber}</p>
-                          </div>
-                          <StatusBadge status={evaluateCycleStatus(personData.monthNumber, personData.personalYear)} testId="status-monthnumber" />
-                        </div>
-                      </div>
-                      <div className="pt-2 border-t">
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div>
-                            <p className="text-xs text-muted-foreground">Personal Year</p>
-                            <p className="text-lg font-semibold" data-testid="text-personalyear">{personData.personalYear}</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground">Personal Month</p>
-                            <p className="text-lg font-semibold" data-testid="text-personalmonth">{personData.personalMonth}</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground">Personal Day</p>
-                            <p className="text-lg font-semibold text-primary" data-testid="text-personalday">{personData.personalDay}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <Type className="h-5 w-5 text-primary" />
-                        Gematria (Latin)
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <div className="w-64 space-y-2">
-                              <p className="font-semibold">Gematria (Latin)</p>
-                              <p className="text-xs">Pythagorean numerology of your name using the Latin alphabet.</p>
-                              <p className="text-xs mt-2"><strong>Expression:</strong> How you express yourself and your talents</p>
-                              <p className="text-xs"><strong>Soul Urge:</strong> Your inner desires and motivations</p>
-                              <p className="text-xs"><strong>Personality:</strong> How others perceive you</p>
-                            </div>
-                          </TooltipContent>
-                        </Tooltip>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {nameNumerology && (
-                        <>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-xs text-muted-foreground">Expression</p>
-                              <p className="text-lg font-bold" data-testid="text-expression">{nameNumerology.expressionNumber}</p>
-                            </div>
-                            <StatusBadge status={evaluateCycleStatus(nameNumerology.expressionNumber, personData.personalYear)} testId="status-expression" />
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <p className="text-xs text-muted-foreground">Soul Urge</p>
-                              <p className="text-base font-semibold" data-testid="text-soulurge">{nameNumerology.soulUrge}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-muted-foreground">Personality</p>
-                              <p className="text-base font-semibold" data-testid="text-personality">{nameNumerology.personality}</p>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </CardContent>
-                  </Card>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
