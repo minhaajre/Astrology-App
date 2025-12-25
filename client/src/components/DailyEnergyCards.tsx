@@ -25,7 +25,7 @@ import {
 export function DailyEnergyCards() {
   const today = new Date();
   
-  // Today's energy - use actual date from GG33 system
+  // Today's energy - use actual date from numerology system
   const todayDate = today.getDate();
   const todaySpecialDate = specialDates.find(d => d.date === todayDate);
   const todayNumber = todayDate; // Display the actual date

@@ -111,7 +111,7 @@ export const specialDates: SpecialDateInfo[] = [
   { date: 27, theme: "Spiritual Completion", number: 9, category: "🔮 Completion & Transition", bestFor: ["Reflection", "Endings"], avoidFor: ["Attachment"], note: "Double-digit: Soul-level closure. Reduces to 9" },
   
   // Day 28 (2+8=10→1)
-  { date: 28, theme: "Money Reset · Forced Independence", number: 1, category: "💰 Money & Wealth", bestFor: ["Business launches", "Financial pivots"], avoidFor: ["Relying on others"], note: "Most emphasized GG33 money day. Reduces to 1" },
+  { date: 28, theme: "Money Reset · Forced Independence", number: 1, category: "💰 Money & Wealth", bestFor: ["Business launches", "Financial pivots"], avoidFor: ["Relying on others"], note: "Most emphasized money day. Reduces to 1" },
   
   // Day 29 (2+9=11)
   { date: 29, theme: "Emotional Mastery · Tests", number: 11, category: "🧩 Master Numbers", bestFor: ["Inner work", "Compassion"], avoidFor: ["Emotional extremes"], note: "Double-digit: Emotional insight. Master energy" },
