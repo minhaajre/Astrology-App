@@ -397,7 +397,7 @@ export default function Home() {
                       </CardHeader>
                       <CardContent>
                         <p className="text-lg font-serif italic text-muted-foreground leading-relaxed">
-                          "{template.core}"
+                          "{template.summary}"
                         </p>
                       </CardContent>
                     </Card>
@@ -407,12 +407,12 @@ export default function Home() {
                         <CardHeader>
                           <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400">
                             <CheckCircle className="h-5 w-5" />
-                            Strengths
+                            Key Insights
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
                           <ul className="space-y-2">
-                            {template.strengths.map((s, i) => (
+                            {template.keyInsights.map((s: string, i: number) => (
                               <li key={i} className="flex items-start gap-2">
                                 <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-green-500" />
                                 <span className="text-sm">{s}</span>
@@ -421,40 +421,7 @@ export default function Home() {
                           </ul>
                         </CardContent>
                       </Card>
-
-                      <Card className="border-amber-500/20 bg-amber-500/5">
-                        <CardHeader>
-                          <CardTitle className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
-                            <AlertTriangle className="h-5 w-5" />
-                            Growth Areas
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-2">
-                            {template.traps.map((t, i) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500" />
-                                <span className="text-sm">{t}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
                     </div>
-
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                          <Lightbulb className="h-5 w-5 text-primary" />
-                          Key Insight
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm leading-relaxed text-muted-foreground">
-                          {template.advice}
-                        </p>
-                      </CardContent>
-                    </Card>
                   </div>
                 )}
               </TabsContent>
@@ -465,16 +432,13 @@ export default function Home() {
 
               <TabsContent value="zodiac" className="animate-in fade-in duration-500">
                 <ZodiacDisplay 
-                  currentYearAnimal={currentYearAnimal}
-                  currentMonthAnimal={currentMonthAnimal}
+                  birthYear={personData.dob.getFullYear()}
                 />
               </TabsContent>
 
               <TabsContent value="compatibility" className="animate-in fade-in duration-500">
                 <CompatibilityCalculator 
-                  userName={personData.name}
-                  userDob={personData.dob}
-                  userArabicName={personData.arabicName}
+                  personA={{ name: personData.name, dob: personData.dob }}
                 />
               </TabsContent>
 
@@ -484,13 +448,13 @@ export default function Home() {
                   personalMonth={personData.personalMonth}
                   personalDay={personData.personalDay}
                 />
-                <TimingAdvisor />
+                <TimingAdvisor dob={personData.dob} />
               </TabsContent>
 
               <TabsContent value="export" className="animate-in fade-in duration-500">
                 <ExportPanel 
-                  nameNumerology={nameNumerology}
-                  template={template}
+                  name={personData.name}
+                  dob={personData.dob}
                 />
               </TabsContent>
             </Tabs>
