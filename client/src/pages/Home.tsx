@@ -460,6 +460,38 @@ export default function Home() {
                           </CardContent>
                         </Card>
                       )}
+
+                      {template.compatibility && (
+                        <Card className="border-pink-500/20 bg-pink-500/5">
+                          <CardHeader>
+                            <CardTitle className="flex items-center gap-2 text-pink-600 dark:text-pink-400">
+                              <Heart className="h-5 w-5" />
+                              Relational Dynamics
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="text-sm leading-relaxed">
+                              {template.compatibility}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      )}
+
+                      {template.career && (
+                        <Card className="border-amber-500/20 bg-amber-500/5">
+                          <CardHeader>
+                            <CardTitle className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+                              <Target className="h-5 w-5" />
+                              Career Pathing
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="text-sm leading-relaxed">
+                              {template.career}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      )}
                     </div>
                   </div>
                 )}

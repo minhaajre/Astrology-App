@@ -737,6 +737,8 @@ export interface ReportTemplate {
   summary: string;
   keyInsights: string[];
   advice: string[];
+  compatibility?: string;
+  career?: string;
 }
 
 export const reportTemplates: ReportTemplate[] = [
@@ -757,7 +759,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Schedule deep solitude for research, but force social interaction for execution",
       "Verify every financial contract twice—month 8 energy attracts complex legalities",
       "Use your voice to teach what you've mastered, not just to criticize what is broken"
-    ]
+    ],
+    compatibility: "You thrive with partners who respect your need for silence and intellectual depth. Look for those with 1, 5, or 7 energy.",
+    career: "Strategic consulting, specialized research, technical writing, or high-level financial analysis."
   },
   {
     id: "2-5-7",
@@ -776,7 +780,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Travel with a purpose—field research or spiritual retreats ground your 5 energy",
       "Build a career that rewards mobility and specialized research",
       "Practice emotional boundaries to prevent taking on others' stress as your own"
-    ]
+    ],
+    compatibility: "You need a partner who values freedom and intellectual growth. Look for 5, 7, or 9 energies.",
+    career: "Travel journalism, psychological research, documentary filmmaking, or intuitive counseling."
   },
   {
     id: "8-1-4",
@@ -795,7 +801,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Audit your business integrity quarterly; karmic 8 energy reacts quickly to shortcuts",
       "Build from the ground up—your 4 month arena rewards solid foundations over speed",
       "Practice humility in leadership to keep your team's loyalty"
-    ]
+    ],
+    compatibility: "You need a supportive yet independent partner. 2, 4, and 6 energies offer the stability you require.",
+    career: "Corporate leadership, real estate development, financial management, or industrial engineering."
   },
   {
     id: "9-6-2",
@@ -814,7 +822,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Set strict 'off' hours for your service work to prevent depletion",
       "Practice asking for help once a day—it builds the 2 month's receptivity",
       "Trust that ending a project is a sacred completion, not a personal failure"
-    ]
+    ],
+    compatibility: "You thrive with partners who are equally service-oriented. 3, 6, and 9 energies are harmonious.",
+    career: "Counseling, non-profit leadership, healthcare, or social advocacy."
   },
   {
     id: "1-5-9",
@@ -833,7 +843,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Structure your business to allow for seasonal shifts or travel",
       "Focus on the 'why' to keep your restless 5 energy engaged in the 1's goal",
       "Practice 'unplugging' to let the humanitarian 9 vision clarify"
-    ]
+    ],
+    compatibility: "You need a partner who is adventurous and supportive of your independent vision. 1, 3, and 5 energies match well.",
+    career: "Innovation consulting, international entrepreneurship, motivational speaking, or media production."
   },
   {
     id: "3-6-9",
@@ -852,7 +864,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Monetize your creative gifts through community or teaching projects",
       "Release family expectations that block your creative voice",
       "Create for the joy of it, not just for the service of it"
-    ]
+    ],
+    compatibility: "Partners who appreciate art and emotional depth are best. 3, 6, and 9 energies are your natural tribe.",
+    career: "Art therapy, creative direction for non-profits, music education, or lifestyle blogging."
   },
   {
     id: "4-2-6",
@@ -871,7 +885,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Schedule emotional check-ins with yourself as strictly as work meetings",
       "Build your empire around home or family legacy to stay motivated",
       "Learn that resting is part of the building process"
-    ]
+    ],
+    compatibility: "You need a partner who values security and tradition. 2, 4, and 8 energies provide the stability you crave.",
+    career: "Operations management, family business leadership, architecture, or clinical practice."
   },
   {
     id: "5-7-1",
@@ -890,7 +906,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Design a location-independent business or consulting practice",
       "Trust your 'gut' research over popular opinion or trends",
       "Build a network of independent allies who don't require daily maintenance"
-    ]
+    ],
+    compatibility: "You thrive with other independent seekers. 1, 5, and 7 energies understand your need for space.",
+    career: "Independent consulting, investigative research, tech innovation, or adventure travel leadership."
   },
   {
     id: "11-22-33",
@@ -909,7 +927,9 @@ export const reportTemplates: ReportTemplate[] = [
       "Prioritize silence and nature daily to manage the master vibration",
       "Say 'no' to projects that aren't large-scale or high-impact",
       "Seek a mentor who understands the weight of master energy"
-    ]
+    ],
+    compatibility: "You need a highly evolved partner who can hold space for your intensity. Other master numbers or 7 and 9 energies are suitable.",
+    career: "Global education leadership, humanitarian architecture, spiritual master-teaching, or visionary philanthropy."
   }
 ];
 
