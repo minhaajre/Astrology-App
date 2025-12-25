@@ -32,7 +32,6 @@ import {
   getMonthlyForecast,
   getYearlyForecast,
   calculateExpressionNumber,
-  TimingAdvisor,
   getVietnamAnimal,
   getDayNumber,
   getMonthNumber,
