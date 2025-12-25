@@ -289,7 +289,14 @@ export default function Home() {
                     <CardContent className="space-y-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm text-muted-foreground">Life Path</p>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm text-muted-foreground">Life Path</p>
+                            {masterNumberLabels[personData.lifePath] && (
+                              <Badge variant="outline" className="h-5 py-0 text-[10px] font-bold border-primary/30 text-primary">
+                                {masterNumberLabels[personData.lifePath]}
+                              </Badge>
+                            )}
+                          </div>
                           <p className="text-2xl font-bold" data-testid="text-lifepath">{personData.lifePath}</p>
                         </div>
                         <StatusBadge status={evaluateCycleStatus(personData.lifePath, personData.personalYear)} testId="status-numerology" />
@@ -297,21 +304,29 @@ export default function Home() {
                       <div className="grid grid-cols-2 gap-4">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-xs text-muted-foreground">Day Number</p>
+                            <div className="flex items-center gap-1.5">
+                              <p className="text-xs text-muted-foreground">Day</p>
+                              {masterNumberLabels[personData.dayNumber] && (
+                                <Badge variant="outline" className="h-4 py-0 text-[9px] font-bold border-primary/20 text-primary">
+                                  {masterNumberLabels[personData.dayNumber]}
+                                </Badge>
+                              )}
+                            </div>
                             <p className="text-lg font-semibold" data-testid="text-daynumber">{personData.dayNumber}</p>
-                            {masterNumberLabels[personData.dayNumber] && (
-                              <p className="text-[10px] text-primary font-medium">{masterNumberLabels[personData.dayNumber]}</p>
-                            )}
                           </div>
                           <StatusBadge status={evaluateCycleStatus(personData.dayNumber, personData.personalYear)} testId="status-daynumber" />
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-xs text-muted-foreground">Month Number</p>
+                            <div className="flex items-center gap-1.5">
+                              <p className="text-xs text-muted-foreground">Month</p>
+                              {masterNumberLabels[personData.monthNumber] && (
+                                <Badge variant="outline" className="h-4 py-0 text-[9px] font-bold border-primary/20 text-primary">
+                                  {masterNumberLabels[personData.monthNumber]}
+                                </Badge>
+                              )}
+                            </div>
                             <p className="text-lg font-semibold" data-testid="text-monthnumber">{personData.monthNumber}</p>
-                            {masterNumberLabels[personData.monthNumber] && (
-                              <p className="text-[10px] text-primary font-medium">{masterNumberLabels[personData.monthNumber]}</p>
-                            )}
                           </div>
                           <StatusBadge status={evaluateCycleStatus(personData.monthNumber, personData.personalYear)} testId="status-monthnumber" />
                         </div>
@@ -386,7 +401,7 @@ export default function Home() {
                   <MetricTile
                     highlight
                     value={personData.lifePath}
-                    subtitle={masterNumberLabels[personData.lifePath]}
+                    subtitle={masterNumberLabels[personData.lifePath] || "Life Path"}
                     icon={Sparkles}
                     testId="metric-lifepath"
                   />
