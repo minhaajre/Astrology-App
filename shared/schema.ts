@@ -18,6 +18,7 @@ export const evaluations = pgTable("evaluations", {
   personality: integer("personality"),
   compatibilityPartner: text("compatibility_partner"),
   compatibilityScore: integer("compatibility_score"),
+  reportData: text("report_data"), // New field to store full report JSON
   createdAt: timestamp("created_at").defaultNow(),
 });
 

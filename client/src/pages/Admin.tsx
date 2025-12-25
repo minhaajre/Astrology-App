@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
@@ -13,13 +13,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, LogOut, Shield, Users, ArrowLeft } from "lucide-react";
+import { Loader2, LogOut, Shield, Users, ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "wouter";
 import type { Evaluation } from "@shared/schema";
+import { NumberAccordion } from "@/components/NumberAccordion";
 
 export default function Admin() {
   const { user, isLoading: authLoading, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
+  const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
+
+  const toggleRow = (id: number) => {
+    setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const { data: adminCheck, isLoading: adminCheckLoading } = useQuery<{
     isAdmin: boolean;
@@ -165,46 +171,95 @@ export default function Admin() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {evaluations.map((evaluation) => (
-                      <TableRow key={evaluation.id} data-testid={`row-evaluation-${evaluation.id}`}>
-                        <TableCell className="font-medium">
-                          {evaluation.name}
-                        </TableCell>
-                        <TableCell>{evaluation.birthDate}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline">
-                            {evaluation.lifePath}
-                            {evaluation.lifePathLabel && (
-                              <span className="ml-1 text-xs">
-                                ({evaluation.lifePathLabel})
-                              </span>
-                            )}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{evaluation.zodiacAnimal || "-"}</TableCell>
-                        <TableCell>{evaluation.zodiacSign || "-"}</TableCell>
-                        <TableCell>{evaluation.expressionNumber || "-"}</TableCell>
-                        <TableCell>
-                          {evaluation.compatibilityPartner ? (
-                            <span>
-                              {evaluation.compatibilityPartner}
-                              {evaluation.compatibilityScore && (
-                                <Badge variant="secondary" className="ml-2">
-                                  {evaluation.compatibilityScore}%
-                                </Badge>
+                    {evaluations.map((evaluation) => {
+                      const isExpanded = !!expandedRows[evaluation.id];
+                      let fullData = null;
+                      try {
+                        if (evaluation.reportData) {
+                          fullData = JSON.parse(evaluation.reportData);
+                        }
+                      } catch (e) {
+                        console.error("Error parsing report data", e);
+                      }
+
+                      return (
+                        <>
+                          <TableRow 
+                            key={evaluation.id} 
+                            data-testid={`row-evaluation-${evaluation.id}`}
+                            className="cursor-pointer hover:bg-muted/50 transition-colors"
+                            onClick={() => toggleRow(evaluation.id)}
+                          >
+                            <TableCell className="font-medium">
+                              <div className="flex items-center gap-2">
+                                {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                                {evaluation.name}
+                              </div>
+                            </TableCell>
+                            <TableCell>{evaluation.birthDate}</TableCell>
+                            <TableCell>
+                              <Badge variant="outline">
+                                {evaluation.lifePath}
+                                {evaluation.lifePathLabel && (
+                                  <span className="ml-1 text-xs">
+                                    ({evaluation.lifePathLabel})
+                                  </span>
+                                )}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>{evaluation.zodiacAnimal || "-"}</TableCell>
+                            <TableCell>{evaluation.zodiacSign || "-"}</TableCell>
+                            <TableCell>{evaluation.expressionNumber || "-"}</TableCell>
+                            <TableCell>
+                              {evaluation.compatibilityPartner ? (
+                                <span>
+                                  {evaluation.compatibilityPartner}
+                                  {evaluation.compatibilityScore && (
+                                    <Badge variant="secondary" className="ml-2">
+                                      {evaluation.compatibilityScore}%
+                                    </Badge>
+                                  )}
+                                </span>
+                              ) : (
+                                "-"
                               )}
-                            </span>
-                          ) : (
-                            "-"
+                            </TableCell>
+                            <TableCell className="text-muted-foreground text-sm">
+                              {evaluation.createdAt
+                                ? new Date(evaluation.createdAt).toLocaleDateString()
+                                : "-"}
+                            </TableCell>
+                          </TableRow>
+                          {isExpanded && fullData && (
+                            <TableRow className="bg-muted/30">
+                              <TableCell colSpan={8} className="p-0">
+                                <div className="p-6 border-b border-t animate-in fade-in slide-in-from-top-2 duration-300">
+                                  <NumberAccordion
+                                    personData={{
+                                      name: evaluation.name,
+                                      birthDate: new Date(evaluation.birthDate),
+                                      lifePath: fullData.lp,
+                                      zodiacAnimal: fullData.animal,
+                                      zodiacSign: fullData.zodiac,
+                                      personalYear: fullData.personalYear,
+                                      personalMonth: fullData.personalMonth,
+                                      personalDay: fullData.personalDay,
+                                      lunarPhase: fullData.lunarInfo?.phase,
+                                      universalYear: fullData.universalYear,
+                                      expressionNumber: fullData.nameNum?.expressionNumber,
+                                      soulUrge: fullData.nameNum?.soulUrge,
+                                      personality: fullData.nameNum?.personality
+                                    }}
+                                    timingAdvisor={fullData.timingAdvisor}
+                                    template={fullData.template}
+                                  />
+                                </div>
+                              </TableCell>
+                            </TableRow>
                           )}
-                        </TableCell>
-                        <TableCell className="text-muted-foreground text-sm">
-                          {evaluation.createdAt
-                            ? new Date(evaluation.createdAt).toLocaleDateString()
-                            : "-"}
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                        </>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </div>

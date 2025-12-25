@@ -134,6 +134,22 @@ export default function Home() {
           evaluationData.personality = nameNum.personality;
         }
       }
+
+      // Store full report data
+      evaluationData.reportData = JSON.stringify({
+        lp,
+        animal,
+        zodiac,
+        nameNum,
+        personalYear,
+        personalMonth,
+        personalDay,
+        lunarInfo,
+        universalYear,
+        template,
+        timingAdvisor: lp ? getTimingAdvisor(lp.lifePath) : null
+      });
+
       await apiRequest("POST", "/api/evaluations", evaluationData);
     } catch (error) {
       console.error("Failed to save evaluation:", error);
