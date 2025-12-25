@@ -113,17 +113,28 @@ export default function Home() {
     setActiveTab("overview");
 
     try {
-      await apiRequest("POST", "/api/evaluations", {
+      const evaluationData: Record<string, unknown> = {
         name,
         birthDate: dob.toISOString().split("T")[0],
         lifePath: lp.lifePath,
-        lifePathLabel: masterNumberLabels[lp.lifePath] || null,
         zodiacAnimal: animal,
         zodiacSign: zodiac.name,
-        expressionNumber: nameNum?.expressionNumber || null,
-        soulUrge: nameNum?.soulUrge || null,
-        personality: nameNum?.personality || null,
-      });
+      };
+      if (masterNumberLabels[lp.lifePath]) {
+        evaluationData.lifePathLabel = masterNumberLabels[lp.lifePath];
+      }
+      if (nameNum) {
+        if (nameNum.expressionNumber !== undefined) {
+          evaluationData.expressionNumber = nameNum.expressionNumber;
+        }
+        if (nameNum.soulUrge !== undefined) {
+          evaluationData.soulUrge = nameNum.soulUrge;
+        }
+        if (nameNum.personality !== undefined) {
+          evaluationData.personality = nameNum.personality;
+        }
+      }
+      await apiRequest("POST", "/api/evaluations", evaluationData);
     } catch (error) {
       console.error("Failed to save evaluation:", error);
     }
