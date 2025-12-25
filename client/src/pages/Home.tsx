@@ -41,6 +41,7 @@ import {
   evaluateCycleStatus,
   getNameNumerology,
   getZodiacSign,
+  numberMeanings,
   type NumberStatus,
 } from "@/lib/numerology";
 import { 
@@ -262,6 +263,99 @@ export default function Home() {
                       year: "numeric" 
                     })}
                   </p>
+                </div>
+
+                <div className="bg-muted/30 rounded-xl p-6 border">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Sparkles className="h-6 w-6 text-primary" />
+                    <h3 className="text-xl font-semibold">Your Numerological Profile</h3>
+                  </div>
+                  <p className="text-muted-foreground mb-4">
+                    Your unique Life Path ({personData.lifePath}), Day ({personData.dayNumber}), and Month ({personData.monthNumber}) combination creates a distinctive numerological signature. Explore the Numerology tab for detailed insights into each number's meaning and how they interact in your life.
+                  </p>
+                  <div className="space-y-2">
+                    <p className="font-semibold text-sm">Your Numbers:</p>
+                    <ul className="space-y-1">
+                      <li className="flex items-center gap-2 text-sm">
+                        <span className="text-primary">•</span>
+                        <span className="font-medium text-foreground">Life Path {personData.lifePath}:</span>
+                        <span className="text-muted-foreground">{numberMeanings[personData.lifePath]?.core}</span>
+                      </li>
+                      <li className="flex items-center gap-2 text-sm">
+                        <span className="text-primary">•</span>
+                        <span className="font-medium text-foreground">Day {personData.dayNumber}:</span>
+                        <span className="text-muted-foreground">{numberMeanings[personData.dayNumber]?.core}</span>
+                      </li>
+                      <li className="flex items-center gap-2 text-sm">
+                        <span className="text-primary">•</span>
+                        <span className="font-medium text-foreground">Month {personData.monthNumber}:</span>
+                        <span className="text-muted-foreground">{numberMeanings[personData.monthNumber]?.core}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 px-2">
+                    <TrendingUp className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold">Key Themes & Insights</h3>
+                  </div>
+                  
+                  <div className="grid gap-6 md:grid-cols-3">
+                    <Card className="bg-muted/20 border-none shadow-none">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-sm text-foreground">
+                          <TrendingUp className="h-4 w-4 text-green-500" />
+                          Key Themes
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <div>
+                          <p className="text-xs font-bold text-foreground mb-1">Life Path {personData.lifePath}: {numberMeanings[personData.lifePath]?.core}</p>
+                          <p className="text-xs font-bold text-foreground mb-1">Day {personData.dayNumber}: {numberMeanings[personData.dayNumber]?.core}</p>
+                          <p className="text-xs font-bold text-foreground">Month {personData.monthNumber}: {numberMeanings[personData.monthNumber]?.core}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="bg-muted/20 border-none shadow-none">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-sm text-foreground">
+                          <AlertTriangle className="h-4 w-4 text-amber-500" />
+                          Watch Out For
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-2">
+                          {numberMeanings[personData.lifePath]?.traps.slice(0, 3).map((trap, i) => (
+                            <li key={i} className="flex items-start gap-2 text-xs">
+                              <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
+                              <span className="text-muted-foreground">{trap}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="bg-muted/20 border-none shadow-none">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-sm text-foreground">
+                          <Lightbulb className="h-4 w-4 text-blue-500" />
+                          Leverage Points
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-2">
+                          {numberMeanings[personData.lifePath]?.strengths.slice(0, 3).map((strength, i) => (
+                            <li key={i} className="flex items-start gap-2 text-xs">
+                              <span className="mt-1 h-1.5 w-1.5 rounded-full bg-blue-500 shrink-0" />
+                              <span className="text-muted-foreground">{strength}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
