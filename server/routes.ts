@@ -106,6 +106,41 @@ export async function registerRoutes(
     }
   });
 
+  // Bulk delete evaluations (admin only)
+  app.post("/api/evaluations/bulk-delete", isAuthenticated, async (req: any, res) => {
+    try {
+      const userEmail = req.user?.claims?.email;
+      if (!ADMIN_EMAIL || userEmail !== ADMIN_EMAIL) {
+        return res.status(403).json({ message: "Forbidden - Admin access only" });
+      }
+
+      const { ids } = req.body;
+      if (!Array.isArray(ids) || ids.length === 0) {
+        return res.status(400).json({ message: "No IDs provided" });
+      }
+
+      // Validate all IDs are numbers
+      const validIds = ids.filter((id: any) => typeof id === "number" && !isNaN(id));
+      if (validIds.length === 0) {
+        return res.status(400).json({ message: "No valid IDs provided" });
+      }
+
+      let deletedCount = 0;
+      for (const id of validIds) {
+        const [deleted] = await db
+          .delete(evaluations)
+          .where(eq(evaluations.id, id))
+          .returning();
+        if (deleted) deletedCount++;
+      }
+
+      res.json({ success: true, deletedCount });
+    } catch (error) {
+      console.error("Error bulk deleting evaluations:", error);
+      res.status(500).json({ message: "Failed to delete evaluations" });
+    }
+  });
+
   // Delete evaluation (admin only)
   app.delete("/api/evaluations/:id", isAuthenticated, async (req: any, res) => {
     try {

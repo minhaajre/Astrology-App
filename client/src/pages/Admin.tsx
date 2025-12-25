@@ -33,7 +33,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, LogOut, Shield, Users, ArrowLeft, ChevronDown, ChevronUp, Plus, Pencil, Trash2 } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Loader2, LogOut, Shield, Users, ArrowLeft, ChevronDown, ChevronUp, Pencil, Trash2 } from "lucide-react";
 import { Link } from "wouter";
 import type { Evaluation } from "@shared/schema";
 import { NumberAccordion } from "@/components/NumberAccordion";
@@ -69,11 +70,33 @@ export default function Admin() {
   const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
   const [selectedEvaluation, setSelectedEvaluation] = useState<Evaluation | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [formData, setFormData] = useState({ name: "", birthDate: "" });
 
   const toggleRow = (id: number) => {
     setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const toggleSelection = (id: number) => {
+    setSelectedIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleSelectAll = (evaluations: Evaluation[]) => {
+    if (selectedIds.size === evaluations.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(evaluations.map(e => e.id)));
+    }
   };
 
   const deleteMutation = useMutation({
@@ -88,6 +111,21 @@ export default function Admin() {
     },
     onError: () => {
       toast({ title: "Error", description: "Failed to delete evaluation", variant: "destructive" });
+    },
+  });
+
+  const bulkDeleteMutation = useMutation({
+    mutationFn: async (ids: number[]) => {
+      await apiRequest("POST", "/api/evaluations/bulk-delete", { ids });
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/evaluations"] });
+      toast({ title: "Deleted", description: `${variables.length} evaluations removed successfully` });
+      setBulkDeleteDialogOpen(false);
+      setSelectedIds(new Set());
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to delete evaluations", variant: "destructive" });
     },
   });
 
@@ -252,10 +290,42 @@ export default function Admin() {
                 Failed to load evaluations
               </p>
             ) : evaluations && evaluations.length > 0 ? (
-              <div className="overflow-x-auto">
+              <div className="space-y-4">
+                {selectedIds.size > 0 && (
+                  <div className="flex items-center gap-4 p-3 bg-muted/50 rounded-md">
+                    <span className="text-sm font-medium">
+                      {selectedIds.size} selected
+                    </span>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => setBulkDeleteDialogOpen(true)}
+                      data-testid="button-bulk-delete"
+                    >
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Delete Selected
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSelectedIds(new Set())}
+                      data-testid="button-clear-selection"
+                    >
+                      Clear Selection
+                    </Button>
+                  </div>
+                )}
+                <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead className="w-12">
+                        <Checkbox
+                          checked={selectedIds.size === evaluations.length && evaluations.length > 0}
+                          onCheckedChange={() => toggleSelectAll(evaluations)}
+                          data-testid="checkbox-select-all"
+                        />
+                      </TableHead>
                       <TableHead>Name</TableHead>
                       <TableHead>Birth Date</TableHead>
                       <TableHead>Life Path</TableHead>
@@ -283,12 +353,20 @@ export default function Admin() {
                           <TableRow 
                             key={evaluation.id} 
                             data-testid={`row-evaluation-${evaluation.id}`}
-                            className="cursor-pointer hover:bg-muted/50 transition-colors select-none"
+                            className={`cursor-pointer hover:bg-muted/50 transition-colors select-none ${selectedIds.has(evaluation.id) ? 'bg-muted/30' : ''}`}
                             onClick={(e) => {
                               e.preventDefault();
                               toggleRow(evaluation.id);
                             }}
                           >
+                            <TableCell>
+                              <Checkbox
+                                checked={selectedIds.has(evaluation.id)}
+                                onCheckedChange={() => toggleSelection(evaluation.id)}
+                                onClick={(e) => e.stopPropagation()}
+                                data-testid={`checkbox-row-${evaluation.id}`}
+                              />
+                            </TableCell>
                             <TableCell className="font-medium">
                               <div className="flex items-center gap-2">
                                 {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -355,7 +433,7 @@ export default function Admin() {
                           </TableRow>
                           {isExpanded && fullData && (
                             <TableRow className="bg-muted/30">
-                              <TableCell colSpan={8} className="p-0">
+                              <TableCell colSpan={9} className="p-0">
                                 <div className="p-6 border-b border-t animate-in fade-in slide-in-from-top-2 duration-300">
                                   <NumberAccordion
                                     highlightNumbers={[fullData.lp?.lifePath]}
@@ -386,6 +464,7 @@ export default function Admin() {
                     })}
                   </TableBody>
                 </Table>
+              </div>
               </div>
             ) : (
               <div className="text-center py-8 text-muted-foreground">
@@ -460,6 +539,29 @@ export default function Admin() {
             >
               {deleteMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
               Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Bulk Delete Confirmation Dialog */}
+      <AlertDialog open={bulkDeleteDialogOpen} onOpenChange={setBulkDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Multiple Evaluations</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete {selectedIds.size} evaluation{selectedIds.size > 1 ? 's' : ''}? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel data-testid="button-cancel-bulk-delete">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => bulkDeleteMutation.mutate(Array.from(selectedIds))}
+              className="bg-destructive text-destructive-foreground"
+              data-testid="button-confirm-bulk-delete"
+            >
+              {bulkDeleteMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+              Delete {selectedIds.size} Evaluation{selectedIds.size > 1 ? 's' : ''}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
