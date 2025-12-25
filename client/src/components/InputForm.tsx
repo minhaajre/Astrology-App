@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Globe, User, Sparkles } from "lucide-react";
+import { User, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { countries } from "@/lib/countries";
 
 interface InputFormProps {
   onGenerate: (name: string, dob: Date, arabicName?: string) => void;

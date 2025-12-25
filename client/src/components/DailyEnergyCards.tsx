@@ -255,8 +255,6 @@ export function DailyEnergyCards() {
           </CardContent>
         </Card>
       </div>
-
-      </div>
     </div>
   );
 }
