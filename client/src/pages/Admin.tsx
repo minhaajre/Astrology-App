@@ -187,8 +187,11 @@ export default function Admin() {
                           <TableRow 
                             key={evaluation.id} 
                             data-testid={`row-evaluation-${evaluation.id}`}
-                            className="cursor-pointer hover:bg-muted/50 transition-colors"
-                            onClick={() => toggleRow(evaluation.id)}
+                            className="cursor-pointer hover:bg-muted/50 transition-colors select-none"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              toggleRow(evaluation.id);
+                            }}
                           >
                             <TableCell className="font-medium">
                               <div className="flex items-center gap-2">

@@ -14,7 +14,7 @@ import {
 import { countries } from "@/lib/countries";
 
 interface InputFormProps {
-  onGenerate: (name: string, dob: Date, country?: string, arabicName?: string) => void;
+  onGenerate: (name: string, dob: Date, arabicName?: string) => void;
   isLoading?: boolean;
 }
 
@@ -24,23 +24,6 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
   const [day, setDay] = useState("1");
   const [month, setMonth] = useState("January");
   const [year, setYear] = useState(new Date().getFullYear().toString());
-  const [country, setCountry] = useState("");
-
-  // Auto-detect country on mount
-  useEffect(() => {
-    const detectCountry = async () => {
-      try {
-        const response = await fetch("https://ipapi.co/json/");
-        const data = await response.json();
-        if (data.country_name) {
-          setCountry(data.country_name);
-        }
-      } catch {
-        // Silently fail - country selection is optional
-      }
-    };
-    detectCountry();
-  }, []);
 
   const monthMap: Record<string, number> = {
     January: 1,
@@ -64,7 +47,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
     e.preventDefault();
     if (name && day && month && year) {
       const dob = new Date(parseInt(year), monthMap[month] - 1, parseInt(day));
-      onGenerate(name, dob, country || undefined, arabicName || undefined);
+      onGenerate(name, dob, arabicName || undefined);
     }
   };
 
@@ -72,44 +55,20 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
     <Card>
       <CardContent className="p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name and Country Row */}
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-xs uppercase tracking-wide text-muted-foreground">
-                Name
-              </Label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  id="name"
-                  placeholder="Enter your name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="pl-10"
-                  data-testid="input-name"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="country" className="text-xs uppercase tracking-wide text-muted-foreground">
-                Country
-              </Label>
-              <div className="relative">
-                <Globe className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground z-10" />
-                <Select value={country} onValueChange={setCountry}>
-                  <SelectTrigger className="pl-10" data-testid="select-country">
-                    <SelectValue placeholder="Select country (optional)" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {countries.map((c) => (
-                      <SelectItem key={c.name} value={c.name}>
-                        {c.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-xs uppercase tracking-wide text-muted-foreground">
+              Name
+            </Label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="name"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="pl-10"
+                data-testid="input-name"
+              />
             </div>
           </div>
 

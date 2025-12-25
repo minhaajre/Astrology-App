@@ -21,27 +21,27 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { apiRequest } from "@/lib/queryClient";
-import {
-  getLifePath,
+import { 
+  getLifePath, 
+  masterNumberLabels, 
+  getPersonalYear, 
+  getPersonalMonth, 
+  getPersonalDay, 
+  getLunarPhase, 
+  getUniversalYear,
+  getMonthlyForecast,
+  getYearlyForecast,
+  calculateExpressionNumber,
+  TimingAdvisor,
+  getVietnamAnimal,
   getDayNumber,
   getMonthNumber,
-  getVietnamAnimal,
-  animalIconNames,
-  getPersonalYear,
-  getPersonalMonth,
-  getPersonalDay,
-  getUniversalYear,
-  numberMeanings,
   getReportTemplate,
   getCurrentYearAnimal,
   getMonthAnimal,
-  getAnimalCompatibility,
   evaluateCycleStatus,
   getNameNumerology,
-  getArabicNumerology,
   getZodiacSign,
-  masterNumberLabels,
-  getLunarPhase,
   type NumberStatus,
 } from "@/lib/numerology";
 import { 
@@ -77,7 +77,6 @@ interface PersonData {
   personalYear: number;
   personalMonth: number;
   personalDay: number;
-  country?: string;
   arabicName?: string;
 }
 
@@ -85,7 +84,7 @@ export default function Home() {
   const [personData, setPersonData] = useState<PersonData | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const handleGenerate = async (name: string, dob: Date, country?: string, arabicName?: string) => {
+  const handleGenerate = async (name: string, dob: Date, arabicName?: string) => {
     const lp = getLifePath(dob);
     const dayNum = getDayNumber(dob);
     const monthNum = getMonthNumber(dob);
@@ -97,7 +96,7 @@ export default function Home() {
     const zodiac = getZodiacSign(dob);
     const nameNum = getNameNumerology(name);
     const lunarInfo = getLunarPhase(new Date());
-    const template = lp ? getReportTemplate(lp.lifePath, dayNum, monthNum) : null;
+    const genTemplate = lp ? getReportTemplate(lp.lifePath, dayNum, monthNum) : null;
 
     setPersonData({
       name,
@@ -110,48 +109,35 @@ export default function Home() {
       personalYear: py,
       personalMonth: pm,
       personalDay: pd,
-      country,
       arabicName,
     });
     setActiveTab("overview");
 
     try {
-      const evaluationData: Record<string, unknown> = {
+      const evaluationData: any = {
         name,
         birthDate: dob.toISOString().split("T")[0],
         lifePath: lp.lifePath,
         zodiacAnimal: animal,
         zodiacSign: zodiac.name,
+        expressionNumber: nameNum?.expressionNumber,
+        soulUrge: nameNum?.soulUrge,
+        personality: nameNum?.personality,
+        lifePathLabel: masterNumberLabels[lp.lifePath] || null,
+        reportData: JSON.stringify({
+          lp,
+          animal,
+          zodiac,
+          nameNum,
+          personalYear: py,
+          personalMonth: pm,
+          personalDay: pd,
+          lunarInfo,
+          universalYear: uy,
+          template: genTemplate,
+          timingAdvisor: lp ? { lifePath: lp.lifePath } : null
+        })
       };
-      if (masterNumberLabels[lp.lifePath]) {
-        evaluationData.lifePathLabel = masterNumberLabels[lp.lifePath];
-      }
-      if (nameNum) {
-        if (nameNum.expressionNumber !== undefined) {
-          evaluationData.expressionNumber = nameNum.expressionNumber;
-        }
-        if (nameNum.soulUrge !== undefined) {
-          evaluationData.soulUrge = nameNum.soulUrge;
-        }
-        if (nameNum.personality !== undefined) {
-          evaluationData.personality = nameNum.personality;
-        }
-      }
-
-      // Store full report data
-      evaluationData.reportData = JSON.stringify({
-        lp,
-        animal,
-        zodiac,
-        nameNum,
-        personalYear: py,
-        personalMonth: pm,
-        personalDay: pd,
-        lunarInfo,
-        universalYear: uy,
-        template,
-        timingAdvisor: lp ? { lifePath: lp.lifePath } : null
-      });
 
       await apiRequest("POST", "/api/evaluations", evaluationData);
     } catch (error) {
@@ -382,20 +368,18 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <MetricTile
-                    title="Life Path"
+                    highlight
                     value={personData.lifePath}
                     subtitle={masterNumberLabels[personData.lifePath]}
                     icon={Sparkles}
                     testId="metric-lifepath"
                   />
                   <MetricTile
-                    title="Zodiac Animal"
                     value={personData.animal}
                     icon={Target}
                     testId="metric-animal"
                   />
                   <MetricTile
-                    title="Universal Year"
                     value={personData.universalYear}
                     subtitle="Universal Energy"
                     icon={TrendingUp}
@@ -482,8 +466,6 @@ export default function Home() {
 
               <TabsContent value="zodiac" className="animate-in fade-in duration-500">
                 <ZodiacDisplay 
-                  animal={personData.animal} 
-                  lifePath={personData.lifePath}
                   currentYearAnimal={currentYearAnimal}
                   currentMonthAnimal={currentMonthAnimal}
                 />
@@ -491,7 +473,6 @@ export default function Home() {
 
               <TabsContent value="compatibility" className="animate-in fade-in duration-500">
                 <CompatibilityCalculator 
-                  userLifePath={personData.lifePath}
                   userName={personData.name}
                   userDob={personData.dob}
                   userArabicName={personData.arabicName}
@@ -502,13 +483,13 @@ export default function Home() {
                 <TimePeriodForecasts 
                   personalYear={personData.personalYear}
                   personalMonth={personData.personalMonth}
+                  personalDay={personData.personalDay}
                 />
-                <TimingAdvisor lifePath={personData.lifePath} />
+                <TimingAdvisor />
               </TabsContent>
 
               <TabsContent value="export" className="animate-in fade-in duration-500">
                 <ExportPanel 
-                  personData={personData}
                   nameNumerology={nameNumerology}
                   template={template}
                 />

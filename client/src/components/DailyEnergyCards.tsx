@@ -5,7 +5,8 @@ import {
   Calendar, 
   BarChart3,
   Star,
-  Heart
+  Heart,
+  Moon
 } from "lucide-react";
 import {
   reduceToSingleDigit,
@@ -72,6 +73,30 @@ export function DailyEnergyCards() {
       </div>
       
       <div className="grid gap-4 md:grid-cols-5">
+        {/* Today's Animal - GG33 Focus */}
+        <Card className="bg-card/50 h-full">
+          <CardContent className="pt-6 pb-6 flex flex-col h-full">
+            <div className="flex gap-3">
+              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                <span className="text-xl flex-shrink-0">{todayAnimalIcon}</span>
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Animal of Year
+                </p>
+                <div className="mb-3">
+                  <p className="text-3xl font-bold" data-testid="energy-today-animal">
+                    {todayAnimal}
+                  </p>
+                </div>
+                <p className="text-xs text-muted-foreground mt-auto">
+                  {getTodayCompatibility() === 'Good' ? '✓ Aligned' : getTodayCompatibility() === 'Enemies' ? '✗ Challenging' : '• Neutral'}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* This Year's Theme */}
         <Card className="bg-card/50 h-full">
           <CardContent className="pt-6 pb-6 flex flex-col h-full">
@@ -176,6 +201,33 @@ export function DailyEnergyCards() {
           </CardContent>
         </Card>
 
+        {/* Lunar Phase */}
+        <Card className="bg-card/50 h-full">
+          <CardContent className="pt-6 pb-6 flex flex-col h-full">
+            <div className="flex gap-3">
+              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                <Moon className="h-5 w-5 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col">
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Lunar Phase
+                </p>
+                <div className="mb-3">
+                  <p className="text-lg font-bold">
+                    {lunarPhase.phaseName}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {lunarPhase.percentage}% {lunarPhase.isWaxing ? 'Waxing' : 'Waning'}
+                  </p>
+                </div>
+                <div className="mt-auto space-y-1 text-[10px] leading-tight text-muted-foreground opacity-70">
+                  <p>Full Moon: {lunarPhase.lastFullMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Today's Zodiac Sign */}
         <Card className="bg-card/50 h-full">
           <CardContent className="pt-6 pb-6 flex flex-col h-full">
@@ -204,60 +256,6 @@ export function DailyEnergyCards() {
         </Card>
       </div>
 
-      {/* Vietnamese Zodiac & Lunar Phase Row */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {/* Today's Zodiac */}
-        <Card className="bg-card/50 min-h-32">
-          <CardContent className="pt-6 pb-6 h-full flex items-center">
-            <div className="flex items-center gap-4 w-full">
-              <span className="text-5xl flex-shrink-0">{todayAnimalIcon}</span>
-              <div className="flex-1">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Today's Animal
-                </p>
-                <p className="text-lg font-bold" data-testid="energy-today-animal">
-                  {todayAnimal}
-                </p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  {getTodayCompatibility() === 'Good' ? '✓ Aligned' : getTodayCompatibility() === 'Enemies' ? '✗ Challenging' : '• Neutral'}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Lunar Phase */}
-        <Card className="bg-card/50 min-h-32">
-          <CardContent className="pt-6 pb-6 h-full flex flex-col">
-            <div className="mb-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                Lunar Phase
-              </p>
-              <div className="space-y-2">
-                <div>
-                  <p className="text-lg font-bold" data-testid="lunar-phase-name">
-                    {lunarPhase.phaseName}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {lunarPhase.isWaxing ? 'Waxing' : 'Waning'} • {lunarPhase.percentage}%
-                  </p>
-                </div>
-                <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                  <div 
-                    className="bg-primary h-full transition-all"
-                    style={{ width: `${lunarPhase.percentage}%` }}
-                    data-testid="lunar-progress-bar"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mt-auto space-y-1 text-xs text-muted-foreground">
-              <p>Last New Moon: {lunarPhase.lastNewMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
-              <p>Full Moon: {lunarPhase.lastFullMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
-              <p>Next New Moon: {lunarPhase.nextNewMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
