@@ -235,6 +235,7 @@ export default function Admin() {
                               <TableCell colSpan={8} className="p-0">
                                 <div className="p-6 border-b border-t animate-in fade-in slide-in-from-top-2 duration-300">
                                   <NumberAccordion
+                                    highlightNumbers={[fullData.lp?.lifePath]}
                                     personData={{
                                       name: evaluation.name,
                                       birthDate: new Date(evaluation.birthDate),

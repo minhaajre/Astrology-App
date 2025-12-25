@@ -11,9 +11,17 @@ import { Briefcase, Heart, DollarSign, AlertTriangle, Star, Moon } from "lucide-
 
 interface NumberAccordionProps {
   highlightNumbers?: number[];
+  personData?: any;
+  timingAdvisor?: any;
+  template?: any;
 }
 
-export function NumberAccordion({ highlightNumbers = [] }: NumberAccordionProps) {
+export function NumberAccordion({ 
+  highlightNumbers = [], 
+  personData, 
+  timingAdvisor, 
+  template 
+}: NumberAccordionProps) {
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22, 33];
 
   return (

@@ -41,6 +41,7 @@ import {
   getArabicNumerology,
   getZodiacSign,
   masterNumberLabels,
+  getLunarPhase,
   type NumberStatus,
 } from "@/lib/numerology";
 import { 
@@ -95,6 +96,8 @@ export default function Home() {
     const pd = getPersonalDay(dob);
     const zodiac = getZodiacSign(dob);
     const nameNum = getNameNumerology(name);
+    const lunarInfo = getLunarPhase(new Date());
+    const template = lp ? getReportTemplate(lp.lifePath, dayNum, monthNum) : null;
 
     setPersonData({
       name,
@@ -141,13 +144,13 @@ export default function Home() {
         animal,
         zodiac,
         nameNum,
-        personalYear,
-        personalMonth,
-        personalDay,
+        personalYear: py,
+        personalMonth: pm,
+        personalDay: pd,
         lunarInfo,
-        universalYear,
+        universalYear: uy,
         template,
-        timingAdvisor: lp ? getTimingAdvisor(lp.lifePath) : null
+        timingAdvisor: lp ? { lifePath: lp.lifePath } : null
       });
 
       await apiRequest("POST", "/api/evaluations", evaluationData);
@@ -356,384 +359,170 @@ export default function Home() {
                         <>
                           <div className="flex items-center justify-between">
                             <div>
-                              <p className="text-sm text-muted-foreground">Expression</p>
-                              <p className="text-2xl font-bold" data-testid="text-expression">{nameNumerology.expressionNumber}</p>
+                              <p className="text-xs text-muted-foreground">Expression</p>
+                              <p className="text-lg font-bold" data-testid="text-expression">{nameNumerology.expressionNumber}</p>
                             </div>
-                            <StatusBadge status={evaluateCycleStatus(personData.lifePath, nameNumerology.expressionNumber)} testId="status-gematria" />
+                            <StatusBadge status={evaluateCycleStatus(nameNumerology.expressionNumber, personData.personalYear)} testId="status-expression" />
                           </div>
                           <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-xs text-muted-foreground">Soul Urge</p>
-                                <p className="text-lg font-semibold" data-testid="text-soulurge">{nameNumerology.soulUrge}</p>
-                              </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">Soul Urge</p>
+                              <p className="text-base font-semibold" data-testid="text-soulurge">{nameNumerology.soulUrge}</p>
                             </div>
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-xs text-muted-foreground">Personality</p>
-                                <p className="text-lg font-semibold" data-testid="text-personality">{nameNumerology.personality}</p>
-                              </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">Personality</p>
+                              <p className="text-base font-semibold" data-testid="text-personality">{nameNumerology.personality}</p>
                             </div>
-                          </div>
-                          <div className="pt-2 border-t text-sm text-muted-foreground">
-                            Pythagorean system calculation from "{personData.name}"
                           </div>
                         </>
                       )}
                     </CardContent>
                   </Card>
-
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <BookOpen className="h-5 w-5 text-primary" />
-                        Abjad (Arabic)
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <div className="w-64 space-y-2">
-                              <p className="font-semibold">Abjad (Arabic)</p>
-                              <p className="text-xs">Traditional Arabic numerology system where each letter has a numerical value.</p>
-                              <p className="text-xs mt-2">Enter your Arabic name on the front page to calculate this value.</p>
-                            </div>
-                          </TooltipContent>
-                        </Tooltip>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {personData?.arabicName ? (
-                        (() => {
-                          const abjad = getArabicNumerology(personData.arabicName);
-                          return abjad ? (
-                            <>
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <p className="text-sm text-muted-foreground">Abjad Total</p>
-                                  <p className="text-2xl font-bold" data-testid="text-abjad">{abjad.total}</p>
-                                </div>
-                                <StatusBadge status={evaluateCycleStatus(personData.lifePath, abjad.reduced)} testId="status-abjad" />
-                              </div>
-                              <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                  <p className="text-xs text-muted-foreground">Reduced Value</p>
-                                  <p className="text-lg font-semibold" data-testid="text-abjad-reduced">{abjad.reduced}</p>
-                                </div>
-                                <div>
-                                  <p className="text-xs text-muted-foreground">Average Per Letter</p>
-                                  <p className="text-lg font-semibold" data-testid="text-abjad-intensity">{abjad.intensity}</p>
-                                </div>
-                              </div>
-                              <div className="pt-2 border-t text-sm text-muted-foreground">
-                                Calculated from "{personData.arabicName}"
-                              </div>
-                            </>
-                          ) : (
-                            <p className="text-sm text-muted-foreground">Unable to calculate for this name</p>
-                          );
-                        })()
-                      ) : (
-                        <p className="text-sm text-muted-foreground">Arabic name was not provided. Enter your Arabic name on the front page to calculate this value.</p>
-                      )}
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <Target className="h-5 w-5 text-primary" />
-                        Vietnamese Zodiac
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Info className="h-4 w-4 text-muted-foreground cursor-help" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <div className="w-64 space-y-2">
-                              <p className="font-semibold">Vietnamese Zodiac</p>
-                              <p className="text-xs">The 12-year zodiac cycle determining your animal sign and its characteristics.</p>
-                              <p className="text-xs mt-2"><strong>Your Animal:</strong> Determined by your birth year</p>
-                              <p className="text-xs"><strong>Current Year/Month:</strong> Today's animal sign</p>
-                              <p className="text-xs"><strong>Compatibility:</strong> How your animal interacts with current energies</p>
-                            </div>
-                          </TooltipContent>
-                        </Tooltip>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-4xl">{animalIconNames[personData.animal]}</span>
-                          <div>
-                            <p className="text-sm text-muted-foreground">Your Animal</p>
-                            <p className="text-xl font-bold" data-testid="text-zodiac-animal">{personData.animal}</p>
-                          </div>
-                        </div>
-                        <StatusBadge status={getAnimalCompatibility(personData.animal, currentYearAnimal)} testId="status-zodiac" />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 pt-2 border-t">
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">{animalIconNames[currentYearAnimal]}</span>
-                          <div>
-                            <p className="text-xs text-muted-foreground">Current Year</p>
-                            <p className="text-sm font-semibold" data-testid="text-current-year-animal">{currentYearAnimal}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl">{animalIconNames[currentMonthAnimal]}</span>
-                          <div>
-                            <p className="text-xs text-muted-foreground">Current Month</p>
-                            <p className="text-sm font-semibold" data-testid="text-current-month-animal">{currentMonthAnimal}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
                 </div>
 
-                <DailyForecast personalDay={personData.personalDay} />
-
-                <Collapsible defaultOpen>
-                  <CollapsibleTrigger asChild>
-                    <button className="w-full flex items-center justify-between py-2 px-1 cursor-pointer hover:bg-muted/30 rounded-md transition-colors text-left">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-5 w-5 text-primary" />
-                        <span className="font-semibold">Time Period Forecasts</span>
-                      </div>
-                      <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
-                    </button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <TimePeriodForecasts
-                      personalDay={personData.personalDay}
-                      personalMonth={personData.personalMonth}
-                      personalYear={personData.personalYear}
-                    />
-                  </CollapsibleContent>
-                </Collapsible>
-
-                <Collapsible defaultOpen>
-                  <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-                    <CollapsibleTrigger asChild>
-                      <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
-                        <CardTitle className="flex items-center justify-between">
-                          <span className="flex items-center gap-2">
-                            <Sparkles className="h-5 w-5 text-primary" />
-                            {template ? `Your Archetype: ${template.name}` : "Your Numerological Profile"}
-                          </span>
-                          <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <MetricTile
+                    title="Life Path"
+                    value={personData.lifePath}
+                    subtitle={masterNumberLabels[personData.lifePath]}
+                    icon={Sparkles}
+                    testId="metric-lifepath"
+                  />
+                  <MetricTile
+                    title="Zodiac Animal"
+                    value={personData.animal}
+                    icon={Target}
+                    testId="metric-animal"
+                  />
+                  <MetricTile
+                    title="Universal Year"
+                    value={personData.universalYear}
+                    subtitle="Universal Energy"
+                    icon={TrendingUp}
+                    testId="metric-universal"
+                  />
+                </div>
+                
+                {template && (
+                  <div className="space-y-6">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <BookOpen className="h-5 w-5 text-primary" />
+                          Core Meaning
                         </CardTitle>
-                        {template && <Badge variant="secondary" className="w-fit">{template.archetype}</Badge>}
                       </CardHeader>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <CardContent className="space-y-4">
-                        {template ? (
-                          <>
-                            <div>
-                              <p className="leading-relaxed text-muted-foreground">
-                                {template.summary}
-                              </p>
-                            </div>
-                            <div className="space-y-2">
-                              <p className="text-sm font-semibold text-foreground">Key Insights:</p>
-                              <ul className="space-y-2">
-                                {template.keyInsights.map((insight, i) => (
-                                  <li key={i} className="flex gap-3 text-sm">
-                                    <span className="text-primary font-bold flex-shrink-0">-</span>
-                                    <span className="text-muted-foreground leading-relaxed">{insight}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          </>
-                        ) : (
-                          <div className="space-y-2">
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                              Your unique Life Path ({personData.lifePath}), Day ({personData.dayNumber}), and Month ({personData.monthNumber}) combination creates a distinctive numerological signature. Explore the Numerology tab for detailed insights into each number's meaning and how they interact in your life.
-                            </p>
-                            <div className="space-y-2 mt-4">
-                              <p className="text-sm font-semibold text-foreground">Your Numbers:</p>
-                              <ul className="space-y-1">
-                                <li className="flex gap-3 text-sm">
-                                  <span className="text-primary font-bold flex-shrink-0">-</span>
-                                  <span className="text-muted-foreground">Life Path {personData.lifePath}: {numberMeanings[personData.lifePath]?.core}</span>
-                                </li>
-                                <li className="flex gap-3 text-sm">
-                                  <span className="text-primary font-bold flex-shrink-0">-</span>
-                                  <span className="text-muted-foreground">Day {personData.dayNumber}: {numberMeanings[personData.dayNumber]?.core}</span>
-                                </li>
-                                <li className="flex gap-3 text-sm">
-                                  <span className="text-primary font-bold flex-shrink-0">-</span>
-                                  <span className="text-muted-foreground">Month {personData.monthNumber}: {numberMeanings[personData.monthNumber]?.core}</span>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        )}
+                      <CardContent>
+                        <p className="text-lg font-serif italic text-muted-foreground leading-relaxed">
+                          "{template.core}"
+                        </p>
                       </CardContent>
-                    </CollapsibleContent>
-                  </Card>
-                </Collapsible>
+                    </Card>
 
-                <Collapsible>
-                  <CollapsibleTrigger asChild>
-                    <button className="w-full flex items-center justify-between py-2 px-1 cursor-pointer hover:bg-muted/30 rounded-md transition-colors text-left">
-                      <div className="flex items-center gap-2">
-                        <TrendingUp className="h-5 w-5 text-primary" />
-                        <span className="font-semibold">Key Themes & Insights</span>
-                      </div>
-                      <ChevronDown className="h-4 w-4 transition-transform data-[state=open]:rotate-180" />
-                    </button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <div className="grid gap-4 md:grid-cols-3 mt-4">
-                      <Card>
-                        <CardHeader className="pb-3">
-                          <CardTitle className="flex items-center gap-2 text-base">
-                            <TrendingUp className="h-4 w-4 text-green-500" />
-                            Key Themes
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                          <div className="text-sm">
-                            <strong>Life Path {personData.lifePath}:</strong>{" "}
-                            {numberMeanings[personData.lifePath]?.core}
-                          </div>
-                          <div className="text-sm">
-                            <strong>Day {personData.dayNumber}:</strong>{" "}
-                            {numberMeanings[personData.dayNumber]?.core}
-                          </div>
-                          <div className="text-sm">
-                            <strong>Month {personData.monthNumber}:</strong>{" "}
-                            {numberMeanings[personData.monthNumber]?.core}
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardHeader className="pb-3">
-                          <CardTitle className="flex items-center gap-2 text-base">
-                            <AlertTriangle className="h-4 w-4 text-amber-500" />
-                            Watch Out For
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <Card className="border-green-500/20 bg-green-500/5">
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                            <CheckCircle className="h-5 w-5" />
+                            Strengths
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <ul className="space-y-1 text-sm">
-                            {numberMeanings[personData.lifePath]?.traps.slice(0, 3).map((trap, i) => (
+                          <ul className="space-y-2">
+                            {template.strengths.map((s, i) => (
                               <li key={i} className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500" />
-                                {trap}
+                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-green-500" />
+                                <span className="text-sm">{s}</span>
                               </li>
                             ))}
                           </ul>
                         </CardContent>
                       </Card>
 
-                      <Card>
-                        <CardHeader className="pb-3">
-                          <CardTitle className="flex items-center gap-2 text-base">
-                            <Lightbulb className="h-4 w-4 text-blue-500" />
-                            Leverage Points
+                      <Card className="border-amber-500/20 bg-amber-500/5">
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+                            <AlertTriangle className="h-5 w-5" />
+                            Growth Areas
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <ul className="space-y-1 text-sm">
-                            {numberMeanings[personData.lifePath]?.strengths.slice(0, 3).map((strength, i) => (
+                          <ul className="space-y-2">
+                            {template.traps.map((t, i) => (
                               <li key={i} className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-blue-500" />
-                                {strength}
+                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500" />
+                                <span className="text-sm">{t}</span>
                               </li>
                             ))}
                           </ul>
                         </CardContent>
                       </Card>
                     </div>
-                  </CollapsibleContent>
-                </Collapsible>
+
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Lightbulb className="h-5 w-5 text-primary" />
+                          Key Insight
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm leading-relaxed text-muted-foreground">
+                          {template.advice}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
               </TabsContent>
 
-              <TabsContent value="numerology" className="space-y-6">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold mb-2">Number Meanings</h2>
-                  <p className="text-muted-foreground">
-                    Deep analysis of numbers 1-9 and Master Numbers 11, 22, 33
-                  </p>
-                </div>
-
-                <NumberAccordion
-                  highlightNumbers={[
-                    personData.lifePath,
-                    personData.dayNumber,
-                    personData.monthNumber,
-                  ]}
-                />
-
-                <div className="mt-8">
-                  <NameNumerology initialName={personData.name} />
-                </div>
-
-                <CountryCompatibility personDob={personData.dob} personName={personData.name} initialCountry={personData.country} />
+              <TabsContent value="numerology" className="animate-in fade-in duration-500">
+                <NumberAccordion highlightNumbers={[personData.lifePath]} />
               </TabsContent>
 
-              <TabsContent value="zodiac" className="space-y-6">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold mb-2">Vietnamese Zodiac</h2>
-                  <p className="text-muted-foreground">
-                    Animal sign compatibility and yearly forecasts
-                  </p>
-                </div>
-
-                <ZodiacDisplay birthYear={personData.dob.getFullYear()} />
-              </TabsContent>
-
-              <TabsContent value="compatibility" className="space-y-6">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold mb-2">Compatibility Analysis</h2>
-                  <p className="text-muted-foreground">
-                    Calculate relationship compatibility with detailed scoring
-                  </p>
-                </div>
-
-                <CompatibilityCalculator
-                  personA={{ name: personData.name, dob: personData.dob }}
+              <TabsContent value="zodiac" className="animate-in fade-in duration-500">
+                <ZodiacDisplay 
+                  animal={personData.animal} 
+                  lifePath={personData.lifePath}
+                  currentYearAnimal={currentYearAnimal}
+                  currentMonthAnimal={currentMonthAnimal}
                 />
               </TabsContent>
 
-              <TabsContent value="timing" className="space-y-6">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold mb-2">Timing Advisor</h2>
-                  <p className="text-muted-foreground">
-                    Optimal days based on your personal cycles
-                  </p>
-                </div>
-
-                <DailyForecast personalDay={personData.personalDay} />
-
-                <TimingAdvisor dob={personData.dob} />
+              <TabsContent value="compatibility" className="animate-in fade-in duration-500">
+                <CompatibilityCalculator 
+                  userLifePath={personData.lifePath}
+                  userName={personData.name}
+                  userDob={personData.dob}
+                  userArabicName={personData.arabicName}
+                />
               </TabsContent>
 
-              <TabsContent value="export" className="space-y-6">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold mb-2">Export Report</h2>
-                  <p className="text-muted-foreground">
-                    Download or copy your complete numerology analysis
-                  </p>
-                </div>
+              <TabsContent value="timing" className="animate-in fade-in duration-500 space-y-6">
+                <TimePeriodForecasts 
+                  personalYear={personData.personalYear}
+                  personalMonth={personData.personalMonth}
+                />
+                <TimingAdvisor lifePath={personData.lifePath} />
+              </TabsContent>
 
-                <ExportPanel name={personData.name} dob={personData.dob} />
+              <TabsContent value="export" className="animate-in fade-in duration-500">
+                <ExportPanel 
+                  personData={personData}
+                  nameNumerology={nameNumerology}
+                  template={template}
+                />
               </TabsContent>
             </Tabs>
-          ) : null}
+          ) : (
+            <Card className="border-dashed">
+              <CardContent className="py-12 text-center text-muted-foreground">
+                Enter your details above to generate your universal matrix profile.
+              </CardContent>
+            </Card>
+          )}
         </div>
       </main>
-
-      <footer className="border-t py-6 mt-12">
-        <div className="mx-auto max-w-7xl px-4 md:px-6 text-center text-sm text-muted-foreground">
-          <p>The Universal Matrix - Numerology Calculator</p>
-          <p className="mt-1">Ancient wisdom, modern insights</p>
-        </div>
-      </footer>
     </div>
   );
 }
