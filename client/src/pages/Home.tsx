@@ -291,9 +291,6 @@ export default function Home() {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="text-sm text-muted-foreground">Life Path</p>
-                            <Badge variant="outline" className="h-5 py-0 text-[10px] font-bold border-primary/30 text-primary">
-                              {masterNumberLabels[personData.lifePath] || "Your Number"}
-                            </Badge>
                           </div>
                           <p className="text-2xl font-bold" data-testid="text-lifepath">{personData.lifePath}</p>
                         </div>
@@ -304,9 +301,6 @@ export default function Home() {
                           <div>
                             <div className="flex items-center gap-1.5">
                               <p className="text-xs text-muted-foreground">Day</p>
-                              <Badge variant="outline" className="h-4 py-0 text-[9px] font-bold border-primary/20 text-primary">
-                                {masterNumberLabels[personData.dayNumber] || "Your Number"}
-                              </Badge>
                             </div>
                             <p className="text-lg font-semibold" data-testid="text-daynumber">{personData.dayNumber}</p>
                           </div>
@@ -316,9 +310,6 @@ export default function Home() {
                           <div>
                             <div className="flex items-center gap-1.5">
                               <p className="text-xs text-muted-foreground">Month</p>
-                              <Badge variant="outline" className="h-4 py-0 text-[9px] font-bold border-primary/20 text-primary">
-                                {masterNumberLabels[personData.monthNumber] || "Your Number"}
-                              </Badge>
                             </div>
                             <p className="text-lg font-semibold" data-testid="text-monthnumber">{personData.monthNumber}</p>
                           </div>
@@ -395,7 +386,7 @@ export default function Home() {
                   <MetricTile
                     highlight
                     value={personData.lifePath}
-                    subtitle={masterNumberLabels[personData.lifePath] || "Life Path"}
+                    subtitle="Life Path"
                     icon={Sparkles}
                     testId="metric-lifepath"
                   />
@@ -508,8 +499,29 @@ export default function Home() {
                 )}
               </TabsContent>
 
-              <TabsContent value="numerology" className="animate-in fade-in duration-500">
-                <NumberAccordion highlightNumbers={[personData.lifePath]} />
+              <TabsContent value="numerology" className="animate-in fade-in duration-500 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <MetricTile
+                    highlight
+                    value={personData.lifePath}
+                    subtitle={masterNumberLabels[personData.lifePath] || "Your Number"}
+                    icon={Sparkles}
+                    testId="numerology-tab-lifepath"
+                  />
+                  <MetricTile
+                    value={personData.dayNumber}
+                    subtitle={masterNumberLabels[personData.dayNumber] || "Your Number"}
+                    icon={Calendar}
+                    testId="numerology-tab-day"
+                  />
+                  <MetricTile
+                    value={personData.monthNumber}
+                    subtitle={masterNumberLabels[personData.monthNumber] || "Your Number"}
+                    icon={Hash}
+                    testId="numerology-tab-month"
+                  />
+                </div>
+                <NumberAccordion highlightNumbers={[personData.lifePath, personData.dayNumber, personData.monthNumber]} />
               </TabsContent>
 
               <TabsContent value="zodiac" className="animate-in fade-in duration-500">
