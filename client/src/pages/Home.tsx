@@ -291,11 +291,9 @@ export default function Home() {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="text-sm text-muted-foreground">Life Path</p>
-                            {masterNumberLabels[personData.lifePath] && (
-                              <Badge variant="outline" className="h-5 py-0 text-[10px] font-bold border-primary/30 text-primary">
-                                {masterNumberLabels[personData.lifePath]}
-                              </Badge>
-                            )}
+                            <Badge variant="outline" className="h-5 py-0 text-[10px] font-bold border-primary/30 text-primary">
+                              {masterNumberLabels[personData.lifePath] || "Your Number"}
+                            </Badge>
                           </div>
                           <p className="text-2xl font-bold" data-testid="text-lifepath">{personData.lifePath}</p>
                         </div>
