@@ -209,7 +209,16 @@ export default function Home() {
       <main className="mx-auto max-w-7xl px-4 py-8 md:px-6">
         <div className="space-y-8">
           <DailyEnergyCards />
-          <SpecialDatesInfo />
+          <Collapsible defaultOpen={false}>
+            <CollapsibleTrigger className="flex items-center gap-2 w-full py-3 text-left hover-elevate rounded-lg px-4 group" data-testid="button-toggle-dates">
+              <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+              <span className="font-medium">Special Dates Energy Guide</span>
+              <Badge variant="secondary" className="ml-auto">1-31</Badge>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <SpecialDatesInfo />
+            </CollapsibleContent>
+          </Collapsible>
           <InputForm onGenerate={handleGenerate} />
 
           {personData ? (
@@ -392,36 +401,37 @@ export default function Home() {
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                           <BookOpen className="h-5 w-5 text-primary" />
-                          Core Meaning
+                          {template.name}
                         </CardTitle>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Archetype: <span className="font-medium text-foreground">{template.archetype}</span>
+                        </p>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-lg font-serif italic text-muted-foreground leading-relaxed">
-                          "{template.summary}"
+                        <p className="text-base leading-relaxed text-muted-foreground">
+                          {template.summary}
                         </p>
                       </CardContent>
                     </Card>
 
-                    <div className="grid gap-6 md:grid-cols-2">
-                      <Card className="border-green-500/20 bg-green-500/5">
-                        <CardHeader>
-                          <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400">
-                            <CheckCircle className="h-5 w-5" />
-                            Key Insights
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-2">
-                            {template.keyInsights.map((s: string, i: number) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-green-500" />
-                                <span className="text-sm">{s}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
-                    </div>
+                    <Card className="border-green-500/20 bg-green-500/5">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                          <Lightbulb className="h-5 w-5" />
+                          Key Insights
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-2">
+                          {template.keyInsights.map((s: string, i: number) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-green-500 shrink-0" />
+                              <span className="text-sm">{s}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
                   </div>
                 )}
               </TabsContent>
@@ -433,6 +443,7 @@ export default function Home() {
               <TabsContent value="zodiac" className="animate-in fade-in duration-500">
                 <ZodiacDisplay 
                   birthYear={personData.dob.getFullYear()}
+                  birthDate={personData.dob}
                 />
               </TabsContent>
 

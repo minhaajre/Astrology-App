@@ -6,31 +6,33 @@ import {
   animalFriends, 
   animalEnemiesPrimary, 
   animalEnemiesSecondary,
-  getNextYearsByAnimals 
+  getNextYearsByAnimals,
+  getZodiacSign
 } from "@/lib/numerology";
 import { Heart, AlertTriangle, AlertCircle, Calendar } from "lucide-react";
 
 interface ZodiacDisplayProps {
   birthYear: number;
+  birthDate?: Date;
 }
 
-const animalEmojis: Record<string, string> = {
-  Rat: "Rat",
-  Buffalo: "Buffalo",
-  Tiger: "Tiger",
-  Cat: "Cat",
-  Dragon: "Dragon",
-  Snake: "Snake",
-  Horse: "Horse",
-  Goat: "Goat",
-  Monkey: "Monkey",
-  Rooster: "Rooster",
-  Dog: "Dog",
-  Pig: "Pig"
+const elementColors: Record<string, string> = {
+  Fire: "text-red-500",
+  Earth: "text-amber-600 dark:text-amber-400",
+  Air: "text-sky-500",
+  Water: "text-blue-500"
 };
 
-export function ZodiacDisplay({ birthYear }: ZodiacDisplayProps) {
+const elementBgColors: Record<string, string> = {
+  Fire: "bg-red-500/10",
+  Earth: "bg-amber-500/10",
+  Air: "bg-sky-500/10",
+  Water: "bg-blue-500/10"
+};
+
+export function ZodiacDisplay({ birthYear, birthDate }: ZodiacDisplayProps) {
   const animal = getVietnamAnimal(birthYear);
+  const westernZodiac = birthDate ? getZodiacSign(birthDate) : null;
   const friends = animalFriends[animal] || [];
   const enemiesPrimary = animalEnemiesPrimary[animal] || [];
   const enemiesSecondary = animalEnemiesSecondary[animal] || [];
@@ -41,20 +43,42 @@ export function ZodiacDisplay({ birthYear }: ZodiacDisplayProps) {
 
   return (
     <div className="space-y-6">
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-        <CardContent className="p-8 text-center">
-          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
-            Vietnamese Zodiac
-          </p>
-          <p className="text-7xl mb-2" data-testid="text-zodiac-animal">
-            {animalIconNames[animal]}
-          </p>
-          <p className="text-3xl font-black mb-2">{animal}</p>
-          <p className="text-sm text-muted-foreground">
-            Born in the Year of the {animal}
-          </p>
-        </CardContent>
-      </Card>
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+          <CardContent className="p-8 text-center">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
+              Vietnamese Zodiac
+            </p>
+            <p className="text-7xl mb-2" data-testid="text-zodiac-animal">
+              {animalIconNames[animal]}
+            </p>
+            <p className="text-3xl font-black mb-2">{animal}</p>
+            <p className="text-sm text-muted-foreground">
+              Born in the Year of the {animal}
+            </p>
+          </CardContent>
+        </Card>
+
+        {westernZodiac && (
+          <Card className={`border-primary/20 ${elementBgColors[westernZodiac.element]}`}>
+            <CardContent className="p-8 text-center">
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
+                Western Zodiac
+              </p>
+              <p className="text-7xl mb-2" data-testid="text-western-zodiac-symbol">
+                {westernZodiac.symbol}
+              </p>
+              <p className="text-3xl font-black mb-2" data-testid="text-western-zodiac-name">{westernZodiac.name}</p>
+              <div className="flex items-center justify-center gap-2">
+                <Badge variant="secondary" className={elementColors[westernZodiac.element]}>
+                  {westernZodiac.element}
+                </Badge>
+                <span className="text-xs text-muted-foreground">{westernZodiac.dates}</span>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      </div>
 
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
