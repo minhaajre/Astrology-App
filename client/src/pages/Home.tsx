@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { InputForm } from "@/components/InputForm";
@@ -17,7 +18,9 @@ import { SpecialDatesInfo } from "@/components/SpecialDatesInfo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { apiRequest } from "@/lib/queryClient";
 import {
   getLifePath,
   getDayNumber,
@@ -36,6 +39,8 @@ import {
   evaluateCycleStatus,
   getNameNumerology,
   getArabicNumerology,
+  getZodiacSign,
+  masterNumberLabels,
   type NumberStatus,
 } from "@/lib/numerology";
 import { 
@@ -56,7 +61,8 @@ import {
   BookOpen,
   CheckCircle,
   XCircle,
-  MinusCircle
+  MinusCircle,
+  Shield
 } from "lucide-react";
 
 interface PersonData {
@@ -78,7 +84,7 @@ export default function Home() {
   const [personData, setPersonData] = useState<PersonData | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const handleGenerate = (name: string, dob: Date, country?: string, arabicName?: string) => {
+  const handleGenerate = async (name: string, dob: Date, country?: string, arabicName?: string) => {
     const lp = getLifePath(dob);
     const dayNum = getDayNumber(dob);
     const monthNum = getMonthNumber(dob);
@@ -87,6 +93,8 @@ export default function Home() {
     const py = getPersonalYear(dob);
     const pm = getPersonalMonth(dob);
     const pd = getPersonalDay(dob);
+    const zodiac = getZodiacSign(dob);
+    const nameNum = getNameNumerology(name);
 
     setPersonData({
       name,
@@ -103,6 +111,22 @@ export default function Home() {
       arabicName,
     });
     setActiveTab("overview");
+
+    try {
+      await apiRequest("POST", "/api/evaluations", {
+        name,
+        birthDate: dob.toISOString().split("T")[0],
+        lifePath: lp.lifePath,
+        lifePathLabel: masterNumberLabels[lp.lifePath] || null,
+        zodiacAnimal: animal,
+        zodiacSign: zodiac.name,
+        expressionNumber: nameNum?.expressionNumber || null,
+        soulUrge: nameNum?.soulUrge || null,
+        personality: nameNum?.personality || null,
+      });
+    } catch (error) {
+      console.error("Failed to save evaluation:", error);
+    }
   };
 
   const template = personData
@@ -156,7 +180,14 @@ export default function Home() {
               <p className="text-xs text-muted-foreground">Numerology Calculator</p>
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <Link href="/admin">
+              <Button variant="ghost" size="icon" data-testid="button-admin">
+                <Shield className="h-4 w-4" />
+              </Button>
+            </Link>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
