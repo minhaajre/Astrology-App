@@ -23,6 +23,7 @@ import {
   getLunarPhase,
   getUniversalYear,
 } from "@/lib/numerology";
+import { useState } from "react";
 
 export function DailyEnergyCards() {
   const today = new Date();
