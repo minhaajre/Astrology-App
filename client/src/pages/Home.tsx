@@ -549,14 +549,12 @@ export default function Home() {
                 />
               </TabsContent>
 
-              <TabsContent value="timing" className="animate-in fade-in duration-500 space-y-6">
-                <TimePeriodForecasts 
-                  personalYear={personData.personalYear}
-                  personalMonth={personData.personalMonth}
-                  personalDay={personData.personalDay}
-                />
-                <TimingAdvisor dob={personData.dob} />
-              </TabsContent>
+                <TabsContent value="timing" className="mt-6">
+                  <div className="space-y-6">
+                    <TimingAdvisor dob={personData.dob} />
+                    <ProfectionPanel birthDate={personData.dob} ascendantSign={getZodiacSign(personData.dob).name} />
+                  </div>
+                </TabsContent>
 
               <TabsContent value="export" className="animate-in fade-in duration-500">
                 <ExportPanel 

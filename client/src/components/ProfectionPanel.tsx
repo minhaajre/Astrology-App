@@ -19,10 +19,42 @@ import wheelImage from "@assets/image_1766847825598.png";
 
 interface ProfectionPanelProps {
   birthDate: Date;
+  ascendantSign?: string;
 }
 
-export function ProfectionPanel({ birthDate }: ProfectionPanelProps) {
-  const houseNumber = calculateProfectionYear(birthDate);
+export function ProfectionPanel({ birthDate, ascendantSign }: ProfectionPanelProps) {
+  const zodiacSigns = [
+    "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+    "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+  ];
+
+  const calculateProfectionHouse = () => {
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    // Profection starts at 1st house at age 0
+    // Every year it moves 1 house forward
+    // 0 -> 1st, 1 -> 2nd, ..., 11 -> 12th, 12 -> 1st
+    const houseOffset = age % 12;
+    
+    if (!ascendantSign) return (houseOffset % 12) + 1;
+
+    const ascIndex = zodiacSigns.indexOf(ascendantSign);
+    if (ascIndex === -1) return (houseOffset % 12) + 1;
+
+    // The profection sign for the current year
+    const profectionSignIndex = (ascIndex + houseOffset) % 12;
+    const profectionSign = zodiacSigns[profectionSignIndex];
+
+    // Return the house number (1-12)
+    return (houseOffset % 12) + 1;
+  };
+
+  const houseNumber = calculateProfectionHouse();
   const data = profections[houseNumber];
 
   if (!data) return null;
@@ -61,6 +93,7 @@ export function ProfectionPanel({ birthDate }: ProfectionPanelProps) {
           </div>
 
           <div className="relative group mx-auto max-w-md">
+            <p className="text-[10px] text-center text-muted-foreground mb-1 italic">Sample Image for Leo Asc</p>
             <Dialog>
               <DialogTrigger asChild>
                 <div className="relative cursor-pointer overflow-hidden rounded-lg border border-primary/20 hover:border-primary/50 transition-colors">
