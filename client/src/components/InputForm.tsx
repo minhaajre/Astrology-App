@@ -20,7 +20,9 @@ interface InputFormProps {
 export function InputForm({ onGenerate, isLoading }: InputFormProps) {
   const [name, setName] = useState("");
   const [arabicName, setArabicName] = useState("");
-  const [birthTime, setBirthTime] = useState("");
+  const [birthHour, setBirthHour] = useState("12");
+  const [birthMinute, setBirthMinute] = useState("00");
+  const [birthPeriod, setBirthPeriod] = useState("AM");
   const [birthLocation, setBirthLocation] = useState("");
   const [day, setDay] = useState("1");
   const [month, setMonth] = useState("January");
@@ -46,9 +48,10 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && day && month && year) {
+    if (name && day && month && year && birthLocation) {
       const dob = new Date(parseInt(year), monthMap[month] - 1, parseInt(day));
-      onGenerate(name, dob, arabicName || undefined, birthTime || undefined, birthLocation || undefined);
+      const birthTimeFormatted = `${birthHour}:${birthMinute} ${birthPeriod}`;
+      onGenerate(name, dob, arabicName || undefined, birthTimeFormatted, birthLocation);
     }
   };
 
@@ -91,21 +94,52 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
 
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="birthTime" className="text-xs uppercase tracking-wide text-muted-foreground">
-                Time of Birth (optional)
+              <Label className="text-xs uppercase tracking-wide text-muted-foreground">
+                Time of Birth
               </Label>
-              <Input
-                id="birthTime"
-                type="time"
-                value={birthTime}
-                onChange={(e) => setBirthTime(e.target.value)}
-                data-testid="input-birth-time"
-              />
+              <div className="flex gap-2">
+                <select
+                  value={birthHour}
+                  onChange={(e) => setBirthHour(e.target.value)}
+                  className="border rounded-sm bg-muted/30 px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                  style={{ height: "32px", width: "60px" }}
+                  data-testid="select-birth-hour"
+                >
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map((h) => (
+                    <option key={h} value={h.toString().padStart(2, '0')}>
+                      {h.toString().padStart(2, '0')}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={birthMinute}
+                  onChange={(e) => setBirthMinute(e.target.value)}
+                  className="border rounded-sm bg-muted/30 px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                  style={{ height: "32px", width: "60px" }}
+                  data-testid="select-birth-minute"
+                >
+                  {Array.from({ length: 60 }, (_, i) => i).map((m) => (
+                    <option key={m} value={m.toString().padStart(2, '0')}>
+                      {m.toString().padStart(2, '0')}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={birthPeriod}
+                  onChange={(e) => setBirthPeriod(e.target.value)}
+                  className="border rounded-sm bg-muted/30 px-2 py-1 text-xs text-center focus:outline-none focus:ring-1 focus:ring-primary"
+                  style={{ height: "32px", width: "60px" }}
+                  data-testid="select-birth-period"
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="birthLocation" className="text-xs uppercase tracking-wide text-muted-foreground">
-                Location of Birth (optional)
+                Location of Birth
               </Label>
               <Input
                 id="birthLocation"
@@ -113,6 +147,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
                 value={birthLocation}
                 onChange={(e) => setBirthLocation(e.target.value)}
                 data-testid="input-birth-location"
+                required
               />
             </div>
           </div>
@@ -171,7 +206,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
           {/* Submit Button */}
           <Button
             type="submit"
-            disabled={!name || !day || !month || !year || isLoading}
+            disabled={!name || !day || !month || !year || !birthLocation || isLoading}
             className="w-full"
             data-testid="button-generate"
           >
