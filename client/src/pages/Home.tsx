@@ -81,13 +81,25 @@ interface PersonData {
   arabicName?: string;
   birthTime?: string;
   birthLocation?: string;
+  birthCity?: string;
+  latitude?: string;
+  longitude?: string;
 }
 
 export default function Home() {
   const [personData, setPersonData] = useState<PersonData | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const handleGenerate = async (name: string, dob: Date, arabicName?: string, birthTime?: string, birthLocation?: string) => {
+  const handleGenerate = async (
+    name: string,
+    dob: Date,
+    arabicName?: string,
+    birthTime?: string,
+    birthLocation?: string,
+    birthCity?: string,
+    latitude?: string,
+    longitude?: string
+  ) => {
     const lp = getLifePath(dob);
     const dayNum = getDayNumber(dob);
     const monthNum = getMonthNumber(dob);
@@ -115,6 +127,9 @@ export default function Home() {
       arabicName,
       birthTime,
       birthLocation,
+      birthCity,
+      latitude,
+      longitude,
     });
     setActiveTab("overview");
 
@@ -124,6 +139,9 @@ export default function Home() {
         birthDate: dob.toISOString().split("T")[0],
         birthTime,
         birthLocation,
+        birthCity,
+        latitude,
+        longitude,
         lifePath: lp.lifePath,
         zodiacAnimal: animal,
         zodiacSign: zodiac.name,
@@ -142,7 +160,8 @@ export default function Home() {
           lunarInfo,
           universalYear: uy,
           template: genTemplate,
-          timingAdvisor: lp ? { lifePath: lp.lifePath } : null
+          timingAdvisor: lp ? { lifePath: lp.lifePath } : null,
+          geo: { birthCity, latitude, longitude }
         })
       };
 
@@ -486,6 +505,9 @@ export default function Home() {
                   dob={personData.dob}
                   birthTime={personData.birthTime}
                   birthLocation={personData.birthLocation}
+                  birthCity={personData.birthCity}
+                  latitude={personData.latitude}
+                  longitude={personData.longitude}
                 />
               </TabsContent>
 

@@ -16,15 +16,18 @@ interface NatalChartProps {
   dob: Date;
   birthTime?: string;
   birthLocation?: string;
+  birthCity?: string;
+  latitude?: string;
+  longitude?: string;
 }
 
-export function NatalChart({ name, dob, birthTime, birthLocation }: NatalChartProps) {
+export function NatalChart({ name, dob, birthTime, birthLocation, birthCity, latitude, longitude }: NatalChartProps) {
   // Using freeastrologyapi.com public endpoint (mocking for now as it requires specific API setup, but showing structure)
   // Since I don't have an API key and I'm in Fast mode, I will implement a robust display component 
   // and a mock fetcher that simulates the data retrieval from a public astrology API
   
   const { data, isLoading, error } = useQuery({
-    queryKey: ["/api/natal-chart", dob.toISOString(), birthTime, birthLocation],
+    queryKey: ["/api/natal-chart", dob.toISOString(), birthTime, birthLocation, birthCity, latitude, longitude],
     queryFn: async () => {
       // Simulation of an astrology API call
       await new Promise(r => setTimeout(r, 1500));
@@ -83,7 +86,19 @@ export function NatalChart({ name, dob, birthTime, birthLocation }: NatalChartPr
           {birthLocation && (
             <div className="flex items-center gap-1">
               <MapPin className="h-4 w-4" />
-              Location: {birthLocation}
+              Country: {birthLocation}
+            </div>
+          )}
+          {birthCity && (
+            <div className="flex items-center gap-1">
+              <MapPin className="h-4 w-4" />
+              City: {birthCity}
+            </div>
+          )}
+          {(latitude || longitude) && (
+            <div className="flex items-center gap-1">
+              <MapPin className="h-4 w-4" />
+              Coords: {latitude || "N/A"}, {longitude || "N/A"}
             </div>
           )}
         </div>
