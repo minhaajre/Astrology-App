@@ -7,6 +7,34 @@ import { desc, eq } from "drizzle-orm";
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "";
 
+// Retry wrapper for database operations
+async function withRetry<T>(
+  operation: () => Promise<T>,
+  maxRetries: number = 3,
+  delayMs: number = 1000
+): Promise<T> {
+  let lastError: Error | null = null;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await operation();
+    } catch (error: any) {
+      lastError = error;
+      const isTransient = error.code === 'EAI_AGAIN' || 
+                          error.code === 'ECONNRESET' || 
+                          error.code === 'ETIMEDOUT' ||
+                          error.message?.includes('getaddrinfo');
+      
+      if (isTransient && attempt < maxRetries) {
+        console.log(`Database operation failed (attempt ${attempt}/${maxRetries}), retrying in ${delayMs}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delayMs * attempt));
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw lastError;
+}
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
@@ -16,7 +44,9 @@ export async function registerRoutes(
 
   app.post("/api/evaluations", async (req, res) => {
     try {
-      const [evaluation] = await db.insert(evaluations).values(req.body).returning();
+      const [evaluation] = await withRetry(() => 
+        db.insert(evaluations).values(req.body).returning()
+      );
       res.json(evaluation);
     } catch (error) {
       console.error("Error saving evaluation:", error);
@@ -31,10 +61,12 @@ export async function registerRoutes(
         return res.status(403).json({ message: "Forbidden - Admin access only" });
       }
 
-      const allEvaluations = await db
-        .select()
-        .from(evaluations)
-        .orderBy(desc(evaluations.createdAt));
+      const allEvaluations = await withRetry(() =>
+        db
+          .select()
+          .from(evaluations)
+          .orderBy(desc(evaluations.createdAt))
+      );
       res.json(allEvaluations);
     } catch (error) {
       console.error("Error fetching evaluations:", error);
@@ -89,11 +121,13 @@ export async function registerRoutes(
         return res.status(400).json({ message: "Invalid date format. Use YYYY-MM-DD" });
       }
 
-      const [updated] = await db
-        .update(evaluations)
-        .set(updateData)
-        .where(eq(evaluations.id, id))
-        .returning();
+      const [updated] = await withRetry(() =>
+        db
+          .update(evaluations)
+          .set(updateData)
+          .where(eq(evaluations.id, id))
+          .returning()
+      );
 
       if (!updated) {
         return res.status(404).json({ message: "Evaluation not found" });
@@ -127,10 +161,12 @@ export async function registerRoutes(
 
       let deletedCount = 0;
       for (const id of validIds) {
-        const [deleted] = await db
-          .delete(evaluations)
-          .where(eq(evaluations.id, id))
-          .returning();
+        const [deleted] = await withRetry(() =>
+          db
+            .delete(evaluations)
+            .where(eq(evaluations.id, id))
+            .returning()
+        );
         if (deleted) deletedCount++;
       }
 
@@ -154,10 +190,12 @@ export async function registerRoutes(
         return res.status(400).json({ message: "Invalid evaluation ID" });
       }
 
-      const [deleted] = await db
-        .delete(evaluations)
-        .where(eq(evaluations.id, id))
-        .returning();
+      const [deleted] = await withRetry(() =>
+        db
+          .delete(evaluations)
+          .where(eq(evaluations.id, id))
+          .returning()
+      );
 
       if (!deleted) {
         return res.status(404).json({ message: "Evaluation not found" });
