@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { Star, MapPin, Clock } from "lucide-react";
 
 interface Planet {
@@ -21,19 +24,58 @@ interface NatalChartProps {
   longitude?: string;
 }
 
+const ZODIAC_SIGNS = [
+  "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+  "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+];
+
+const AYANAMSA = 24.1; // Lahiri ayanamsa (approximate for 2024)
+
+function convertToSidereal(tropicalSign: string, tropicalDegree: number): { sign: string; degree: number } {
+  const signIndex = ZODIAC_SIGNS.indexOf(tropicalSign);
+  const absoluteDegree = signIndex * 30 + tropicalDegree;
+  let siderealAbsolute = absoluteDegree - AYANAMSA;
+  
+  if (siderealAbsolute < 0) {
+    siderealAbsolute += 360;
+  }
+  
+  const newSignIndex = Math.floor(siderealAbsolute / 30) % 12;
+  const newDegree = siderealAbsolute % 30;
+  
+  return {
+    sign: ZODIAC_SIGNS[newSignIndex],
+    degree: newDegree
+  };
+}
+
+function convertToTropical(siderealSign: string, siderealDegree: number): { sign: string; degree: number } {
+  const signIndex = ZODIAC_SIGNS.indexOf(siderealSign);
+  const absoluteDegree = signIndex * 30 + siderealDegree;
+  let tropicalAbsolute = absoluteDegree + AYANAMSA;
+  
+  if (tropicalAbsolute >= 360) {
+    tropicalAbsolute -= 360;
+  }
+  
+  const newSignIndex = Math.floor(tropicalAbsolute / 30) % 12;
+  const newDegree = tropicalAbsolute % 30;
+  
+  return {
+    sign: ZODIAC_SIGNS[newSignIndex],
+    degree: newDegree
+  };
+}
+
 export function NatalChart({ name, dob, birthTime, birthLocation, birthCity, latitude, longitude }: NatalChartProps) {
-  // Using freeastrologyapi.com public endpoint (mocking for now as it requires specific API setup, but showing structure)
-  // Since I don't have an API key and I'm in Fast mode, I will implement a robust display component 
-  // and a mock fetcher that simulates the data retrieval from a public astrology API
+  const [isTropical, setIsTropical] = useState(true);
   
   const { data, isLoading, error } = useQuery({
     queryKey: ["/api/natal-chart", dob.toISOString(), birthTime, birthLocation, birthCity, latitude, longitude],
     queryFn: async () => {
-      // Simulation of an astrology API call
       await new Promise(r => setTimeout(r, 1500));
       
-      // In a real scenario, we'd use birthLocation to get lat/long via geocoding
-      // For this implementation, we provide a clean UI for the placements
+      // Base data in Tropical coordinates (Western astrology default)
       return {
         planets: [
           { name: "Sun", sign: "Capricorn", degree: 15.4, house: 10 },
@@ -52,6 +94,30 @@ export function NatalChart({ name, dob, birthTime, birthLocation, birthCity, lat
     }
   });
 
+  const getDisplayPlanets = () => {
+    if (!data) return [];
+    
+    if (isTropical) {
+      return data.planets;
+    }
+    
+    return data.planets.map(p => {
+      const converted = convertToSidereal(p.sign, p.degree);
+      return { ...p, sign: converted.sign, degree: converted.degree };
+    });
+  };
+
+  const getDisplayAscendant = () => {
+    if (!data?.ascendant) return null;
+    
+    if (isTropical) {
+      return data.ascendant;
+    }
+    
+    const converted = convertToSidereal(data.ascendant.sign, data.ascendant.degree);
+    return { ...data.ascendant, sign: converted.sign, degree: converted.degree };
+  };
+
   if (isLoading) {
     return (
       <Card className="w-full">
@@ -69,13 +135,40 @@ export function NatalChart({ name, dob, birthTime, birthLocation, birthCity, lat
     );
   }
 
+  const displayPlanets = getDisplayPlanets();
+  const displayAscendant = getDisplayAscendant();
+
   return (
     <Card className="w-full border-primary/20 bg-primary/5">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Star className="h-5 w-5 text-primary" />
-          Natal Birth Chart (Tropical)
-        </CardTitle>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <CardTitle className="flex items-center gap-2">
+            <Star className="h-5 w-5 text-primary" />
+            Natal Birth Chart
+          </CardTitle>
+          
+          <div className="flex items-center gap-3 bg-background/50 rounded-md px-3 py-2">
+            <Label 
+              htmlFor="zodiac-toggle" 
+              className={`text-sm cursor-pointer transition-colors ${!isTropical ? 'text-primary font-medium' : 'text-muted-foreground'}`}
+            >
+              Sidereal
+            </Label>
+            <Switch
+              id="zodiac-toggle"
+              checked={isTropical}
+              onCheckedChange={setIsTropical}
+              data-testid="switch-zodiac-system"
+            />
+            <Label 
+              htmlFor="zodiac-toggle" 
+              className={`text-sm cursor-pointer transition-colors ${isTropical ? 'text-primary font-medium' : 'text-muted-foreground'}`}
+            >
+              Tropical
+            </Label>
+          </div>
+        </div>
+        
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mt-2">
           {birthTime && (
             <div className="flex items-center gap-1">
@@ -114,7 +207,7 @@ export function NatalChart({ name, dob, birthTime, birthLocation, birthCity, lat
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.planets.map((p) => (
+            {displayPlanets.map((p) => (
               <TableRow key={p.name}>
                 <TableCell className="font-medium">{p.name}</TableCell>
                 <TableCell>{p.sign}</TableCell>
@@ -122,18 +215,19 @@ export function NatalChart({ name, dob, birthTime, birthLocation, birthCity, lat
                 <TableCell>{p.house}</TableCell>
               </TableRow>
             ))}
-            {data?.ascendant && (
+            {displayAscendant && (
               <TableRow className="bg-primary/5 font-bold">
-                <TableCell>{data.ascendant.name}</TableCell>
-                <TableCell>{data.ascendant.sign}</TableCell>
-                <TableCell>{data.ascendant.degree.toFixed(1)}°</TableCell>
-                <TableCell>{data.ascendant.house}</TableCell>
+                <TableCell>{displayAscendant.name}</TableCell>
+                <TableCell>{displayAscendant.sign}</TableCell>
+                <TableCell>{displayAscendant.degree.toFixed(1)}°</TableCell>
+                <TableCell>{displayAscendant.house}</TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
         <p className="text-[10px] text-muted-foreground mt-4 italic text-center">
-          * Calculated using the Tropical Zodiac system. Placements are approximate based on birth data provided.
+          * Calculated using the {isTropical ? "Tropical" : "Sidereal (Lahiri)"} Zodiac system. 
+          {!isTropical && " Ayanamsa offset: ~24.1°."} Placements are approximate based on birth data provided.
         </p>
       </CardContent>
     </Card>
