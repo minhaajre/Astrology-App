@@ -572,6 +572,23 @@ export default function Home() {
               </CardContent>
             </Card>
           )}
+
+          <footer className="mt-12 pt-8 border-t border-primary/10 text-center pb-12">
+            <Card className="max-w-2xl mx-auto border-primary/20 bg-primary/5">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold mb-3">Ready for a deeper dive?</h3>
+                <p className="text-muted-foreground mb-6">
+                  While these insights provide a powerful foundation, a personalized consultation can help you navigate your unique cycles with even greater clarity.
+                </p>
+                <Button asChild size="lg" className="hover-elevate">
+                  <a href="https://calendly.com/minhaaj/30min" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    Book a Personalized Consultation
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+          </footer>
         </div>
       </main>
     </div>
