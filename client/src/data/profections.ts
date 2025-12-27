@@ -8,6 +8,21 @@ export interface ProfectionEntry {
   cautions: string[];
 }
 
+export const houseThemes = [
+  { house: 1, theme: "Self, personality, appearance, vitality", ages: [0, 12, 24, 36, 48, 60, 72] },
+  { house: 2, theme: "Money, resources, possessions, self-worth", ages: [1, 13, 25, 37, 49, 61, 73] },
+  { house: 3, theme: "Communication, siblings, short travel, learning", ages: [2, 14, 26, 38, 50, 62, 74] },
+  { house: 4, theme: "Home, family, roots, living situation, parents", ages: [3, 15, 27, 39, 51, 63, 75] },
+  { house: 5, theme: "Pleasure, romance, creativity, children, fun", ages: [4, 16, 28, 40, 52, 64, 76] },
+  { house: 6, theme: "Health, work, daily routine, service, pets", ages: [5, 17, 29, 41, 53, 65, 77] },
+  { house: 7, theme: "Relationships, marriage, partnerships, open enemies", ages: [6, 18, 30, 42, 54, 66, 78] },
+  { house: 8, theme: "Shared resources, death, transformation, inheritances", ages: [7, 19, 31, 43, 55, 67, 79] },
+  { house: 9, theme: "Travel, higher education, philosophy, beliefs", ages: [8, 20, 32, 44, 56, 68, 80] },
+  { house: 10, theme: "Career, public image, reputation, life direction", ages: [9, 21, 33, 45, 57, 69, 81] },
+  { house: 11, theme: "Friends, groups, hopes, goals, future aspirations", ages: [10, 22, 34, 46, 58, 70, 82] },
+  { house: 12, theme: "Secrets, self-undoing, isolation, hidden matters, spirituality", ages: [11, 23, 35, 47, 59, 71, 83] },
+];
+
 export const profections: Record<number, ProfectionEntry> = {
   1: {
     house: 1,

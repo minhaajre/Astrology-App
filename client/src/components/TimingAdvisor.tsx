@@ -8,8 +8,8 @@ interface TimingAdvisorProps {
 export function TimingAdvisor({ dob }: TimingAdvisorProps) {
   return (
     <div className="space-y-8">
-      <SpecialDatesInfo />
       <ProfectionPanel birthDate={dob} />
+      <SpecialDatesInfo />
     </div>
   );
 }
