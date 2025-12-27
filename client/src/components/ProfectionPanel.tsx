@@ -15,7 +15,7 @@ import {
 import { profections, houseThemes } from "@/data/profections";
 import { calculateProfectionYear } from "@/lib/numerology";
 import { HelpCircle, AlertCircle, Sparkles, BookOpen, Download, Maximize2, Info } from "lucide-react";
-import wheelImage from "@assets/CleanShot_2025-12-25_at_1_.25.08@2x_1766643919708.png";
+import wheelImage from "@assets/CleanShot_2025-12-25_at_1_.24.01@2x_1766643862808.png";
 
 interface ProfectionPanelProps {
   birthDate: Date;
