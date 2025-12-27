@@ -84,7 +84,7 @@ export default function Home() {
   const [personData, setPersonData] = useState<PersonData | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const handleGenerate = async (name: string, dob: Date, arabicName?: string) => {
+  const handleGenerate = async (name: string, dob: Date, arabicName?: string, birthTime?: string, birthLocation?: string) => {
     const lp = getLifePath(dob);
     const dayNum = getDayNumber(dob);
     const monthNum = getMonthNumber(dob);
@@ -117,6 +117,8 @@ export default function Home() {
       const evaluationData: any = {
         name,
         birthDate: dob.toISOString().split("T")[0],
+        birthTime,
+        birthLocation,
         lifePath: lp.lifePath,
         zodiacAnimal: animal,
         zodiacSign: zodiac.name,

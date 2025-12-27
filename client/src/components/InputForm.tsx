@@ -13,13 +13,15 @@ import {
 } from "@/components/ui/select";
 
 interface InputFormProps {
-  onGenerate: (name: string, dob: Date, arabicName?: string) => void;
+  onGenerate: (name: string, dob: Date, arabicName?: string, birthTime?: string, birthLocation?: string) => void;
   isLoading?: boolean;
 }
 
 export function InputForm({ onGenerate, isLoading }: InputFormProps) {
   const [name, setName] = useState("");
   const [arabicName, setArabicName] = useState("");
+  const [birthTime, setBirthTime] = useState("");
+  const [birthLocation, setBirthLocation] = useState("");
   const [day, setDay] = useState("1");
   const [month, setMonth] = useState("January");
   const [year, setYear] = useState(new Date().getFullYear().toString());
@@ -46,7 +48,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
     e.preventDefault();
     if (name && day && month && year) {
       const dob = new Date(parseInt(year), monthMap[month] - 1, parseInt(day));
-      onGenerate(name, dob, arabicName || undefined);
+      onGenerate(name, dob, arabicName || undefined, birthTime || undefined, birthLocation || undefined);
     }
   };
 
@@ -54,36 +56,65 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
     <Card>
       <CardContent className="p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="name" className="text-xs uppercase tracking-wide text-muted-foreground">
-              Name
-            </Label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-xs uppercase tracking-wide text-muted-foreground">
+                Name
+              </Label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="name"
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="pl-10"
+                  data-testid="input-name"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="arabicName" className="text-xs uppercase tracking-wide text-muted-foreground">
+                Arabic Name (optional)
+              </Label>
               <Input
-                id="name"
-                placeholder="Enter your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="pl-10"
-                data-testid="input-name"
+                id="arabicName"
+                placeholder="Enter your name in Arabic (ع ل ي)"
+                value={arabicName}
+                onChange={(e) => setArabicName(e.target.value)}
+                dir="rtl"
+                data-testid="input-arabic-name"
               />
             </div>
           </div>
 
-          {/* Arabic Name (optional for Abjad calculation) */}
-          <div className="space-y-2">
-            <Label htmlFor="arabicName" className="text-xs uppercase tracking-wide text-muted-foreground">
-              Arabic Name (optional for Abjad numerology)
-            </Label>
-            <Input
-              id="arabicName"
-              placeholder="Enter your name in Arabic (ع ل ي)"
-              value={arabicName}
-              onChange={(e) => setArabicName(e.target.value)}
-              dir="rtl"
-              data-testid="input-arabic-name"
-            />
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="birthTime" className="text-xs uppercase tracking-wide text-muted-foreground">
+                Time of Birth (optional)
+              </Label>
+              <Input
+                id="birthTime"
+                type="time"
+                value={birthTime}
+                onChange={(e) => setBirthTime(e.target.value)}
+                data-testid="input-birth-time"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="birthLocation" className="text-xs uppercase tracking-wide text-muted-foreground">
+                Location of Birth (optional)
+              </Label>
+              <Input
+                id="birthLocation"
+                placeholder="City, Country"
+                value={birthLocation}
+                onChange={(e) => setBirthLocation(e.target.value)}
+                data-testid="input-birth-location"
+              />
+            </div>
           </div>
 
           {/* Date of Birth - Scrollable Selectors */}

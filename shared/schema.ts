@@ -9,6 +9,8 @@ export const evaluations = pgTable("evaluations", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   birthDate: text("birth_date").notNull(),
+  birthTime: text("birth_time"),
+  birthLocation: text("birth_location"),
   lifePath: integer("life_path").notNull(),
   lifePathLabel: text("life_path_label"),
   zodiacAnimal: text("zodiac_animal"),
