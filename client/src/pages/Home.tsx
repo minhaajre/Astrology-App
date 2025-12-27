@@ -553,7 +553,6 @@ export default function Home() {
                 <TabsContent value="timing" className="mt-6">
                   <div className="space-y-6">
                     <TimingAdvisor dob={personData.dob} />
-                    <ProfectionPanel birthDate={personData.dob} ascendantSign={getZodiacSign(personData.dob).name} />
                   </div>
                 </TabsContent>
 

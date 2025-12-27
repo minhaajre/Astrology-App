@@ -1,12 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { 
   Zap, 
   Calendar, 
   BarChart3,
   Star,
   Heart,
-  Moon
+  Moon,
+  ChevronDown
 } from "lucide-react";
 import {
   reduceToSingleDigit,
@@ -58,8 +60,6 @@ export function DailyEnergyCards() {
   // Generate daily insight - use reduced number for insights
   const dailyInsight = generateDailyInsight(todayReducedNumber, weekNumber1, monthNumber, zodiacSign, todayAnimal, "");
 
-  const getTodayCompatibility = () => getAnimalCompatibility(todayAnimal, todayAnimal);
-
   return (
     <div className="space-y-4 mb-8">
       <div className="text-center mb-4">
@@ -71,190 +71,141 @@ export function DailyEnergyCards() {
           {dailyInsight}
         </p>
       </div>
-      
-      <div className="grid gap-4 md:grid-cols-5">
-        {/* Today's Animal - GG33 Focus */}
-        <Card className="bg-card/50 h-full">
-          <CardContent className="pt-6 pb-6 flex flex-col h-full">
-            <div className="flex gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
-                <span className="text-xl flex-shrink-0">{todayAnimalIcon}</span>
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  Animal of Year
-                </p>
-                <div className="mb-3">
-                  <p className="text-3xl font-bold" data-testid="energy-today-animal">
-                    {todayAnimal}
-                  </p>
-                </div>
-                <p className="text-xs text-muted-foreground mt-auto">
-                  {getTodayCompatibility() === 'Enemies' ? '✗ Challenging' : getTodayCompatibility() === 'Good' ? '✓ Harmonious' : '• Neutral'}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* This Year's Theme */}
-        <Card className="bg-card/50 h-full">
-          <CardContent className="pt-6 pb-6 flex flex-col h-full">
-            <div className="flex gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
-                <Star className="h-5 w-5 text-primary" />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  Year Theme
-                </p>
-                <div className="mb-3">
-                  <p className="text-3xl font-bold" data-testid="energy-year-number">
-                    {yearNumber}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {yearMeaning.core}
-                  </p>
+      <Collapsible defaultOpen={true}>
+        <CollapsibleTrigger className="flex items-center gap-2 w-full py-2 text-left hover-elevate rounded-lg px-4 group bg-muted/30">
+          <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+          <span className="font-medium text-sm">Energy Cards</span>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="pt-4">
+          <div className="grid gap-4 md:grid-cols-5">
+            {/* Today's Animal - GG33 Focus */}
+            <Card className="bg-card/50 h-full">
+              <CardContent className="pt-6 pb-6 flex flex-col h-full">
+                <div className="flex gap-3">
+                  <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                    <span className="text-xl flex-shrink-0">{todayAnimalIcon}</span>
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                      Animal of Year
+                    </p>
+                    <div className="mb-3">
+                      <p className="text-3xl font-bold" data-testid="energy-today-animal">
+                        {todayAnimal}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-xs text-muted-foreground mt-auto leading-relaxed">
-                  {today.getFullYear()} yearly focus
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
 
-        {/* Today's Numerology */}
-        <Card className="bg-card/50 h-full">
-          <CardContent className="pt-6 pb-6 flex flex-col h-full">
-            <div className="flex gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
-                <Zap className="h-5 w-5 text-primary" />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  Today's Number
-                </p>
-                <div className="mb-3">
-                  <p className="text-3xl font-bold" data-testid="energy-today-number">
-                    {todayNumber}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {todaySpecialDate?.theme || todayMeaning.core}
-                  </p>
+            {/* This Year's Theme */}
+            <Card className="bg-card/50 h-full">
+              <CardContent className="pt-6 pb-6 flex flex-col h-full">
+                <div className="flex gap-3">
+                  <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                    <Star className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                      Year Theme
+                    </p>
+                    <div className="mb-3">
+                      <p className="text-3xl font-bold" data-testid="energy-year-number">
+                        {yearNumber}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {yearMeaning.core}
+                      </p>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-auto leading-relaxed">
+                      {today.getFullYear()} yearly focus
+                    </p>
+                  </div>
                 </div>
-                <p className="text-xs text-muted-foreground mt-auto leading-relaxed">
-                  {todaySpecialDate?.bestFor && todaySpecialDate.bestFor.length > 0 
-                    ? `Best for: ${todaySpecialDate.bestFor.slice(0, 2).join(", ")}`
-                    : todayMeaning.dailyForecast}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
 
-        {/* This Week's Energy */}
-        <Card className="bg-card/50 h-full">
-          <CardContent className="pt-6 pb-6 flex flex-col h-full">
-            <div className="flex gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
-                <Calendar className="h-5 w-5 text-primary" />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  Week {weekNumber} Theme
-                </p>
-                <div className="mb-3">
-                  <p className="text-3xl font-bold" data-testid="energy-week-number">
-                    {weekNumber1}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {weekMeaning.core}
-                  </p>
+            {/* Today's Numerology */}
+            <Card className="bg-card/50 h-full">
+              <CardContent className="pt-6 pb-6 flex flex-col h-full">
+                <div className="flex gap-3">
+                  <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                    <Zap className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                      Today's Number
+                    </p>
+                    <div className="mb-3">
+                      <p className="text-3xl font-bold" data-testid="energy-today-number">
+                        {todayNumber}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {todaySpecialDate?.theme || todayMeaning.core}
+                      </p>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-auto leading-relaxed">
+                      {todaySpecialDate?.bestFor && todaySpecialDate.bestFor.length > 0 
+                        ? `Best for: ${todaySpecialDate.bestFor.slice(0, 2).join(", ")}`
+                        : todayMeaning.dailyForecast}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
 
-        {/* This Month's Energy */}
-        <Card className="bg-card/50 h-full">
-          <CardContent className="pt-6 pb-6 flex flex-col h-full">
-            <div className="flex gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
-                <BarChart3 className="h-5 w-5 text-primary" />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  {today.toLocaleDateString("en-US", { month: "long" })} Theme
-                </p>
-                <div className="mb-3">
-                  <p className="text-3xl font-bold" data-testid="energy-month-number">
-                    {monthNumber}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {monthMeaning.core}
-                  </p>
+            {/* This Week's Energy */}
+            <Card className="bg-card/50 h-full">
+              <CardContent className="pt-6 pb-6 flex flex-col h-full">
+                <div className="flex gap-3">
+                  <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                    <Calendar className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                      Week {weekNumber} Theme
+                    </p>
+                    <div className="mb-3">
+                      <p className="text-3xl font-bold" data-testid="energy-week-number">
+                        {weekNumber1}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {weekMeaning.core}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
 
-        {/* Lunar Phase */}
-        <Card className="bg-card/50 h-full">
-          <CardContent className="pt-6 pb-6 flex flex-col h-full">
-            <div className="flex gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
-                <Moon className="h-5 w-5 text-primary" />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  Lunar Phase
-                </p>
-                <div className="mb-3">
-                  <p className="text-lg font-bold">
-                    {lunarPhase.phaseName}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {lunarPhase.percentage}% {lunarPhase.isWaxing ? 'Waxing' : 'Waning'}
-                  </p>
+            {/* This Month's Energy */}
+            <Card className="bg-card/50 h-full">
+              <CardContent className="pt-6 pb-6 flex flex-col h-full">
+                <div className="flex gap-3">
+                  <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
+                    <BarChart3 className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                      {today.toLocaleDateString("en-US", { month: "long" })} Theme
+                    </p>
+                    <div className="mb-3">
+                      <p className="text-3xl font-bold" data-testid="energy-month-number">
+                        {monthNumber}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {monthMeaning.core}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-auto space-y-1 text-[10px] leading-tight text-muted-foreground opacity-70">
-                  <p>Full Moon: {lunarPhase.lastFullMoon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Today's Zodiac Sign */}
-        <Card className="bg-card/50 h-full">
-          <CardContent className="pt-6 pb-6 flex flex-col h-full">
-            <div className="flex gap-3">
-              <div className="rounded-lg bg-primary/10 p-2 flex-shrink-0">
-                <Star className="h-5 w-5 text-primary" />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  Zodiac Sign
-                </p>
-                <div className="mb-3">
-                  <p className="text-3xl font-bold" data-testid="energy-zodiac-sign">
-                    {zodiacSign.symbol}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {zodiacSign.name}
-                  </p>
-                </div>
-                <p className="text-xs text-muted-foreground mt-auto">
-                  {zodiacSign.element} • {zodiacSign.dates}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+              </CardContent>
+            </Card>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 }

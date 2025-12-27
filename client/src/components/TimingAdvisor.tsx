@@ -1,5 +1,5 @@
-import { SpecialDatesInfo } from "./SpecialDatesInfo";
 import { ProfectionPanel } from "./ProfectionPanel";
+import { getZodiacSign } from "@/lib/numerology";
 
 interface TimingAdvisorProps {
   dob: Date;
@@ -8,8 +8,7 @@ interface TimingAdvisorProps {
 export function TimingAdvisor({ dob }: TimingAdvisorProps) {
   return (
     <div className="space-y-8">
-      <ProfectionPanel birthDate={dob} />
-      <SpecialDatesInfo />
+      <ProfectionPanel birthDate={dob} ascendantSign={getZodiacSign(dob).name} />
     </div>
   );
 }
