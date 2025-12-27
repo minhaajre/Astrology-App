@@ -1,9 +1,21 @@
-import { useState } from "react";
-import { User, Sparkles } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { User, Sparkles, MapPin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+
+interface LocationSuggestion {
+  display_name: string;
+  lat: string;
+  lon: string;
+  address: {
+    city?: string;
+    town?: string;
+    village?: string;
+    country: string;
+  };
+}
 
 interface InputFormProps {
   onGenerate: (
@@ -19,29 +31,6 @@ interface InputFormProps {
   isLoading?: boolean;
 }
 
-const countries = [
-  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
-  "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia",
-  "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
-  "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)",
-  "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Democratic Republic of the Congo", "Denmark", "Djibouti",
-  "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini",
-  "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala",
-  "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran",
-  "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait",
-  "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-  "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico",
-  "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia",
-  "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway",
-  "Oman", "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland",
-  "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines",
-  "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore",
-  "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka",
-  "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga",
-  "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom",
-  "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-];
-
 const monthMap: Record<string, number> = {
   January: 1, February: 2, March: 3, April: 4, May: 5, June: 6,
   July: 7, August: 8, September: 9, October: 10, November: 11, December: 12,
@@ -55,22 +44,68 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
   const [birthHour, setBirthHour] = useState("12");
   const [birthMinute, setBirthMinute] = useState("00");
   const [birthPeriod, setBirthPeriod] = useState<"AM" | "PM">("AM");
-  const [birthLocation, setBirthLocation] = useState("");
-  const [birthCity, setBirthCity] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  
+  const [locationInput, setLocationInput] = useState("");
+  const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<LocationSuggestion | null>(null);
+  
   const [day, setDay] = useState("1");
   const [month, setMonth] = useState("January");
   const [year, setYear] = useState(new Date().getFullYear().toString());
-
+  
+  const suggestionRef = useRef<HTMLDivElement>(null);
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (suggestionRef.current && !suggestionRef.current.contains(event.target as Node)) {
+        setSuggestions([]);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (locationInput.length > 2 && !selectedLocation) {
+        setIsSearching(true);
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationInput)}&addressdetails=1&limit=5`
+          );
+          const data = await response.json();
+          setSuggestions(data);
+        } catch (error) {
+          console.error("Location search error:", error);
+        } finally {
+          setIsSearching(false);
+        }
+      } else {
+        setSuggestions([]);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [locationInput, selectedLocation]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && day && month && year && birthLocation && birthCity) {
+    if (name && day && month && year && selectedLocation) {
       const dob = new Date(parseInt(year), monthMap[month] - 1, parseInt(day));
       const birthTimeFormatted = `${birthHour}:${birthMinute} ${birthPeriod}`;
-      onGenerate(name, dob, arabicName || undefined, birthTimeFormatted, birthLocation, birthCity, latitude, longitude);
+      const city = selectedLocation.address.city || selectedLocation.address.town || selectedLocation.address.village || "";
+      onGenerate(
+        name,
+        dob,
+        arabicName || undefined,
+        birthTimeFormatted,
+        selectedLocation.address.country,
+        city,
+        selectedLocation.lat,
+        selectedLocation.lon
+      );
     }
   };
 
@@ -112,29 +147,44 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
                 </select>
               </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="birthLocation" className="text-xs uppercase tracking-wide text-muted-foreground">Location of Birth (Country)</Label>
-              <select id="birthLocation" value={birthLocation} onChange={(e) => setBirthLocation(e.target.value)} className="w-full border rounded-sm bg-muted/30 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary" data-testid="select-birth-location" required>
-                <option value="">Select a country</option>
-                {countries.map((country) => (<option key={country} value={country}>{country}</option>))}
-              </select>
-            </div>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="birthCity" className="text-xs uppercase tracking-wide text-muted-foreground">City of Birth</Label>
-              <Input id="birthCity" placeholder="City" value={birthCity} onChange={(e) => setBirthCity(e.target.value)} data-testid="input-birth-city" required />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="space-y-2">
-                <Label htmlFor="latitude" className="text-xs uppercase tracking-wide text-muted-foreground">Latitude (optional)</Label>
-                <Input id="latitude" placeholder="e.g. 51.5" value={latitude} onChange={(e) => setLatitude(e.target.value)} data-testid="input-latitude" />
+            
+            <div className="space-y-2 relative">
+              <Label htmlFor="location" className="text-xs uppercase tracking-wide text-muted-foreground">Place of Birth</Label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input 
+                  id="location" 
+                  placeholder="Type city name (e.g. Paris, New York)" 
+                  value={locationInput} 
+                  onChange={(e) => {
+                    setLocationInput(e.target.value);
+                    setSelectedLocation(null);
+                  }} 
+                  className="pl-10"
+                  data-testid="input-location"
+                  required
+                />
+                {isSearching && <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-muted-foreground" />}
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="longitude" className="text-xs uppercase tracking-wide text-muted-foreground">Longitude (optional)</Label>
-                <Input id="longitude" placeholder="e.g. -0.1" value={longitude} onChange={(e) => setLongitude(e.target.value)} data-testid="input-longitude" />
-              </div>
+              
+              {suggestions.length > 0 && (
+                <div ref={suggestionRef} className="absolute z-50 w-full mt-1 bg-background border rounded-md shadow-lg max-h-60 overflow-auto">
+                  {suggestions.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-muted focus:bg-muted focus:outline-none"
+                      onClick={() => {
+                        setSelectedLocation(suggestion);
+                        setLocationInput(suggestion.display_name);
+                        setSuggestions([]);
+                      }}
+                    >
+                      {suggestion.display_name}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -151,7 +201,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
             </div>
           </div>
 
-          <Button type="submit" disabled={!name || !day || !month || !year || !birthLocation || !birthCity || isLoading} className="w-full" data-testid="button-generate">
+          <Button type="submit" disabled={!name || !day || !month || !year || !selectedLocation || isLoading} className="w-full" data-testid="button-generate">
             <Sparkles className="mr-2 h-4 w-4" />
             {isLoading ? "Generating..." : "Generate Report"}
           </Button>
@@ -160,3 +210,4 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
     </Card>
   );
 }
+
