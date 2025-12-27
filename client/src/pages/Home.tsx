@@ -8,6 +8,7 @@ import { NumberAccordion } from "@/components/NumberAccordion";
 import { DailyForecast } from "@/components/DailyForecast";
 import { TimePeriodForecasts } from "@/components/TimePeriodForecasts";
 import { TimingAdvisor } from "@/components/TimingAdvisor";
+import { ProfectionPanel } from "@/components/ProfectionPanel";
 import { ZodiacDisplay } from "@/components/ZodiacDisplay";
 import { NatalChart } from "@/components/NatalChart";
 import { CompatibilityCalculator } from "@/components/CompatibilityCalculator";
