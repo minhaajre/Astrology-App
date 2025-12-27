@@ -123,7 +123,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
             </div>
             <div className="space-y-2">
               <Label htmlFor="arabicName" className="text-xs uppercase tracking-wide text-muted-foreground">Arabic Name (optional)</Label>
-              <Input id="arabicName" placeholder="Enter your name in Arabic (ع ل ي)" value={arabicName} onChange={(e) => setArabicName(e.target.value)} dir="rtl" data-testid="input-arabic-name" />
+              <Input id="arabicName" placeholder="Enter your name in Arabic" value={arabicName} onChange={(e) => setArabicName(e.target.value)} dir="rtl" data-testid="input-arabic-name" />
             </div>
           </div>
 
