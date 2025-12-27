@@ -1,0 +1,383 @@
+Got it. I’ll incorporate your house text, but I’m going to **sanitize the language** so it fits your app’s non-predictive, grounded tone:
+
+* Replace “will/may happen” outcome claims with **“themes that come into focus”**
+* Keep the **planetary joys** (Mercury 1st, Moon 3rd, Venus 5th, Mars 6th, Sun 9th, Jupiter 11th, Saturn 12th)
+* Keep the practical topics (money, relationships, travel, career, etc.)
+* Keep the instruction: “look to the sign + ruler” (and optionally “ruler’s condition” if natal chart exists)
+
+Below are **Replit AI agent instructions** plus **drop-in house text** for your profection module.
+
+---
+
+## Replit AI Instructions
+
+### Replace the house descriptions in `data/profections.ts` with the following copy
+
+### Rules to enforce across all 12 houses
+
+1. No fate language: avoid “you will / this will happen.”
+2. Use “themes / areas of focus / may notice.”
+3. Keep it concrete and actionable (journaling prompts + focus suggestions).
+4. Add “Planetary Joy” only where traditional joys exist.
+5. End each house with:
+
+   * “Look to the sign of this house and its ruler for detail.”
+   * If natal chart exists: “Also check that ruler’s current condition.”
+
+### Data fields to add/ensure
+
+For each house entry, include:
+
+* `focus_text` (your rewritten paragraph)
+* `planetary_joy` (optional string)
+* `how_to_use` (short, consistent steps)
+* `prompts` (3 journaling prompts)
+* `cautions` (2–4 gentle cautions)
+
+### UI Requirements
+
+* In the Profection panel, show:
+
+  * House number + name
+  * Focus text
+  * Planetary joy badge (if present)
+  * “How to use this year” collapsible
+  * Prompts block
+  * “Look to sign + ruler” note
+
+---
+
+## Drop-in House Copy (rewritten to match your app tone)
+
+### 1st House Profection Year
+
+Focus: self, body, identity, vitality, style, presence, personal direction.
+Planetary Joy: Mercury rejoices here (traditional).
+Copy:
+In a 1st house profection year, attention naturally returns to the self: your body, energy, identity, presentation, and the way you move through the world. This is less about “reinventing” and more about refining what is true and sustainable for you. Notice how your vitality, confidence, and sense of direction respond to your daily choices.
+Look to the sign on the 1st house (your Rising sign) and its ruler for detail, and if available, observe what that ruler is doing now.
+
+How to use:
+
+* Prioritize consistent routines that support wellbeing
+* Reduce identity pressure; choose authenticity over image
+* Track energy and boundaries weekly
+
+Prompts:
+
+* What version of me is trying to emerge right now?
+* What strengthens my vitality, and what drains it?
+* Where am I performing instead of being present?
+
+Cautions:
+
+* Over-identifying with appearances or roles
+* Forcing drastic change without stability
+
+---
+
+### 2nd House Profection Year
+
+Focus: values, self-worth, money, income, skills, possessions, resources.
+Copy:
+A 2nd house year foregrounds what you value and how you resource your life: finances, earning, spending, possessions, talents, and the relationship between money and self-worth. This year works well for building sustainable foundations—especially when spending aligns with values rather than impulse.
+Look to the sign on the 2nd house and its ruler for detail.
+
+How to use:
+
+* Track income/outflow patterns monthly
+* Strengthen one core skill or resource stream
+* Make values explicit before big purchases
+
+Prompts:
+
+* What do I truly value, beyond comfort or fear?
+* Where does my money reflect my priorities?
+* What skill, if strengthened, increases stability?
+
+Cautions:
+
+* Spending to regulate emotion
+* Confusing wealth with worth
+
+---
+
+### 3rd House Profection Year
+
+Focus: communication, learning, mindset, writing, siblings/relatives, local travel, daily crafts.
+Planetary Joy: Moon rejoices here (traditional).
+Copy:
+A 3rd house year emphasizes how you think, speak, learn, and connect locally—through writing, teaching, short trips, daily communication, and relationships with siblings or relatives. This can be a year of refining your mental habits and aligning your expression with what is true.
+Look to the sign on the 3rd house and its ruler for detail.
+
+How to use:
+
+* Build a simple writing/learning rhythm
+* Practice clearer boundaries around information intake
+* Improve one communication habit (tone, pacing, listening)
+
+Prompts:
+
+* What narratives shape my choices right now?
+* How do I communicate under stress?
+* What daily practice strengthens my mind?
+
+Cautions:
+
+* Information overload
+* Speaking/reacting too quickly
+
+---
+
+### 4th House Profection Year
+
+Focus: home, family, roots, ancestry, belonging, inner foundation, emotional base.
+Copy:
+A 4th house year draws attention to your home life, family patterns, ancestry, and the places where you feel safe and rooted. This can be a time to strengthen foundations—literal (home, living situation) and inner (belonging, emotional security, family stories).
+Look to the sign on the 4th house and its ruler for detail.
+
+How to use:
+
+* Stabilize your living environment
+* Do reflective work around family patterns (without blame)
+* Build a private rhythm that supports rest
+
+Prompts:
+
+* Where do I feel truly at home—inside and outside?
+* What inherited pattern am I ready to soften?
+* What foundation do I need before I expand?
+
+Cautions:
+
+* Avoiding inner work through busyness
+* Trying to control family dynamics
+
+---
+
+### 5th House Profection Year
+
+Focus: joy, creativity, pleasure, romance, hobbies, play, children, vitality.
+Planetary Joy: Venus rejoices here (traditional).
+Copy:
+A 5th house year emphasizes joy, creativity, desire, and the life-force that comes from play and expression. It can support creative projects, romance, and hobbies, not as escape but as nourishment. The key is to let pleasure be conscious and aligned, not compulsive.
+Look to the sign on the 5th house and its ruler for detail.
+
+How to use:
+
+* Schedule regular creative/play time
+* Express affection with sincerity and boundaries
+* Track what genuinely restores you
+
+Prompts:
+
+* What gives me clean joy (not a crash after)?
+* Where am I withholding my creative voice?
+* What would playful discipline look like?
+
+Cautions:
+
+* Indulgence that undermines wellbeing
+* Seeking validation through attention
+
+---
+
+### 6th House Profection Year
+
+Focus: daily work, routines, health habits, service, colleagues, responsibilities, pets.
+Planetary Joy: Mars rejoices here (traditional).
+Copy:
+A 6th house year foregrounds routines, health, daily work, and the structure of your life. This is about what you repeatedly do—habits, service, duty, maintenance. It can feel “work heavy,” so the key is building routines that are firm but humane.
+Look to the sign on the 6th house and its ruler for detail.
+
+How to use:
+
+* Create one sustainable routine stack (sleep, food, movement)
+* Audit your day for friction points
+* Improve systems before chasing goals
+
+Prompts:
+
+* What habit most changes my life if consistent?
+* Where do I leak energy in daily life?
+* What does service look like without self-erasure?
+
+Cautions:
+
+* Overwork and burnout
+* Harsh self-criticism around productivity
+
+---
+
+### 7th House Profection Year
+
+Focus: partnerships, marriage, business partners, clients, contracts, one-to-one dynamics.
+Copy:
+A 7th house year emphasizes one-to-one relationships: romantic partners, business partners, clients, and close personal bonds. This is often a year of learning through mirrors—how you relate, negotiate, commit, and set boundaries.
+Look to the sign on the 7th house and its ruler for detail.
+
+How to use:
+
+* Clarify expectations and agreements
+* Practice repair skills: listening, naming needs, negotiating
+* Track patterns: pursuit/avoidance, control/surrender
+
+Prompts:
+
+* What do I truly need from partnership?
+* What do I repeatedly recreate in one-to-one bonds?
+* Where does commitment require clearer boundaries?
+
+Cautions:
+
+* Making promises to avoid discomfort
+* Repeating relational patterns unconsciously
+
+---
+
+### 8th House Profection Year
+
+Focus: transformation, shared resources, taxes, debts, grants, inheritances, intimacy, deep boundaries.
+Copy:
+An 8th house year emphasizes shared resources and deeper transformation: joint finances, debt, taxes, inheritances (literal or symbolic), and the emotional bonds that require trust and boundaries. This year often asks for clean accounting—financially and emotionally—so that intimacy becomes clearer rather than entangling.
+Look to the sign on the 8th house and its ruler for detail.
+
+How to use:
+
+* Review shared finances and obligations carefully
+* Strengthen emotional + financial boundaries
+* Do honest “what am I carrying that isn’t mine?” reflection
+
+Prompts:
+
+* What am I merging with, and why?
+* What debt (emotional or financial) needs clarity?
+* What part of me wants transformation—and what resists it?
+
+Cautions:
+
+* Avoiding hard conversations about money/boundaries
+* Turning intensity into drama
+
+---
+
+### 9th House Profection Year
+
+Focus: long-distance travel, higher education, worldview, beliefs, religion/spirituality, philosophy, teaching/publishing.
+Planetary Joy: Sun rejoices here (traditional).
+Copy:
+A 9th house year foregrounds meaning: learning, travel, higher education, beliefs, spirituality, philosophy, teaching, and publishing. It’s less about collecting facts and more about expanding perspective in a way that matures character.
+Look to the sign on the 9th house and its ruler for detail.
+
+How to use:
+
+* Commit to one serious study thread
+* Revisit beliefs: what’s lived truth vs inherited idea
+* Teach or publish in a grounded way
+
+Prompts:
+
+* What do I believe, and why?
+* What experience expanded my worldview recently?
+* What wisdom am I meant to live—not just know?
+
+Cautions:
+
+* Dogmatism or preaching
+* Escaping daily responsibilities through “big ideas”
+
+---
+
+### 10th House Profection Year
+
+Focus: career, vocation, reputation, public role, visibility, leadership, legacy.
+Copy:
+A 10th house year emphasizes your public life: career direction, authority, responsibility, visibility, and legacy. It invites clarity about what you want to be known for and what path deserves your effort.
+Look to the sign on the 10th house and its ruler for detail.
+
+How to use:
+
+* Define one core professional aim
+* Build proof through consistent output
+* Refine public persona to match reality
+
+Prompts:
+
+* What am I building that will still matter later?
+* What responsibility am I ready to hold?
+* Where is my public image misaligned with truth?
+
+Cautions:
+
+* Chasing status over substance
+* Overworking for external approval
+
+---
+
+### 11th House Profection Year
+
+Focus: friendships, communities, networks, alliances, groups, hopes, long-term goals.
+Planetary Joy: Jupiter rejoices here (traditional).
+Copy:
+An 11th house year emphasizes friends, communities, collaborators, networks, and the long view—hopes and long-term goals. The invitation is to choose community with discernment: not quantity of connections, but quality of mutual purpose and integrity.
+Look to the sign on the 11th house and its ruler for detail.
+
+How to use:
+
+* Join or deepen one aligned community
+* Collaborate with clear roles and expectations
+* Set a realistic long-term goal and track it
+
+Prompts:
+
+* Who supports my best self—and how do I support them?
+* What goal deserves steady investment this year?
+* Where do I belong, not just participate?
+
+Cautions:
+
+* Over-socializing to avoid solitude
+* Losing direction in group dynamics
+
+---
+
+### 12th House Profection Year
+
+Focus: retreat, inner life, hidden patterns, subconscious, dreams, solitude, renewal, endings, spiritual hygiene.
+Planetary Joy: Saturn rejoices here (traditional).
+Copy:
+A 12th house year emphasizes the inner world: retreat, renewal, hidden patterns, dreams, solitude, and the unseen forces shaping behavior. This year can support deep repair—mental, emotional, spiritual—through simplicity and quiet structure.
+Look to the sign on the 12th house and its ruler for detail.
+
+How to use:
+
+* Protect sleep and nervous system
+* Reduce stimulation and increase contemplative time
+* Do therapy/journaling/retreat work if supportive
+
+Prompts:
+
+* What pattern repeats when I’m stressed or tired?
+* What does my nervous system need to feel safe?
+* What am I ready to release without drama?
+
+Cautions:
+
+* Isolation without support
+* Escapism or numbness instead of renewal
+
+---
+
+## Final integration note for the agent
+
+Replace any “This may happen / you may do X” phrasing in UI with:
+
+* “This year often brings attention to…”
+* “You may notice themes around…”
+* “Use this as a lens for reflection…”
+
+Also remove any stray promotional text from imported sources.
+
+---
+
+If you want, I can now output this in the exact structure of your existing `profections.ts` schema (TS object array) so your agent can paste it in without adapting fields.
