@@ -1151,6 +1151,16 @@ export function getYearlyForecast(personalYear: number): { forecast: string; str
 // ==========================================
 
 // Pythagorean letter values (Latin alphabet)
+export function calculateProfectionYear(birthDate: Date): number {
+  const now = new Date();
+  let age = now.getFullYear() - birthDate.getFullYear();
+  const m = now.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return (age % 12) + 1;
+}
+
 export const pythagoreanMap: Record<string, number> = {
   'a': 1, 'j': 1, 's': 1,
   'b': 2, 'k': 2, 't': 2,
