@@ -247,6 +247,13 @@ export default function Home() {
               <SpecialDatesInfo />
             </CollapsibleContent>
           </Collapsible>
+          
+          {!personData && (
+            <p className="text-center text-muted-foreground py-2">
+              Enter your details below to generate your universal matrix profile.
+            </p>
+          )}
+          
           <InputForm onGenerate={handleGenerate} />
 
           {personData ? (
@@ -563,13 +570,7 @@ export default function Home() {
                 />
               </TabsContent>
             </Tabs>
-          ) : (
-            <Card className="border-dashed">
-              <CardContent className="py-12 text-center text-muted-foreground">
-                Enter your details above to generate your universal matrix profile.
-              </CardContent>
-            </Card>
-          )}
+          ) : null}
 
           <footer className="mt-12 pt-8 border-t border-primary/10 text-center pb-12">
             <Card className="max-w-2xl mx-auto border-primary/20 bg-primary/5">
