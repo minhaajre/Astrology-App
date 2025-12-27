@@ -9,7 +9,7 @@ export interface ProfectionEntry {
 }
 
 export const houseThemes = [
-  { house: 1, theme: "Self, personality, appearance, vitality", ages: [0, 12, 24, 36, 48, 60, 72] },
+  { house: 1, theme: "Self, personality, appearance, vitality", ages: [12, 24, 36, 48, 60, 72] },
   { house: 2, theme: "Money, resources, possessions, self-worth", ages: [1, 13, 25, 37, 49, 61, 73] },
   { house: 3, theme: "Communication, siblings, short travel, learning", ages: [2, 14, 26, 38, 50, 62, 74] },
   { house: 4, theme: "Home, family, roots, living situation, parents", ages: [3, 15, 27, 39, 51, 63, 75] },
@@ -27,7 +27,6 @@ export const profections: Record<number, ProfectionEntry> = {
   1: {
     house: 1,
     focus: "self, body, identity, vitality, style, presence, personal direction",
-    planetary_joy: "Mercury rejoices here (traditional)",
     copy: "In a 1st house profection year, attention naturally returns to the self: your body, energy, identity, presentation, and the way you move through the world. This is less about “reinventing” and more about refining what is true and sustainable for you. Notice how your vitality, confidence, and sense of direction respond to your daily choices.",
     how_to_use: [
       "Prioritize consistent routines that support wellbeing",
@@ -66,7 +65,6 @@ export const profections: Record<number, ProfectionEntry> = {
   3: {
     house: 3,
     focus: "communication, learning, mindset, writing, siblings/relatives, local travel, daily crafts",
-    planetary_joy: "Moon rejoices here (traditional)",
     copy: "A 3rd house year emphasizes how you think, speak, learn, and connect locally—through writing, teaching, short trips, daily communication, and relationships with siblings or relatives. This can be a year of refining your mental habits and aligning your expression with what is true.",
     how_to_use: [
       "Build a simple writing/learning rhythm",
@@ -105,7 +103,6 @@ export const profections: Record<number, ProfectionEntry> = {
   5: {
     house: 5,
     focus: "joy, creativity, pleasure, romance, hobbies, play, children, vitality",
-    planetary_joy: "Venus rejoices here (traditional)",
     copy: "A 5th house year emphasizes joy, creativity, desire, and the life-force that comes from play and expression. It can support creative projects, romance, and hobbies, not as escape but as nourishment. The key is to let pleasure be conscious and aligned, not compulsive.",
     how_to_use: [
       "Schedule regular creative/play time",
@@ -125,7 +122,6 @@ export const profections: Record<number, ProfectionEntry> = {
   6: {
     house: 6,
     focus: "daily work, routines, health habits, service, colleagues, responsibilities, pets",
-    planetary_joy: "Mars rejoices here (traditional)",
     copy: "A 6th house year foregrounds routines, health, daily work, and the structure of your life. This is about what you repeatedly do—habits, service, duty, maintenance. It can feel “work heavy,” so the key is building routines that are firm but humane.",
     how_to_use: [
       "Create one sustainable routine stack (sleep, food, movement)",
@@ -183,7 +179,6 @@ export const profections: Record<number, ProfectionEntry> = {
   9: {
     house: 9,
     focus: "long-distance travel, higher education, worldview, beliefs, religion/spirituality, philosophy, teaching/publishing",
-    planetary_joy: "Sun rejoices here (traditional)",
     copy: "A 9th house year foregrounds meaning: learning, travel, higher education, beliefs, spirituality, philosophy, teaching, and publishing. It’s less about collecting facts and more about expanding perspective in a way that matures character.",
     how_to_use: [
       "Commit to one serious study thread",
@@ -222,7 +217,6 @@ export const profections: Record<number, ProfectionEntry> = {
   11: {
     house: 11,
     focus: "friendships, communities, networks, alliances, groups, hopes, long-term goals",
-    planetary_joy: "Jupiter rejoices here (traditional)",
     copy: "An 11th house year emphasizes friends, communities, collaborators, networks, and the long view—hopes and long-term goals. The invitation is to choose community with discernment: not quantity of connections, but quality of mutual purpose and integrity.",
     how_to_use: [
       "Join or deepen one aligned community",
@@ -242,7 +236,6 @@ export const profections: Record<number, ProfectionEntry> = {
   12: {
     house: 12,
     focus: "retreat, inner life, hidden patterns, subconscious, dreams, solitude, renewal, endings, spiritual hygiene",
-    planetary_joy: "Saturn rejoices here (traditional)",
     copy: "A 12th house year emphasizes the inner world: retreat, renewal, hidden patterns, dreams, solitude, and the unseen forces shaping behavior. This year can support deep repair—mental, emotional, spiritual—through simplicity and quiet structure.",
     how_to_use: [
       "Protect sleep and nervous system",
