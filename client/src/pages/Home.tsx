@@ -480,6 +480,13 @@ export default function Home() {
                     </div>
                   </div>
                 )}
+
+                <NatalChart 
+                  name={personData.name}
+                  dob={personData.dob}
+                  birthTime={personData.birthTime}
+                  birthLocation={personData.birthLocation}
+                />
               </TabsContent>
 
               <TabsContent value="numerology" className="animate-in fade-in duration-500 space-y-6">
