@@ -90,7 +90,7 @@ export function DailyEnergyCards() {
                   </p>
                 </div>
                 <p className="text-xs text-muted-foreground mt-auto">
-                  {getTodayCompatibility() === 'Good' ? '✓ Aligned' : getTodayCompatibility() === 'Enemies' ? '✗ Challenging' : '• Neutral'}
+                  {getTodayCompatibility() === 'Enemies' ? '✗ Challenging' : getTodayCompatibility() === 'Good' ? '✓ Harmonious' : '• Neutral'}
                 </p>
               </div>
             </div>

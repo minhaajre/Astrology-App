@@ -60,13 +60,13 @@ export function ProfectionPanel({ birthDate }: ProfectionPanelProps) {
             </div>
           </div>
 
-          <div className="relative group">
+          <div className="relative group mx-auto max-w-md">
             <Dialog>
               <DialogTrigger asChild>
                 <div className="relative cursor-pointer overflow-hidden rounded-lg border border-primary/20 hover:border-primary/50 transition-colors">
-                  <img src={wheelImage} alt="Profection Wheel" className="w-full h-auto object-cover" />
+                  <img src={wheelImage} alt="Profection Wheel" className="w-full h-auto object-contain" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                    <Maximize2 className="h-12 w-12 text-white" />
+                    <Maximize2 className="h-8 w-8 text-white" />
                   </div>
                 </div>
               </DialogTrigger>
