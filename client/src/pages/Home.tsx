@@ -9,6 +9,7 @@ import { DailyForecast } from "@/components/DailyForecast";
 import { TimePeriodForecasts } from "@/components/TimePeriodForecasts";
 import { TimingAdvisor } from "@/components/TimingAdvisor";
 import { ZodiacDisplay } from "@/components/ZodiacDisplay";
+import { NatalChart } from "@/components/NatalChart";
 import { CompatibilityCalculator } from "@/components/CompatibilityCalculator";
 import { CountryCompatibility } from "@/components/CountryCompatibility";
 import { ExportPanel } from "@/components/ExportPanel";
@@ -78,6 +79,8 @@ interface PersonData {
   personalMonth: number;
   personalDay: number;
   arabicName?: string;
+  birthTime?: string;
+  birthLocation?: string;
 }
 
 export default function Home() {
@@ -110,6 +113,8 @@ export default function Home() {
       personalMonth: pm,
       personalDay: pd,
       arabicName,
+      birthTime,
+      birthLocation,
     });
     setActiveTab("overview");
 
