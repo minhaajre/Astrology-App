@@ -34,7 +34,7 @@ export function ExportPanel({ name, dob }: ExportPanelProps) {
     const lp = getLifePath(dob);
     const dayNum = getDayNumber(dob);
     const monthNum = getMonthNumber(dob);
-    const animal = getVietnamAnimal(dob.getFullYear());
+    const animal = getVietnamAnimal(dob.getFullYear(), dob);
     const uy = getUniversalYear();
     const py = getPersonalYear(dob);
     const pm = getPersonalMonth(dob);

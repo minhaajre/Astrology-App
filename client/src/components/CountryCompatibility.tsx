@@ -59,7 +59,7 @@ export function CountryCompatibility({
       lifePath: getLifePath(personDob).lifePath,
       dayNumber: getDayNumber(personDob),
       monthNumber: getMonthNumber(personDob),
-      animal: getVietnamAnimal(personDob.getFullYear()),
+      animal: getVietnamAnimal(personDob.getFullYear(), personDob),
     };
   }, [personDob]);
 
@@ -348,7 +348,8 @@ export function CountryCompatibility({
                   </CardHeader>
                   <CardContent>
                     {(() => {
-                      const countryAnimal = getVietnamAnimal(activeResult.year);
+                      const countryDate = new Date(activeResult.year, activeResult.month - 1, activeResult.day);
+                      const countryAnimal = getVietnamAnimal(activeResult.year, countryDate);
                       const compatibility = getAnimalCompatibility(personData.animal, countryAnimal);
                       const details = getZodiacCompatibilityDetails(compatibility);
                       
@@ -370,7 +371,8 @@ export function CountryCompatibility({
                     })()}
                     
                     {(() => {
-                      const countryAnimal = getVietnamAnimal(activeResult.year);
+                      const countryDate = new Date(activeResult.year, activeResult.month - 1, activeResult.day);
+                      const countryAnimal = getVietnamAnimal(activeResult.year, countryDate);
                       const compatibility = getAnimalCompatibility(personData.animal, countryAnimal);
                       const details = getZodiacCompatibilityDetails(compatibility);
                       

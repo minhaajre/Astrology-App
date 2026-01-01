@@ -51,7 +51,7 @@ function getCautionYears(animal: string, startYear: number = new Date().getFullY
   // Find the next 3 years where the calendar year's animal is an enemy
   // Each enemy animal appears every 12 years, so search up to 36 years to find 3
   while (cautionYears.length < 3 && year <= startYear + 36) {
-    const yearAnimal = getVietnamAnimal(year);
+    const yearAnimal = getVietnamAnimal(year, new Date(year, 6, 1));
     if (enemies.includes(yearAnimal)) {
       cautionYears.push(year);
     }

@@ -34,7 +34,7 @@ export function DailyEnergyCards() {
   const todayNumber = todayDate; // Display the actual date
   const todayReducedNumber = todaySpecialDate?.number || reduceToSingleDigit(todayDate);
   const todayMeaning = numberMeanings[todayReducedNumber];
-  const todayAnimal = getVietnamAnimal(today.getFullYear());
+  const todayAnimal = getVietnamAnimal(today.getFullYear(), today);
   const todayAnimalIcon = animalIconNames[todayAnimal];
   
   // This week's energy - use week number

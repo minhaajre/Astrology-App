@@ -54,14 +54,14 @@ export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProp
       lifePath: getLifePath(personA.dob).lifePath,
       dayNumber: getDayNumber(personA.dob),
       monthNumber: getMonthNumber(personA.dob),
-      animal: getVietnamAnimal(personA.dob.getFullYear())
+      animal: getVietnamAnimal(personA.dob.getFullYear(), personA.dob)
     };
 
     const dataB = {
       lifePath: getLifePath(dobB).lifePath,
       dayNumber: getDayNumber(dobB),
       monthNumber: getMonthNumber(dobB),
-      animal: getVietnamAnimal(dobB.getFullYear())
+      animal: getVietnamAnimal(dobB.getFullYear(), dobB)
     };
 
     setPersonBData(dataB);
@@ -126,7 +126,7 @@ export function CompatibilityCalculator({ personA }: CompatibilityCalculatorProp
                       <div className="flex flex-wrap gap-2">
                         <Badge variant="secondary">LP: {getLifePath(personA.dob).lifePath}</Badge>
                         <Badge variant="secondary">Day: {getDayNumber(personA.dob)}</Badge>
-                        <Badge variant="secondary">{animalIconNames[getVietnamAnimal(personA.dob.getFullYear())]} {getVietnamAnimal(personA.dob.getFullYear())}</Badge>
+                        <Badge variant="secondary">{animalIconNames[getVietnamAnimal(personA.dob.getFullYear(), personA.dob)]} {getVietnamAnimal(personA.dob.getFullYear(), personA.dob)}</Badge>
                       </div>
                     </div>
                   ) : (

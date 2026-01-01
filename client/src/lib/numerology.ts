@@ -358,8 +358,55 @@ export function getMonthNumber(dob: Date): number {
   return reduceToSingleDigit(dob.getMonth() + 1);
 }
 
-export function getVietnamAnimal(year: number): string {
-  let idx = (year - 2020) % 12;
+// Chinese New Year dates (approximate) for accurate zodiac calculation
+// The Chinese zodiac year changes on Chinese New Year, not January 1st
+const chineseNewYearDates: Record<number, [number, number]> = {
+  2020: [1, 25], // Jan 25
+  2021: [2, 12], // Feb 12
+  2022: [2, 1],  // Feb 1
+  2023: [1, 22], // Jan 22
+  2024: [2, 10], // Feb 10
+  2025: [1, 29], // Jan 29
+  2026: [2, 17], // Feb 17
+  2027: [2, 6],  // Feb 6
+  2028: [1, 26], // Jan 26
+  2029: [2, 13], // Feb 13
+  2030: [2, 3],  // Feb 3
+  2031: [1, 23], // Jan 23
+  2032: [2, 11], // Feb 11
+  2033: [1, 31], // Jan 31
+  2034: [2, 19], // Feb 19
+  2035: [2, 8],  // Feb 8
+};
+
+// Check if a date is before Chinese New Year for that year
+function isBeforeChineseNewYear(date: Date): boolean {
+  const year = date.getFullYear();
+  const cnyDate = chineseNewYearDates[year];
+  
+  if (!cnyDate) {
+    // Default: assume Feb 5 if year not in lookup table
+    return date.getMonth() === 0 || (date.getMonth() === 1 && date.getDate() < 5);
+  }
+  
+  const [cnyMonth, cnyDay] = cnyDate;
+  const month = date.getMonth() + 1; // 1-indexed
+  const day = date.getDate();
+  
+  if (month < cnyMonth) return true;
+  if (month === cnyMonth && day < cnyDay) return true;
+  return false;
+}
+
+export function getVietnamAnimal(year: number, date?: Date): string {
+  let effectiveYear = year;
+  
+  // If a full date is provided, check if before Chinese New Year
+  if (date && isBeforeChineseNewYear(date)) {
+    effectiveYear = year - 1;
+  }
+  
+  let idx = (effectiveYear - 2020) % 12;
   if (idx < 0) idx += 12;
   return vietnamAnimals[idx];
 }
@@ -434,9 +481,9 @@ export function getAnimalCompatibility(animalA: string, animalB: string): 'Good'
   return 'Neutral';
 }
 
-// Get the zodiac animal for the current year
+// Get the zodiac animal for the current year (accounts for Chinese New Year)
 export function getCurrentYearAnimal(date: Date = new Date()): string {
-  return getVietnamAnimal(date.getFullYear());
+  return getVietnamAnimal(date.getFullYear(), date);
 }
 
 // Get the zodiac animal for the current month (Vietnamese lunar month mapping)
@@ -585,7 +632,8 @@ export function getNextYearsByAnimals(targetAnimals: string[], count: number, st
   const out: { year: number; animal: string }[] = [];
   let y = startYear;
   while (out.length < count) {
-    const a = getVietnamAnimal(y);
+    // Use mid-year date to determine the year's animal (after Chinese New Year)
+    const a = getVietnamAnimal(y, new Date(y, 6, 1));
     if (targetAnimals.includes(a)) out.push({ year: y, animal: a });
     y += 1;
   }

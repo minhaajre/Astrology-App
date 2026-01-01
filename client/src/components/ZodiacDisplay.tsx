@@ -31,7 +31,7 @@ const elementBgColors: Record<string, string> = {
 };
 
 export function ZodiacDisplay({ birthYear, birthDate }: ZodiacDisplayProps) {
-  const animal = getVietnamAnimal(birthYear);
+  const animal = getVietnamAnimal(birthYear, birthDate);
   const westernZodiac = birthDate ? getZodiacSign(birthDate) : null;
   const friends = animalFriends[animal] || [];
   const enemiesPrimary = animalEnemiesPrimary[animal] || [];
