@@ -224,6 +224,13 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {import.meta.env.DEV && (
+              <Link href="/admin">
+                <Button variant="ghost" size="icon" data-testid="button-admin">
+                  <Shield className="h-4 w-4" />
+                </Button>
+              </Link>
+            )}
             <ThemeToggle />
           </div>
         </div>
