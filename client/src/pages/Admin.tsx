@@ -439,7 +439,7 @@ export default function Admin() {
                                     highlightNumbers={[fullData.lp?.lifePath]}
                                     personData={{
                                       name: evaluation.name,
-                                      birthDate: new Date(evaluation.birthDate),
+                                      birthDate: new Date(evaluation.birthDate + 'T12:00:00'),
                                       lifePath: fullData.lp,
                                       zodiacAnimal: fullData.animal,
                                       zodiacSign: fullData.zodiac,

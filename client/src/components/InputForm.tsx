@@ -93,7 +93,12 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && day && month && year && selectedLocation) {
-      const dob = new Date(parseInt(year), monthMap[month] - 1, parseInt(day));
+      // Use YYYY-MM-DD string to avoid timezone shifts
+      const monthNum = monthMap[month].toString().padStart(2, '0');
+      const dayNum = day.padStart(2, '0');
+      const dateString = `${year}-${monthNum}-${dayNum}`;
+      const dob = new Date(dateString);
+
       const birthTimeFormatted = `${birthHour}:${birthMinute} ${birthPeriod}`;
       const city = selectedLocation.address.city || selectedLocation.address.town || selectedLocation.address.village || "";
       onGenerate(
