@@ -137,7 +137,7 @@ export default function Home() {
     try {
       const evaluationData: any = {
         name,
-        birthDate: dob.toISOString().split("T")[0],
+        birthDate: `${dob.getUTCFullYear()}-${(dob.getUTCMonth() + 1).toString().padStart(2, '0')}-${dob.getUTCDate().toString().padStart(2, '0')}`,
         birthTime,
         birthLocation,
         birthCity,
@@ -293,7 +293,7 @@ export default function Home() {
                     Numerology Profile for {personData.name}
                   </h2>
                   <p className="text-muted-foreground">
-                    Born {personData.dob.toLocaleDateString("en-US", { 
+                    Born {new Date(personData.dob.toISOString().split('T')[0] + 'T12:00:00').toLocaleDateString("en-US", { 
                       month: "long", 
                       day: "numeric", 
                       year: "numeric" 

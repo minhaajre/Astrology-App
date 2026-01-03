@@ -343,19 +343,19 @@ export function sumDigitsOfString(s: string): number {
 }
 
 export function getLifePath(dob: Date): { lifePath: number; rawTotal: number; mm: string; dd: string; yyyy: string } {
-  const mm = String(dob.getMonth() + 1).padStart(2, "0");
-  const dd = String(dob.getDate()).padStart(2, "0");
-  const yyyy = String(dob.getFullYear());
+  const mm = String(dob.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(dob.getUTCDate()).padStart(2, "0");
+  const yyyy = String(dob.getUTCFullYear());
   const raw = sumDigitsOfString(mm + dd + yyyy);
   return { lifePath: reduceToSingleDigit(raw), rawTotal: raw, mm, dd, yyyy };
 }
 
 export function getDayNumber(dob: Date): number {
-  return reduceToSingleDigit(dob.getDate());
+  return reduceToSingleDigit(dob.getUTCDate());
 }
 
 export function getMonthNumber(dob: Date): number {
-  return reduceToSingleDigit(dob.getMonth() + 1);
+  return reduceToSingleDigit(dob.getUTCMonth() + 1);
 }
 
 // Chinese New Year dates (approximate) for accurate zodiac calculation
@@ -381,17 +381,17 @@ const chineseNewYearDates: Record<number, [number, number]> = {
 
 // Check if a date is before Chinese New Year for that year
 function isBeforeChineseNewYear(date: Date): boolean {
-  const year = date.getFullYear();
+  const year = date.getUTCFullYear();
   const cnyDate = chineseNewYearDates[year];
   
   if (!cnyDate) {
     // Default: assume Feb 5 if year not in lookup table
-    return date.getMonth() === 0 || (date.getMonth() === 1 && date.getDate() < 5);
+    return date.getUTCMonth() === 0 || (date.getUTCMonth() === 1 && date.getUTCDate() < 5);
   }
   
   const [cnyMonth, cnyDay] = cnyDate;
-  const month = date.getMonth() + 1; // 1-indexed
-  const day = date.getDate();
+  const month = date.getUTCMonth() + 1; // 1-indexed
+  const day = date.getUTCDate();
   
   if (month < cnyMonth) return true;
   if (month === cnyMonth && day < cnyDay) return true;
@@ -434,8 +434,8 @@ const zodiacSigns: Record<string, ZodiacSign> = {
 };
 
 export function getZodiacSign(date: Date): ZodiacSign {
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
+  const month = date.getUTCMonth() + 1;
+  const day = date.getUTCDate();
 
   if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return zodiacSigns.Capricorn;
   if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return zodiacSigns.Aquarius;
@@ -1201,9 +1201,9 @@ export function getYearlyForecast(personalYear: number): { forecast: string; str
 // Pythagorean letter values (Latin alphabet)
 export function calculateProfectionYear(birthDate: Date): number {
   const now = new Date();
-  let age = now.getFullYear() - birthDate.getFullYear();
-  const m = now.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
+  let age = now.getUTCFullYear() - birthDate.getUTCFullYear();
+  const m = now.getUTCMonth() - birthDate.getUTCMonth();
+  if (m < 0 || (m === 0 && now.getUTCDate() < birthDate.getUTCDate())) {
     age--;
   }
   return (age % 12) + 1;
