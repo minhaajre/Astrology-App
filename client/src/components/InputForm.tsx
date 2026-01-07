@@ -92,7 +92,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && day && month && year && selectedLocation) {
+    if (name && day && month && year) {
       // Use YYYY-MM-DD string to avoid timezone shifts
       const monthNum = monthMap[month].toString().padStart(2, '0');
       const dayNum = day.padStart(2, '0');
@@ -100,16 +100,24 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
       const dob = new Date(dateString);
 
       const birthTimeFormatted = `${birthHour}:${birthMinute} ${birthPeriod}`;
-      const city = selectedLocation.address.city || selectedLocation.address.town || selectedLocation.address.village || "";
+      
+      // Location is optional - use values if selected, undefined otherwise
+      const city = selectedLocation 
+        ? (selectedLocation.address.city || selectedLocation.address.town || selectedLocation.address.village || "")
+        : undefined;
+      const country = selectedLocation?.address.country;
+      const lat = selectedLocation?.lat;
+      const lon = selectedLocation?.lon;
+      
       onGenerate(
         name,
         dob,
         arabicName || undefined,
         birthTimeFormatted,
-        selectedLocation.address.country,
+        country,
         city,
-        selectedLocation.lat,
-        selectedLocation.lon
+        lat,
+        lon
       );
     }
   };
@@ -154,7 +162,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
             </div>
             
             <div className="space-y-2 relative">
-              <Label htmlFor="location" className="text-xs uppercase tracking-wide text-muted-foreground">Place of Birth</Label>
+              <Label htmlFor="location" className="text-xs uppercase tracking-wide text-muted-foreground">Place of Birth (optional)</Label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input 
@@ -167,7 +175,6 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
                   }} 
                   className="pl-10"
                   data-testid="input-location"
-                  required
                 />
                 {isSearching && <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-muted-foreground" />}
               </div>
