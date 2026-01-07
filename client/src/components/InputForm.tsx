@@ -213,7 +213,7 @@ export function InputForm({ onGenerate, isLoading }: InputFormProps) {
             </div>
           </div>
 
-          <Button type="submit" disabled={!name || !day || !month || !year || !selectedLocation || isLoading} className="w-full" data-testid="button-generate">
+          <Button type="submit" disabled={!name || !day || !month || !year || isLoading} className="w-full" data-testid="button-generate">
             <Sparkles className="mr-2 h-4 w-4" />
             {isLoading ? "Generating..." : "Generate Report"}
           </Button>
