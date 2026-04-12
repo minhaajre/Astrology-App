@@ -1,11 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
-// Static frontend Vite config
+// Astrology App - Frontend only
 export default defineConfig({
   plugins: [
     react(),
+    tailwindcss(),
   ],
   resolve: {
     alias: {
