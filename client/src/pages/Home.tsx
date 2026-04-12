@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { InputForm } from "@/components/InputForm";
@@ -20,9 +19,7 @@ import { SpecialDatesInfo } from "@/components/SpecialDatesInfo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { apiRequest } from "@/lib/queryClient";
 import { 
   getLifePath, 
   masterNumberLabels, 
@@ -65,7 +62,6 @@ import {
   CheckCircle,
   XCircle,
   MinusCircle,
-  Shield
 } from "lucide-react";
 
 interface PersonData {
@@ -91,7 +87,7 @@ export default function Home() {
   const [personData, setPersonData] = useState<PersonData | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const handleGenerate = async (
+  const handleGenerate = (
     name: string,
     dob: Date,
     arabicName?: string,
@@ -133,43 +129,6 @@ export default function Home() {
       longitude,
     });
     setActiveTab("overview");
-
-    try {
-      const evaluationData: any = {
-        name,
-        birthDate: `${dob.getUTCFullYear()}-${(dob.getUTCMonth() + 1).toString().padStart(2, '0')}-${dob.getUTCDate().toString().padStart(2, '0')}`,
-        birthTime,
-        birthLocation,
-        birthCity,
-        latitude,
-        longitude,
-        lifePath: lp.lifePath,
-        zodiacAnimal: animal,
-        zodiacSign: zodiac.name,
-        expressionNumber: nameNum?.expressionNumber,
-        soulUrge: nameNum?.soulUrge,
-        personality: nameNum?.personality,
-        lifePathLabel: masterNumberLabels[lp.lifePath] || null,
-        reportData: JSON.stringify({
-          lp,
-          animal,
-          zodiac,
-          nameNum,
-          personalYear: py,
-          personalMonth: pm,
-          personalDay: pd,
-          lunarInfo,
-          universalYear: uy,
-          template: genTemplate,
-          timingAdvisor: lp ? { lifePath: lp.lifePath } : null,
-          geo: { birthCity, latitude, longitude }
-        })
-      };
-
-      await apiRequest("POST", "/api/evaluations", evaluationData);
-    } catch (error) {
-      console.error("Failed to save evaluation:", error);
-    }
   };
 
   const template = personData
@@ -223,16 +182,7 @@ export default function Home() {
               <p className="text-xs text-muted-foreground">Numerology Calculator</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            {import.meta.env.DEV && (
-              <Link href="/admin">
-                <Button variant="ghost" size="icon" data-testid="button-admin">
-                  <Shield className="h-4 w-4" />
-                </Button>
-              </Link>
-            )}
-            <ThemeToggle />
-          </div>
+          <ThemeToggle />
         </div>
       </header>
 
