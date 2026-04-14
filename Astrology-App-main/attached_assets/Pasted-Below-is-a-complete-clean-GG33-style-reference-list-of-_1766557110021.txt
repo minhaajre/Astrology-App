@@ -1,0 +1,294 @@
+Below is a **complete, clean, GG33-style reference list** of **all calendar day energies from 1 to 30**, plus **Master Numbers**.
+This is written **app-ready**: short, precise, no mysticism, no fluff.
+
+Use it for:
+
+* Calendar highlights
+* Tooltips
+* Daily guidance
+* Personal day overlays
+
+---
+
+# CALENDAR DAY ENERGIES (1–30)
+
+## 1
+
+Initiation · Leadership · Independence
+Best for: starting, deciding, asserting
+Avoid: waiting, indecision
+
+---
+
+## 2
+
+Partnership · Sensitivity · Diplomacy
+Best for: cooperation, mediation
+Avoid: confrontation
+
+---
+
+## 3
+
+Expression · Creativity · Communication
+Best for: content, marketing, speaking
+Avoid: gossip, overpromising
+
+---
+
+## 4
+
+Structure · Discipline · Foundations
+Best for: planning, systems, building
+Avoid: shortcuts
+
+---
+
+## 5
+
+Change · Movement · Freedom
+Best for: travel, promotion, outreach
+Avoid: commitments, rigidity
+
+---
+
+## 6
+
+Responsibility · Harmony · Care
+Best for: relationships, family, repair
+Avoid: overgiving
+
+---
+
+## 7
+
+Analysis · Truth · Introspection
+Best for: research, strategy, reflection
+Avoid: forcing outcomes
+
+---
+
+## 8
+
+Money · Power · Authority
+Best for: business, negotiations, finance
+Avoid: emotional decisions
+
+---
+
+## 9
+
+Completion · Release · Closure
+Best for: endings, finishing, letting go
+Avoid: starting long-term projects
+
+---
+
+## 10 (1+0=1)
+
+Leadership Reset · Authority
+Best for: strategic direction, rebranding
+Avoid: hesitation
+
+---
+
+## 11 – MASTER NUMBER
+
+Intuition · Insight · Sensitivity
+Best for: vision, creativity, spiritual work
+Avoid: emotional overload
+
+---
+
+## 12 (1+2=3)
+
+Structured Communication
+Best for: writing, pitches, persuasion
+Avoid: charm without clarity
+
+---
+
+## 13 (1+3=4)
+
+Forced Discipline · Hard Work
+Best for: restructuring, system building
+Avoid: laziness
+
+---
+
+## 14 (1+4=5)
+
+Unstable Change · Risk
+Best for: controlled transitions
+Avoid: recklessness, addiction
+
+---
+
+## 15 (1+5=6)
+
+Attraction · Magnetism · Bonding
+Best for: relationships, reconciliation
+Avoid: manipulation
+
+---
+
+## 16 (1+6=7)
+
+Reality Check · Ego Collapse
+Best for: audits, truth-seeking
+Avoid: pride, denial
+
+---
+
+## 17 (1+7=8)
+
+Earned Wealth · Disciplined Power
+Best for: long-term investments, leadership
+Avoid: ego, isolation
+
+---
+
+## 18 (1+8=9)
+
+Karmic Clearing
+Best for: closure tied to money or power
+Avoid: revenge
+
+---
+
+## 19 (1+9=10→1)
+
+Independent Leadership
+Best for: going solo, exits, declarations
+Avoid: burning bridges
+
+---
+
+## 20 (2+0=2)
+
+Heightened Sensitivity · Cooperation
+Best for: negotiation, diplomacy
+Avoid: emotional dependency
+
+---
+
+## 21 (2+1=3)
+
+Social Expansion · Networking
+Best for: collaboration, community
+Avoid: overcommitment
+
+---
+
+## 22 – MASTER NUMBER
+
+Master Builder · Large-Scale Execution
+Best for: institutions, long-term projects
+Avoid: misuse of power
+
+---
+
+## 23 (2+3=5)
+
+Communication-Driven Change
+Best for: marketing, sales, media
+Avoid: gossip
+
+---
+
+## 24 (2+4=6)
+
+Domestic Stability · Trust
+Best for: housing, family agreements
+Avoid: stagnation
+
+---
+
+## 25 (2+5=7)
+
+Strategic Withdrawal
+Best for: review, recalibration
+Avoid: rushing
+
+---
+
+## 26 (2+6=8)
+
+Partnership Wealth · Contracts
+Best for: joint ventures, legal matters
+Avoid: unequal effort
+
+---
+
+## 27 (2+7=9)
+
+Spiritual Completion
+Best for: reflection, endings
+Avoid: attachment
+
+---
+
+## 28 (2+8=10→1)
+
+Money Reset · Forced Independence
+Best for: business launches, financial pivots
+Avoid: relying on others
+
+---
+
+## 29 (2+9=11)
+
+Emotional Mastery · Tests
+Best for: inner work, compassion
+Avoid: emotional extremes
+
+---
+
+## 30 (3+0=3)
+
+Visibility Spike · Big Expression
+Best for: announcements, creative push
+Avoid: careless reputation damage
+
+---
+
+# MASTER NUMBERS SUMMARY
+
+## 11
+
+Vision · Intuition · Sensitivity
+High insight, high emotional cost
+
+## 22
+
+Execution · Scale · Responsibility
+Builds systems that outlast the individual
+
+## 33 (not a calendar date)
+
+Service · Teaching · Sacrifice
+Appears through calculations, not dates
+
+---
+
+# HOW TO USE THIS CORRECTLY (IMPORTANT)
+
+• Double-digit meaning comes **before** reduction
+• Reduced number shows outcome, not process
+• Dates amplify energy — they don’t force events
+• Personal numerology modifies impact
+
+---
+
+## ONE-LINE RULE (SHOW IN APP)
+
+> Double digits describe **how** something happens.
+> Single digits describe **where it ends up**.
+
+---
+
+If you want next, I can:
+
+* Turn this into a **JSON day-energy table**
+* Overlay it with **personal day calculations**
+* Build a **Best / Neutral / Avoid day engine** for your app
