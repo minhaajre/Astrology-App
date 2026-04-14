@@ -286,7 +286,6 @@ function SignBadge({ text }: { text: string }) {
 
 function ElementalProfile({ bazi }: { bazi: BaziChart }) {
   const pillars = [bazi.yearPillar, bazi.monthPillar, bazi.dayPillar, bazi.hourPillar].filter(Boolean);
-  if (pillars.length === 0) return null;
 
   return (
     <Card className="border-amber-500/20 bg-amber-500/5">
@@ -297,39 +296,47 @@ function ElementalProfile({ bazi }: { bazi: BaziChart }) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {pillars.map((p) => (
-            <div
-              key={p!.label}
-              className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-3 text-center"
-            >
-              <p className="text-xs font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wide">
-                {p!.label}
-              </p>
-              <p className="mt-1 text-base font-bold">{p!.stem}</p>
-              <p className="text-sm text-muted-foreground">{p!.branch}</p>
-              {p!.animal && (
-                <Badge variant="outline" className="mt-1 text-xs border-amber-500/30">
-                  {p!.animal}
-                </Badge>
-              )}
-              {p!.element && (
-                <p className="mt-1 text-xs text-amber-600/70 dark:text-amber-400/70">
-                  {p!.element}
-                </p>
-              )}
+        {pillars.length === 0 ? (
+          <p className="text-sm text-center text-muted-foreground py-4">
+            No Bazi data detected — paste your Four Pillars chart in the panel above.
+          </p>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {pillars.map((p) => (
+                <div
+                  key={p!.label}
+                  className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-3 text-center"
+                >
+                  <p className="text-xs font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wide">
+                    {p!.label}
+                  </p>
+                  <p className="mt-1 text-base font-bold">{p!.stem}</p>
+                  <p className="text-sm text-muted-foreground">{p!.branch}</p>
+                  {p!.animal && (
+                    <Badge variant="outline" className="mt-1 text-xs border-amber-500/30">
+                      {p!.animal}
+                    </Badge>
+                  )}
+                  {p!.element && (
+                    <p className="mt-1 text-xs text-amber-600/70 dark:text-amber-400/70">
+                      {p!.element}
+                    </p>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        {bazi.dayMaster && (
-          <p className="mt-3 text-sm text-center text-muted-foreground">
-            Day Master: <span className="font-semibold text-foreground">{bazi.dayMaster}</span>
-          </p>
-        )}
-        {bazi.dominantElement && (
-          <p className="text-xs text-center text-muted-foreground">
-            Dominant element: <span className="font-medium">{bazi.dominantElement}</span>
-          </p>
+            {bazi.dayMaster && (
+              <p className="mt-3 text-sm text-center text-muted-foreground">
+                Day Master: <span className="font-semibold text-foreground">{bazi.dayMaster}</span>
+              </p>
+            )}
+            {bazi.dominantElement && (
+              <p className="text-xs text-center text-muted-foreground">
+                Dominant element: <span className="font-medium">{bazi.dominantElement}</span>
+              </p>
+            )}
+          </>
         )}
       </CardContent>
     </Card>
@@ -337,7 +344,6 @@ function ElementalProfile({ bazi }: { bazi: BaziChart }) {
 }
 
 function TropicalSummary({ chart }: { chart: TropicalChart }) {
-  if (chart.placements.length === 0) return null;
   const corePlanets = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Ascendant"];
   const shown = chart.placements.filter((p) => corePlanets.includes(p.planet));
 
@@ -350,30 +356,35 @@ function TropicalSummary({ chart }: { chart: TropicalChart }) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {shown.map((p) => (
-            <div
-              key={p.planet}
-              className="rounded-lg border border-blue-500/20 bg-blue-500/10 p-3"
-            >
-              <p className="text-xs font-medium text-blue-600 dark:text-blue-400">{p.planet}</p>
-              <p className="font-semibold text-sm">{p.sign}{p.retrograde ? " ℞" : ""}</p>
-              {p.degree != null && (
-                <p className="text-xs text-muted-foreground">{p.degree.toFixed(1)}°</p>
-              )}
-              {p.house != null && (
-                <p className="text-xs text-muted-foreground">House {p.house}</p>
-              )}
-            </div>
-          ))}
-        </div>
+        {shown.length === 0 ? (
+          <p className="text-sm text-center text-muted-foreground py-4">
+            No Tropical data detected — paste your Western/Tropical chart in the panel above.
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {shown.map((p) => (
+              <div
+                key={p.planet}
+                className="rounded-lg border border-blue-500/20 bg-blue-500/10 p-3"
+              >
+                <p className="text-xs font-medium text-blue-600 dark:text-blue-400">{p.planet}</p>
+                <p className="font-semibold text-sm">{p.sign}{p.retrograde ? " ℞" : ""}</p>
+                {p.degree != null && (
+                  <p className="text-xs text-muted-foreground">{p.degree.toFixed(1)}°</p>
+                )}
+                {p.house != null && (
+                  <p className="text-xs text-muted-foreground">House {p.house}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
 }
 
 function VedicSummary({ chart }: { chart: VedicChart }) {
-  if (chart.placements.length === 0) return null;
   const corePlanets = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Ascendant"];
   const shown = chart.placements.filter((p) => corePlanets.includes(p.planet));
 
@@ -391,23 +402,29 @@ function VedicSummary({ chart }: { chart: VedicChart }) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {shown.map((p) => (
-            <div
-              key={p.planet}
-              className="rounded-lg border border-purple-500/20 bg-purple-500/10 p-3"
-            >
-              <p className="text-xs font-medium text-purple-600 dark:text-purple-400">{p.planet}</p>
-              <p className="font-semibold text-sm">{p.sign}</p>
-              {p.nakshatra && (
-                <p className="text-xs text-muted-foreground">{p.nakshatra}{p.pada ? ` P${p.pada}` : ""}</p>
-              )}
-              {p.house != null && (
-                <p className="text-xs text-muted-foreground">House {p.house}</p>
-              )}
-            </div>
-          ))}
-        </div>
+        {shown.length === 0 ? (
+          <p className="text-sm text-center text-muted-foreground py-4">
+            No Vedic data detected — paste your Jyotish/KP chart in the panel above.
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {shown.map((p) => (
+              <div
+                key={p.planet}
+                className="rounded-lg border border-purple-500/20 bg-purple-500/10 p-3"
+              >
+                <p className="text-xs font-medium text-purple-600 dark:text-purple-400">{p.planet}</p>
+                <p className="font-semibold text-sm">{p.sign}</p>
+                {p.nakshatra && (
+                  <p className="text-xs text-muted-foreground">{p.nakshatra}{p.pada ? ` P${p.pada}` : ""}</p>
+                )}
+                {p.house != null && (
+                  <p className="text-xs text-muted-foreground">House {p.house}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
@@ -626,11 +643,9 @@ export default function Home() {
               </p>
             </div>
 
-            {tropical.placements.length > 0 && <TropicalSummary chart={tropical} />}
-            {vedic.placements.length > 0 && <VedicSummary chart={vedic} />}
-            {(bazi.yearPillar || bazi.monthPillar || bazi.dayPillar || bazi.hourPillar) && (
-              <ElementalProfile bazi={bazi} />
-            )}
+            <TropicalSummary chart={tropical} />
+            <VedicSummary chart={vedic} />
+            <ElementalProfile bazi={bazi} />
 
             <SynthesisTable rows={synthesis} />
 
