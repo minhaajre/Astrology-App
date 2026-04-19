@@ -1,6 +1,7 @@
 {
-  "buildCommand": "vite build",
-  "outputDirectory": "dist/public",
-  "installCommand": "npm install",
-  "framework": "vite"
+  "cleanUrls": true,
+  "routes": [
+    { "src": "/", "dest": "/numerology.html" },
+    { "src": "/(.*)", "dest": "/numerology.html" }
+  ]
 }
