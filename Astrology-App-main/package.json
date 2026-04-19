@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@swisseph/browser": "^1.1.1",
     "@tanstack/react-query": "^5.56.2",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",

@@ -102,6 +102,7 @@ export interface PlanetPlacement {
   nakshatra?: string;
   pada?: number;
   lord?: string;
+  navamshaSign?: string;
 }
 
 export interface TropicalChart {
