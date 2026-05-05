@@ -1,4 +1,25 @@
 // ─────────────────────────────────────────────
+//  THEME TOGGLE
+// ─────────────────────────────────────────────
+(function(){
+  const saved=localStorage.getItem('celestia-theme');
+  if(saved)document.documentElement.setAttribute('data-theme',saved);
+})();
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  localStorage.setItem('celestia-theme',next);
+}
+
+// ─────────────────────────────────────────────
+//  NAV LINKS VISIBILITY
+// ─────────────────────────────────────────────
+function showNavLinks(){document.getElementById('nav-links').classList.add('visible')}
+function hideNavLinks(){document.getElementById('nav-links').classList.remove('visible')}
+
+// ─────────────────────────────────────────────
 //  DROPDOWN POPULATION
 // ─────────────────────────────────────────────
 (function(){
@@ -39,6 +60,7 @@ function toggleSection(id){
 function resetAll(){
   document.getElementById('results').style.display='none';
   document.getElementById('footer').style.display='none';
+  hideNavLinks();
   document.getElementById('sel-day').value='';
   document.getElementById('sel-month').value='';
   document.getElementById('sel-year').value='';
@@ -186,6 +208,7 @@ function generateAll(){
   document.getElementById('bazi-body').innerHTML=buildBazi(d,m,y);
   document.getElementById('results').style.display='block';
   document.getElementById('footer').style.display='block';
+  showNavLinks();
   setTimeout(()=>{
     document.getElementById('results').querySelectorAll('.strength-fill,.eb-fill').forEach(el=>{
       const w=el.dataset.w;if(w)el.style.width=w;
