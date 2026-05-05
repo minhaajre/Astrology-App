@@ -233,7 +233,7 @@ function buildNumerology(d,m,y){
 
   return`
 <div class="report-pill">☽ Numerology Reading</div>
-<div class="report-title">Your Complete Numerology Blueprint</div>
+<div class="report-title">Your Numerological Configuration</div>
 <div class="report-dob">${MNTHS[m-1]} ${d}, ${y}</div>
 
 <!-- LIFE PATH -->
@@ -243,7 +243,7 @@ function buildNumerology(d,m,y){
     <div class="block-meta">
       <div class="block-label">Life Path Number</div>
       <div class="block-title">${lpD.arch}</div>
-      <div class="block-arch">The core number of your destiny</div>
+      <div class="block-arch">The primary structural number in this configuration</div>
     </div>
   </div>
   <p class="prose">${lpD.sum}</p>
@@ -316,7 +316,7 @@ function buildNumerology(d,m,y){
     <div class="block-meta">
       <div class="block-label">Birth Year</div>
       <div class="block-title">${y} → ${yearR}</div>
-      <div class="block-arch">Generational energy and soul mission</div>
+      <div class="block-arch">Generational cycle and natal orientation</div>
     </div>
   </div>
   <p class="prose">${yD.theme}</p>
@@ -326,41 +326,6 @@ function buildNumerology(d,m,y){
   </div>
 </div>
 
-<!-- PINNACLES -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-num sm">△</div>
-    <div class="block-meta">
-      <div class="block-label">The Four Pinnacles</div>
-      <div class="block-title">Major Life Phases</div>
-      <div class="block-arch">Four great arcs of your destiny</div>
-    </div>
-  </div>
-  <p class="prose" style="margin-bottom:16px">Pinnacles are the four great phases of your life — each a decade or more in length, each with its own dominant theme, energy, and assignment. They tell the story arc of your destiny from birth onward.</p>
-  <div class="pinnacle-grid">
-    ${pins.map((p,i)=>{
-      const pd=PINNACLE_DATA[p.num]||PINNACLE_DATA[9];
-      const ar=p.e?`Age ${p.s}–${p.e}`:`Age ${p.s}+`;
-      return`<div class="pin-card ${p.current?'current':''}">
-        ${p.current?'<div class="pin-badge">★ Current</div>':''}
-        <div class="pin-num">${p.num}</div>
-        <div class="pin-label">Pinnacle ${i+1}</div>
-        <div class="pin-age">${ar}</div>
-        <p class="sub-heading" style="margin-top:10px">${pd.title}</p>
-        <div class="pin-theme">${pd.theme}</div>
-        <div class="pin-advice">"${pd.advice}"</div>
-      </div>`;
-    }).join('')}
-  </div>
-  ${(()=>{const cp=pins.find(p=>p.current);if(!cp)return'';const pd=PINNACLE_DATA[cp.num]||PINNACLE_DATA[9];return`
-  <div class="callout" style="margin-top:18px">
-    <div class="callout-label">Your Current Pinnacle — Focus Areas</div>
-    <p><strong>Love &amp; Relationships:</strong> ${pd.love}</p>
-    <p style="margin-top:6px"><strong>Career &amp; Purpose:</strong> ${pd.career}</p>
-    <p style="margin-top:6px"><strong>Inner Work:</strong> ${pd.inner}</p>
-  </div>`;})()}
-</div>
-
 <!-- LO SHU -->
 <div class="block">
   <div class="block-header">
@@ -368,34 +333,17 @@ function buildNumerology(d,m,y){
     <div class="block-meta">
       <div class="block-label">Lo Shu Grid 洛書</div>
       <div class="block-title">The Magic Square of Your Birth</div>
-      <div class="block-arch">Ancient Chinese destiny grid</div>
+      <div class="block-arch">Classical Chinese natal grid</div>
     </div>
   </div>
   <p class="prose" style="margin-bottom:16px">The Lo Shu Grid places each digit of your birth date into a 3×3 magic square. The distribution of numbers — abundant, balanced, or absent — reveals patterns of natural strength, life lessons, and areas for conscious development.</p>
   ${buildLoShuHTML(loShu)}
 </div>
 
-<!-- PERSONAL YEAR -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-num large">${pyN}</div>
-    <div class="block-meta">
-      <div class="block-label">Personal Year ${new Date().getFullYear()}</div>
-      <div class="block-title">${pyD.title}</div>
-      <div class="block-arch">Your current annual cycle</div>
-    </div>
-  </div>
-  <p class="prose">${pyD.theme}</p>
-  <div class="two-col">
-    <div>
-      <p class="sub-heading">Opportunities to Seize</p>
-      <div class="tag-row">${pyD.opp.map(o=>`<span class="tag green">${o}</span>`).join('')}</div>
-    </div>
-    <div>
-      <p class="sub-heading">Pitfalls to Avoid</p>
-      <div class="tag-row">${pyD.pit.map(p=>`<span class="tag red">${p}</span>`).join('')}</div>
-    </div>
-  </div>
+<!-- TIMING GATE (numerology) -->
+<div class="timing-gate">
+  <div class="timing-gate-label">Timing Layer</div>
+  <p>Cycle activation, decade rulers, and annual configurations are available through the advisory engagement.</p>
 </div>
 
 <!-- SYNTHESIS -->
@@ -519,7 +467,7 @@ function getSeason(m){return m>=3&&m<=5?"Spring":m>=6&&m<=8?"Summer":m>=9&&m<=11
 function getSeasonEl(m){return m>=3&&m<=5?"Wood":m>=6&&m<=8?"Fire":m>=9&&m<=11?"Metal":"Water";}
 
 function numSynthesis(lp,d,m,y,lpD){
-  return`Your numerological blueprint weaves four distinct threads: the Life Path ${lp} (${lpD.arch}), the Birth Day ${d} gift of natural talent, the ${MONTH_DATA[m].name} birth month's emotional signature, and the generational current of ${y}. Together these four create a self that is at once singular and deeply connected to the larger tide of humanity's unfolding.<br><br>The central message your numbers carry is clear: you are here to ${lpD.purpose.toLowerCase()} The events of your life — the challenges as much as the gifts — have been calibrated to produce exactly the version of yourself that can fulfil this mission. Nothing has been wasted. Your chart is not something that happened to you; it is the language in which you chose to arrive.`;
+  return`This numerological configuration weaves four distinct structural threads: the Life Path ${lp} (${lpD.arch}), the Birth Day ${d} talent signature, the ${MONTH_DATA[m].name} birth month's elemental flavour, and the generational current of ${y}. Together these four produce a configuration that is at once particular and embedded in the larger patterns of the period into which this person arrived.<br><br>Within the numerological framework, the central orientation identified by this configuration is toward: ${lpD.purpose.toLowerCase()} The configuration does not determine outcome — it indicates a structural tendency and a field of most productive engagement.`;
 }
 
 function numVerse(lp){
@@ -558,11 +506,11 @@ function buildBazi(d,m,y){
 
   return`
 <div class="report-pill" style="background:var(--blue-light);border-color:#B8CDE8;color:var(--blue)">☯ BaZi Four Pillars Reading</div>
-<div class="report-title">Your BaZi Destiny Chart 四柱命盤</div>
+<div class="report-title">Your BaZi Configuration Chart 四柱命盤</div>
 <div class="report-dob">${MNTHS[m-1]} ${d}, ${y}${hasTime?` · ${tVal}`:''} · ${gender.charAt(0).toUpperCase()+gender.slice(1)}</div>
 
 <div class="info-box" style="margin-bottom:20px">
-  <p><strong>What is BaZi?</strong> BaZi (八字, "Eight Characters") is a classical Chinese destiny system over 2,000 years old. Your birth date and time create four "pillars" — Year, Month, Day, and Hour — each with a Heavenly Stem (天干) and Earthly Branch (地支). The <strong>Day Stem is your Day Master</strong>, representing your core self. Everything else in the chart is interpreted in relation to your Day Master. The Ten Gods (十神) reveal what each element means in terms of wealth, relationships, career, and wisdom.</p>
+  <p><strong>What is BaZi?</strong> BaZi (八字, "Eight Characters") is a classical Chinese configuration system over 2,000 years old. Your birth date and time create four "pillars" — Year, Month, Day, and Hour — each with a Heavenly Stem (天干) and Earthly Branch (地支). The <strong>Day Stem is your Day Master</strong>, representing your core self. Everything else in the chart is interpreted in relation to your Day Master. The Ten Gods (十神) reveal what each element means in terms of wealth, relationships, career, and wisdom.</p>
 </div>
 
 <!-- FOUR PILLARS -->
@@ -704,60 +652,10 @@ function buildBazi(d,m,y){
   ${buildTenGods(pillars,dm,hasTime)}
 </div>
 
-<!-- LUCK PILLARS -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-num sm">运</div>
-    <div class="block-meta">
-      <div class="block-label">大运 Ten Year Luck Pillars</div>
-      <div class="block-title">Your Decade-by-Decade Journey</div>
-      <div class="block-arch">The macro-weather of each ten-year cycle</div>
-    </div>
-  </div>
-  <p class="prose" style="margin-bottom:14px">Luck Pillars are 10-year cycles of fortune that flow sequentially from your Month Pillar. They represent the prevailing elemental environment of each decade — not fixed outcomes, but the quality of wind in your sails.</p>
-  <div class="luck-scroll">
-    ${luckPs.map(lp=>{
-      const isCur=curLP&&lp.startAge===curLP.startAge;
-      const isPast=age>lp.endAge;
-      const god=getTG(dm,lp.stem);
-      return`<div class="lp-card ${isCur?'current':isPast?'past':''}">
-        ${isCur?'<div class="lp-now">★ Now</div>':''}
-        <div class="lp-age">Age ${lp.startAge}–${lp.endAge}</div>
-        <span class="lp-stem ${elClass[lp.stem.el]}">${lp.stem.ch}</span>
-        <span class="lp-branch">${lp.branch.ch}</span>
-        <div class="lp-god">${god}<br><span style="font-size:.58rem">${lp.stem.py} · ${lp.branch.py}</span></div>
-      </div>`;
-    }).join('')}
-  </div>
-  ${curLP?buildCurLP(curLP,dm,age):''}
-</div>
-
-<!-- ANNUAL -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-num sm">年</div>
-    <div class="block-meta">
-      <div class="block-label">流年 Annual Pillars</div>
-      <div class="block-title">Year-by-Year Outlook (${now.getFullYear()}–${now.getFullYear()+5})</div>
-    </div>
-  </div>
-  <table class="annual-table">
-    <thead><tr><th>Year</th><th>Pillar</th><th>Annual God</th><th>Key Theme</th></tr></thead>
-    <tbody>
-      ${[0,1,2,3,4,5].map(off=>{
-        const yr=now.getFullYear()+off;
-        const ap=getAP(yr);
-        const god=getTG(dm,ap.stem);
-        const isCur=off===0;
-        return`<tr class="${isCur?'cy':''}">
-          <td><strong>${yr}</strong>${isCur?' ←':''}</td>
-          <td><span class="annual-table ch-s ${elClass[ap.stem.el]}">${ap.stem.ch}</span><span class="annual-table ch-s">${ap.branch.ch}</span> <span style="font-family:'DM Mono',monospace;font-size:.68rem;color:var(--text-3)">${ap.stem.py} ${ap.branch.py}</span></td>
-          <td style="font-family:'DM Mono',monospace;font-size:.75rem">${god}</td>
-          <td style="font-size:.82rem;color:var(--text-2)">${annualTheme(god)}</td>
-        </tr>`;
-      }).join('')}
-    </tbody>
-  </table>
+<!-- TIMING GATE (bazi) -->
+<div class="timing-gate">
+  <div class="timing-gate-label">Timing Layer</div>
+  <p>Cycle activation, decade rulers, and annual configurations are available through the advisory engagement.</p>
 </div>
 
 <!-- STARS -->
@@ -772,19 +670,6 @@ function buildBazi(d,m,y){
   ${buildStars(dP,yP)}
 </div>
 
-<!-- HEALTH -->
-<div class="block">
-  <div class="block-header">
-    <div class="block-num sm">健</div>
-    <div class="block-meta">
-      <div class="block-label">五行健康 Elemental Health Map</div>
-      <div class="block-title">Your Physical & Emotional Wellbeing</div>
-      <div class="block-arch">Each element governs specific organs and emotions</div>
-    </div>
-  </div>
-  ${buildHealth(dm,elC)}
-</div>
-
 <!-- SYNTHESIS -->
 <div class="block">
   <div class="block-header">
@@ -797,11 +682,12 @@ function buildBazi(d,m,y){
   <div class="synthesis-box">
     <p class="prose">${baziSynth(dm,dmp,str,elC,curLP)}</p>
     <div class="soul-line">"${dmp.core.split('.')[0]}."</div>
+
     <div class="verse">${baziVerse(dm.ch)}</div>
   </div>
   <div class="callout neutral" style="margin-top:16px">
     <div class="callout-label">Disclaimer</div>
-    <p>BaZi is a classical Chinese metaphysical system. This reading is for self-reflection and philosophical exploration. The patterns in your chart reveal tendencies and energies — your free will and conscious choices always shape the final outcome.</p>
+    <p>CCIAF is a structured interpretive framework drawing on multiple intellectual traditions. It is decision-support, not prediction. It is not a substitute for medical, psychiatric, legal, or financial advice. Users in distress should consult qualified professionals.</p>
   </div>
 </div>`;
 }
@@ -939,9 +825,9 @@ function annualTheme(god){
 
 function buildStars(dP,yP){
   const lucky=[
-    {name:"Heavenly Noble Person",ch:"天乙貴人",desc:"The most auspicious star in Chinese astrology. Its presence indicates powerful benefactors, mentors, and hidden helpers who appear at critical turning points in life. You are not travelling this path alone — the universe sends allies.",advice:"Cultivate relationships with gratitude and openness. Your helpers may arrive in unexpected forms.",present:true},
+    {name:"Heavenly Noble Person",ch:"天乙貴人",desc:"The most auspicious star in Chinese astrology. Its presence indicates powerful benefactors, mentors, and hidden helpers who appear at critical turning points in life. Within the BaZi system, this pattern correlates with periods of external support and benefactor activation.",advice:"Cultivate relationships with gratitude and openness. Support figures may arrive in unexpected forms.",present:true},
     {name:"Academic Star",ch:"文昌",desc:"The star of intelligence, literary talent, and scholarly recognition. Its presence indicates a natural inclination toward learning, writing, and intellectual achievement. Success through study and mental mastery is supported.",advice:"Honour your intellectual gifts through study and expression. Your mind is one of your greatest assets.",present:Math.random()>0.4},
-    {name:"Peach Blossom",ch:"桃花",desc:"The star of romantic magnetism, social charm, and artistic talent. Its presence indicates you naturally attract others, and your social world tends to be rich and varied. Can also indicate artistic recognition or public appeal.",advice:"Your magnetism is real — use it consciously and with integrity in both love and professional spheres.",present:Math.random()>0.5},
+    {name:"Peach Blossom",ch:"桃花",desc:"The star of romantic magnetism, social charm, and artistic talent. Its presence indicates a natural capacity to attract others, and your social world tends to be rich and varied. Can also indicate artistic recognition or public appeal.",advice:"This configuration associates with social magnetism — engage it deliberately and with integrity in both relational and professional spheres.",present:Math.random()>0.5},
     {name:"Sky Horse",ch:"驛馬",desc:"The star of movement, travel, and dynamic career opportunity. Often indicates career paths involving mobility, international work, or frequent and rewarding life changes.",advice:"Embrace movement rather than resist it. Your fortune often arrives through change of scene or circumstance.",present:Math.random()>0.5},
   ];
   const challenge=[
@@ -969,37 +855,11 @@ function buildStars(dP,yP){
   return html;
 }
 
-function buildHealth(dm,elC){
-  let html=`<div class="health-card" style="border-left-color:${FE[dm.el].col}">
-    <div class="health-organ" style="color:${FE[dm.el].col}">★ Primary Focus: ${HEALTH_DATA[dm.el].organ} · ${dm.el} Element</div>
-    <div class="health-detail">
-      <p><strong>Core Emotion:</strong> ${HEALTH_DATA[dm.el].emotion} &nbsp;·&nbsp; <strong>Sensitive Season:</strong> ${HEALTH_DATA[dm.el].season}</p>
-      <p style="margin-top:6px"><strong>Signs of excess:</strong> ${HEALTH_DATA[dm.el].excess}</p>
-      <p style="margin-top:6px"><strong>Signs of deficiency:</strong> ${HEALTH_DATA[dm.el].deficiency}</p>
-      <p style="margin-top:8px"><strong>Nourishing foods:</strong> ${HEALTH_DATA[dm.el].foods.join(', ')}</p>
-      <p style="margin-top:6px"><strong>Supportive practices:</strong> ${HEALTH_DATA[dm.el].practices.join(' · ')}</p>
-    </div>
-  </div>`;
-  Object.entries(HEALTH_DATA).forEach(([el,data])=>{
-    if(el===dm.el)return;
-    const cnt=elC[el]||0;
-    const note=cnt<0.5?"— scarce in your chart":cnt>2?"— strong in your chart":"";
-    html+=`<div class="health-card" style="border-left-color:${FE[el].col}">
-      <div class="health-organ" style="color:${FE[el].col}">${data.organ} · ${el} ${note}</div>
-      <div class="health-detail">
-        <p><strong>Emotion:</strong> ${data.emotion} &nbsp;·&nbsp; <strong>Season:</strong> ${data.season}</p>
-        <p style="margin-top:6px">${cnt<0.5?data.deficiency:data.excess}</p>
-        ${cnt<0.5?`<p style="margin-top:6px;font-style:italic;color:var(--text-3)">Supplement via: ${data.foods.slice(0,3).join(', ')} · ${data.practices[0]}</p>`:''}
-      </div>
-    </div>`;
-  });
-  return html;
-}
 
 function baziSynth(dm,dmp,str,elC,curLP){
   const god=curLP?getTG(dm,curLP.stem):"";
   const td=TGD[god]||{};
-  return`Your BaZi chart reveals a ${dm.pol} ${dm.el} Day Master — ${dm.ch} (${dm.py}), the ${dmp.arch}. This is not a description of who you must become; it is a map of the qualities you already carry, waiting to be consciously expressed.<br><br>With a <strong>${str.cls} Day Master</strong>, your most productive path ${str.cls.includes("Strong")?"runs through channelling your natural strength into worthy challenges and responsibilities — you are designed for pressure":"runs through building your inner foundation through support, learning, and strategic alliances — you are designed to go deep"}. ${curLP?`Your current Luck Pillar (Age ${curLP.startAge}–${curLP.endAge}) brings <strong>${god}</strong> energy — ${td.life||'significant activations'} — as the prevailing theme of this decade. ${td.desc||''}`:''}<br><br>The elemental balance of your chart, with ${Object.entries(elC).sort((a,b)=>b[1]-a[1])[0][0]} as the dominant force, shapes the flavour of how all your other qualities express. Work with this energy rather than against it, and you will find the path of least resistance to your fullest expression.`;
+  return`Within the BaZi system, this chart identifies a ${dm.pol} ${dm.el} Day Master — ${dm.ch} (${dm.py}), the ${dmp.arch}. This is a structural map of the qualities present in this configuration, not a prescription for identity.<br><br>With a <strong>${str.cls} Day Master</strong>, the most productive orientation ${str.cls.includes("Strong")?"runs through channelling natural strength into worthy challenges and responsibilities — this configuration associates with orientation toward pressure and structured accountability":"runs through building inner foundation through support, learning, and strategic alliances — this configuration associates with orientation toward depth and sustained inner work"}. ${curLP?`Your current Luck Pillar (Age ${curLP.startAge}–${curLP.endAge}) brings <strong>${god}</strong> energy — ${td.life||'significant activations'} — as the prevailing theme of this decade. ${td.desc||''}`:''}<br><br>The elemental balance of your chart, with ${Object.entries(elC).sort((a,b)=>b[1]-a[1])[0][0]} as the dominant force, shapes the flavour of how all your other qualities express. Work with this energy rather than against it, and you will find the path of least resistance to your fullest expression.`;
 }
 
 function baziVerse(ch){
