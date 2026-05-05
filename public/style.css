@@ -689,6 +689,10 @@ body{
 .info-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px}
 .info-box p{font-size:0.88rem;line-height:1.8;color:var(--text-3)}
 
+/* ── SYNTHESIS STMTS ── */
+.synth-stmts{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin-bottom:4px}
+.synth-stmts .prose{color:var(--text-3);font-size:0.9rem}
+
 /* ── TIMING GATE ── */
 .timing-gate{
   border:1px solid var(--border);

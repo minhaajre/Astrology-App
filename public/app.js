@@ -67,6 +67,7 @@ function resetAll(){
   document.getElementById('bazi-time').value='';
   document.getElementById('num-body').innerHTML='';
   document.getElementById('bazi-body').innerHTML='';
+  document.getElementById('synth-body').innerHTML='';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -204,8 +205,15 @@ function generateAll(){
   if(!d||!m||!y){errEl.style.display='block';errEl.textContent='Please select a complete date of birth.';return;}
   if(y>new Date().getFullYear()){errEl.style.display='block';errEl.textContent='Year cannot be in the future.';return;}
   errEl.style.display='none';
+  // Compute shared data for cross-traditional synthesis
+  const {lp:synthLP}=calcLP(d,m,y);
+  const synthLPD=LP_DATA[synthLP]||LP_DATA[9];
+  const synthDP=getDP(y,m,d);
+  const synthDM=synthDP.stem;
+  const synthDMP=DMP[synthDM.ch]||DMP["壬"];
   document.getElementById('num-body').innerHTML=buildNumerology(d,m,y);
   document.getElementById('bazi-body').innerHTML=buildBazi(d,m,y);
+  document.getElementById('synth-body').innerHTML=buildCrossTraditionalSynthesis(synthLP,synthDM,synthLPD,synthDMP);
   document.getElementById('results').style.display='block';
   document.getElementById('footer').style.display='block';
   showNavLinks();
@@ -860,6 +868,44 @@ function baziSynth(dm,dmp,str,elC,curLP){
   const god=curLP?getTG(dm,curLP.stem):"";
   const td=TGD[god]||{};
   return`Within the BaZi system, this chart identifies a ${dm.pol} ${dm.el} Day Master — ${dm.ch} (${dm.py}), the ${dmp.arch}. This is a structural map of the qualities present in this configuration, not a prescription for identity.<br><br>With a <strong>${str.cls} Day Master</strong>, the most productive orientation ${str.cls.includes("Strong")?"runs through channelling natural strength into worthy challenges and responsibilities — this configuration associates with orientation toward pressure and structured accountability":"runs through building inner foundation through support, learning, and strategic alliances — this configuration associates with orientation toward depth and sustained inner work"}. ${curLP?`Your current Luck Pillar (Age ${curLP.startAge}–${curLP.endAge}) brings <strong>${god}</strong> energy — ${td.life||'significant activations'} — as the prevailing theme of this decade. ${td.desc||''}`:''}<br><br>The elemental balance of your chart, with ${Object.entries(elC).sort((a,b)=>b[1]-a[1])[0][0]} as the dominant force, shapes the flavour of how all your other qualities express. Work with this energy rather than against it, and you will find the path of least resistance to your fullest expression.`;
+}
+
+// ─────────────────────────────────────────────
+//  CROSS-TRADITIONAL SYNTHESIS RENDERER
+// ─────────────────────────────────────────────
+function buildCrossTraditionalSynthesis(lp, dm, lpD, dmp){
+  const dmStmt = SYNTH_DM[dm.ch] || '';
+  const lpStmt = SYNTH_LP[lp] || SYNTH_LP[9];
+  const crossKey = dm.el + '-' + lp;
+  const crossStmt = SYNTH_CROSS[crossKey] || SYNTH_CROSS[dm.el + '-9'] || '';
+
+  return`
+<div class="report-pill" style="background:var(--coral-light);border-color:var(--coral-mid);color:var(--coral)">✦ Cross-Traditional Synthesis</div>
+<div class="report-title">Where the Two Traditions Intersect</div>
+<div class="report-dob">${dm.ch} ${dm.py} · ${dm.pol} ${dm.el} &nbsp;×&nbsp; Life Path ${lp} · ${lpD.arch}</div>
+
+<div class="block">
+  <div class="block-header">
+    <div class="block-num sm" style="background:var(--coral-light);color:var(--coral)">✦</div>
+    <div class="block-meta">
+      <div class="block-label">Cross-Traditional Reading</div>
+      <div class="block-title">BaZi ${dm.ch} (${dm.el}) × Life Path ${lp}</div>
+      <div class="block-arch">One finding neither tradition produces independently</div>
+    </div>
+  </div>
+  <div class="synth-stmts">
+    <p class="prose">${dmStmt}</p>
+    <p class="prose" style="margin-top:12px">${lpStmt}</p>
+  </div>
+  <div class="callout" style="margin-top:18px;border-left-width:3px">
+    <div class="callout-label">Intersection — What Neither System Produces Alone</div>
+    <p style="line-height:1.9">${crossStmt}</p>
+  </div>
+  <div class="callout neutral" style="margin-top:14px">
+    <div class="callout-label">Disclaimer</div>
+    <p>CCIAF is a structured interpretive framework drawing on multiple intellectual traditions. It is decision-support, not prediction. It is not a substitute for medical, psychiatric, legal, or financial advice. Users in distress should consult qualified professionals.</p>
+  </div>
+</div>`;
 }
 
 function baziVerse(ch){
